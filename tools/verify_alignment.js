@@ -3,7 +3,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
-const { serve, boardReady, withView, VIEWS } = require('./lib_serve');
+const { serve, boardReady, withView, VIEWS, DECK_CHIP_PT, headChipRatio, deckChipAudit } = require('./lib_serve');
 
 const LANGS = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'app', 'translations', 'manifest.json'), 'utf8')).languages.map(l => l.code);
 const CLOUDS = ['azure', 'aws', 'gcp'];
@@ -111,6 +111,11 @@ function audit(L) {
     const where = t.closest('.cloudwrap') ? 'cloud' : t.closest('.hband.top') ? 'top band' : 'rail';
     if (Math.abs(off) > L.centre) out.push(`${where}: '${label(t)}' sits ${off.toFixed(1)}px off the vertical middle of its tile`);
   });
+  document.querySelectorAll('.panel.stack').forEach(pn => {
+    const sizes = [...new Set([...pn.querySelectorAll('.tagpill')].filter(vis).map(e => getComputedStyle(e).fontSize))];
+    const head = pn.querySelector('.ph-name');
+    if (sizes.length > 1) out.push(`platform: the chips in '${head ? label(head) : 'a stacked panel'}' come in ${sizes.length} sizes (${sizes.join(', ')}), not one`);
+  });
   const tb = document.getElementById('topband'), cb = document.getElementById('cloud');
   if (document.body.classList.contains('fitting') && tb && cb && vis(tb) && vis(cb)) {
     const a = tb.getBoundingClientRect(), b = cb.getBoundingClientRect();
@@ -128,14 +133,16 @@ const PLAT_STYLE = {
   '.plat-head': ['fontSize', 'minHeight'], '.ph-mark': ['width', 'height'],
   '.band:not(.b-work) > .band-lbl': ['flexBasis'], '.b-work > .band-lbl': ['flexBasis'], '.bl-name': ['fontSize', 'fontWeight', 'flexDirection'], '.bl-ic': ['width', 'height'],
   '.pcard': ['flexDirection', 'gap', 'paddingTop', 'paddingLeft'], '.pico': ['width', 'height'], '.pico svg': ['width', 'height'],
-  '.p-name': ['fontSize', 'fontWeight'], '.ph-name': ['fontSize', 'fontWeight'], '.pl-name': ['fontSize', 'fontWeight'], '.tagpill': ['fontSize'],
+  '.p-name': ['fontSize', 'fontWeight'], '.panel.stack .ph-name': ['fontSize', 'fontWeight'], '.panel:not(.stack) .ph-name': ['fontSize', 'fontWeight'], '.pl-name': ['fontSize', 'fontWeight'],
+  '.panel.stack .tagpill': ['fontSize'], '.panel:not(.stack) .tagpill': ['fontSize'],
   '.foot-chip': ['gap', 'paddingLeft'], '.foot-chip svg': ['width'], '.fc-name': ['fontSize'], '.oi-lbl': ['fontSize', 'flexBasis'],
   '.fmt': ['fontSize', 'paddingTop'], '.fmt-logo': ['height'], '.mstage': ['flexBasis'], '.mstage svg': ['width'], '.ms-n': ['fontSize'],
 };
 const PLAT_SCALED = new Set([
-  '.band:not(.b-work) > .band-lbl flexBasis', '.bl-name fontSize', '.bl-ic width', '.bl-ic height', '.p-name fontSize', '.ph-name fontSize',
+  '.band:not(.b-work) > .band-lbl flexBasis', '.bl-name fontSize', '.bl-ic width', '.bl-ic height', '.p-name fontSize', '.panel:not(.stack) .ph-name fontSize',
   '.pl-name fontSize', '.foot-chip svg width', '.fc-name fontSize', '.oi-lbl fontSize', '.oi-lbl flexBasis', '.fmt fontSize', '.ms-n fontSize',
 ]);
+const DECK_OWN = new Set(['.panel.stack .tagpill fontSize', '.panel.stack .ph-name fontSize']);
 function platSig(STYLE) {
   const vis = e => { const r = e.getBoundingClientRect(), cs = getComputedStyle(e); return r.width > 0 && r.height > 0 && cs.visibility !== 'hidden' && cs.display !== 'none'; };
   const step = parseFloat(getComputedStyle(document.getElementById('platform')).getPropertyValue('--pk')) || 1;
@@ -144,29 +151,32 @@ function platSig(STYLE) {
   const tiles = all('.atom').map(e => { const rec = byId[e.dataset.id]; return rec && rec.tile ? rec.tile.n || rec.tile.tag || '' : ''; }).filter(Boolean).sort();
   const style = {};
   Object.entries(STYLE).forEach(([sel, props]) => props.forEach(p => {
-    const vals = new Set(all(sel).filter(e => p !== 'fontSize' || !e.style.fontSize).map(e => getComputedStyle(e)[p]));
+    const els = all(sel), vals = new Set(els.filter(e => p !== 'fontSize' || !e.style.fontSize).map(e => getComputedStyle(e)[p]));
     if (vals.size) style[`${sel} ${p}`] = [...vals].sort().join(' | ');
+    else if (els.length) style[`${sel} ${p}`] = 'fitted';
   }));
   const board = document.querySelector('.board');
   const fit = [...board.querySelectorAll('[data-wfit]')].map(e => `${(e.textContent || '').trim().slice(0, 30)}@${e.style.fontSize}`).sort().join(', ');
-  return { tiles, style, step, h: board.offsetHeight, fit, deck: document.body.classList.contains('deck-type') };
+  return { tiles, style, step, h: board.offsetHeight, fit, deck: ['deck-type', 'deck-chips'].some(c => document.body.classList.contains(c)) };
 }
-function platDiff(key, s, d, deck) {
-  const out = [];
-  const where = deck ? 'the PowerPoint layout of Simplified' : 'Simplified on screen';
+const LAYOUTS = { pptx: 'the PowerPoint layout of Simplified', pdf: 'the PDF layout of Simplified' };
+function platDiff(key, s, d, mode) {
+  const out = [], deck = !!mode;
+  const where = LAYOUTS[mode] || 'Simplified on screen';
   const only = (a, b) => { const left = [...b]; return a.filter(x => { const i = left.indexOf(x); if (i < 0) return true; left.splice(i, 1); return false; }); };
   const lost = only(d.tiles, s.tiles), extra = only(s.tiles, d.tiles);
   if (lost.length) out.push(`[${key}] ${where} leaves out platform tiles Detailed shows: ${lost.join(', ')}`);
   if (extra.length) out.push(`[${key}] ${where} shows platform tiles Detailed does not: ${extra.join(', ')}`);
   if (d.step !== 1) out.push(`[${key}] the Detailed platform carries a type step of ${d.step}, not 1`);
   if (deck && !(s.step > 1)) out.push(`[${key}] ${where} carries no type step above Detailed (--pk reads ${s.step})`);
-  if (!deck && s.step !== 1) out.push(`[${key}] ${where} carries a type step of ${s.step}; only the PowerPoint layout may`);
+  if (!deck && s.step !== 1) out.push(`[${key}] ${where} carries a type step of ${s.step}; only the PowerPoint and PDF layouts may`);
   const scale = (v, f) => v.split(' | ').map(x => /^-?[\d.]+px$/.test(x) ? +(parseFloat(x) * f).toFixed(2) + 'px' : x).sort().join(' | ');
   const same = (a, b) => {
     const x = (a || '').split(' | '), y = (b || '').split(' | ');
     return x.length === y.length && x.every((v, i) => v === y[i] || (/px$/.test(v) && /px$/.test(y[i]) && Math.abs(parseFloat(v) - parseFloat(y[i])) <= 0.05));
   };
   new Set(Object.keys(s.style).concat(Object.keys(d.style))).forEach(k => {
+    if ((mode && DECK_OWN.has(k)) || s.style[k] === 'fitted' || d.style[k] === 'fitted') return;
     const scaled = deck && PLAT_SCALED.has(k);
     const want = scaled && d.style[k] ? scale(d.style[k], s.step) : d.style[k];
     if (!same(s.style[k], want)) out.push(`[${key}] platform ${k} reads ${s.style[k] || 'nothing'} in ${where} and ${d.style[k] || 'nothing'} in Detailed${scaled ? `, which the ${s.step} step makes ${want}` : ''}`);
@@ -206,25 +216,30 @@ function panelAudit(L) {
     checked++;
     r.forEach(m => fails.push(`[${view} ${key}] ${m}`));
     if (view !== 'simple') return;
-    const toggle = on => page.evaluate(on => {
-      if (typeof deckType !== 'function') return null;
-      deckType(on);
-      return { on: document.body.classList.contains('deck-type'), moving: document.getAnimations().filter(a => a instanceof CSSTransition).length };
-    }, on);
-    const into = await toggle(true);
-    if (!into || !into.on) {
-      fails.push(`[deck ${key}] the board has no PowerPoint layout to measure`);
-      return;
+    const toggle = (kind, on) => page.evaluate(([kind, on]) => {
+      if (typeof exportType !== 'function') return null;
+      exportType(kind, on);
+      return { on: document.body.classList.contains('deck-chips'), moving: document.getAnimations().filter(a => a instanceof CSSTransition).length };
+    }, [kind, on]);
+    const ratio = await page.evaluate(headChipRatio);
+    for (const [kind, name] of [['pptx', 'PowerPoint'], ['pdf', 'PDF']]) {
+      const tag = kind === 'pptx' ? 'deck' : kind;
+      const into = await toggle(kind, true);
+      if (!into || !into.on) {
+        fails.push(`[${tag} ${key}] the board has no ${name} layout to measure`);
+        continue;
+      }
+      if (into.moving) fails.push(`[${tag} ${key}] ${into.moving} transition(s) still run after switching to the ${name} layout, so it is measured mid-motion`);
+      (await page.evaluate(audit, LIMITS)).forEach(m => fails.push(`[${tag} ${key}] ${m}`));
+      (await page.evaluate(deckChipAudit, [DECK_CHIP_PT, kind, ratio])).forEach(m => fails.push(`[${tag} ${key}] ${m}`));
+      sig[kind] = await page.evaluate(platSig, PLAT_STYLE);
+      const out = await toggle(kind, false);
+      if (out.moving) fails.push(`[${tag} ${key}] ${out.moving} transition(s) still run after switching back to the screen layout`);
+      const back = await page.evaluate(platSig, PLAT_STYLE), was = sig[view];
+      const moved = Object.keys({ ...was.style, ...back.style }).filter(k => was.style[k] !== back.style[k]).map(k => `${k} ${was.style[k]} -> ${back.style[k]}`);
+      if (back.deck || back.h !== was.h || back.fit !== was.fit || moved.length)
+        fails.push(`[${tag} ${key}] the screen does not return to its own layout after the ${name} layout: height ${was.h} -> ${back.h}${back.fit !== was.fit ? ', fitted names differ' : ''}${back.deck ? ', export class left on' : ''}${moved.length ? ', ' + moved.slice(0, 3).join('; ') : ''}`);
     }
-    if (into.moving) fails.push(`[deck ${key}] ${into.moving} transition(s) still run after switching to the PowerPoint layout, so it is measured mid-motion`);
-    (await page.evaluate(audit, LIMITS)).forEach(m => fails.push(`[deck ${key}] ${m}`));
-    sig.deck = await page.evaluate(platSig, PLAT_STYLE);
-    const out = await toggle(false);
-    if (out.moving) fails.push(`[deck ${key}] ${out.moving} transition(s) still run after switching back to the screen layout`);
-    const back = await page.evaluate(platSig, PLAT_STYLE), was = sig[view];
-    const moved = Object.keys({ ...was.style, ...back.style }).filter(k => was.style[k] !== back.style[k]).map(k => `${k} ${was.style[k]} -> ${back.style[k]}`);
-    if (back.deck || back.h !== was.h || back.fit !== was.fit || moved.length)
-      fails.push(`[deck ${key}] the screen does not return to its own layout after the PowerPoint layout: height ${was.h} -> ${back.h}${back.fit !== was.fit ? ', fitted names differ' : ''}${back.deck ? ', deck class left on' : ''}${moved.length ? ', ' + moved.slice(0, 3).join('; ') : ''}`);
   };
   for (const view of VIEWS) {
     await page.goto(withView(base, view), { waitUntil: 'networkidle' });
@@ -267,11 +282,11 @@ function panelAudit(L) {
   await browser.close();
   server.close();
   Object.entries(sigs).forEach(([key, v]) => {
-    if (v.simple && v.detailed) fails.push(...platDiff(key, v.simple, v.detailed, false));
-    if (v.deck && v.detailed) fails.push(...platDiff(key, v.deck, v.detailed, true));
+    if (v.simple && v.detailed) fails.push(...platDiff(key, v.simple, v.detailed, ''));
+    ['pptx', 'pdf'].forEach(mode => { if (v[mode] && v.detailed) fails.push(...platDiff(key, v[mode], v.detailed, mode)); });
   });
   console.log(`views: ${VIEWS.length}, boards, clouds, shapes and languages measured: ${checked}`);
   if (errs.length) fails.push(...errs.slice(0, 5).map(e => 'page error: ' + e));
   if (fails.length) { console.log(`\nFAIL (${fails.length})`); fails.forEach(f => console.log('  - ' + f)); process.exit(1); }
-  console.log('PASS: in every platform box the tiles sit midway between top and bottom, titles are centered and start at the leading edge, arm cards are evenly spaced, highlight dots clear the borders and never cover a title or its icon, every cloud, top-band and rail tile holds its content at its vertical middle, the cloud band is the size of the Genie Agents band, the medallion arrows ride their cylinders, the platform shows the same tiles, icons, type and spacing in both views on screen, the PowerPoint layout of Simplified sets its type one fixed step larger, holds every check above and gives the screen back unchanged, and panel link arrows end their rows in every language');
+  console.log('PASS: in every platform box the tiles sit midway between top and bottom, titles are centered and start at the leading edge, arm cards are evenly spaced, highlight dots clear the borders and never cover a title or its icon, every cloud, top-band and rail tile holds its content at its vertical middle, the cloud band is the size of the Genie Agents band, the medallion arrows ride their cylinders, the platform shows the same tiles, icons, type and spacing in both views on screen, the Genie and Agent Bricks chips of each panel share one size, the PowerPoint and PDF layouts of Simplified set the type one fixed step larger and those chips at 7pt inside their rectangles under a larger panel name, hold every check above and give the screen back unchanged, and panel link arrows end their rows in every language');
 })().catch(e => { console.error(e); process.exit(2); });

@@ -10,6 +10,17 @@ const TR = path.join(ROOT, 'app', 'translations');
 const LANGS = JSON.parse(fs.readFileSync(path.join(TR, 'manifest.json'), 'utf8')).languages.map(l => l.code).filter(c => c !== 'en');
 const SAME = JSON.parse(fs.readFileSync(path.join(__dirname, 'i18n_same.json'), 'utf8'));
 const html = fs.readFileSync(path.join(ROOT, 'app', 'index.html'), 'utf8');
+const heWord = s => new RegExp('(?:^|[^\u05D0-\u05EA])' + s + '(?=[^\u05D0-\u05EA]|$)');
+const FIN_FILES = ['_common', 'payments_fintech', 'exchanges', 'data_analytics_providers', 'capital_markets_buyside', 'capital_markets_sellside', 'wealth_management', 'banking', 'crypto_digital_assets',
+  'insurance_pandc', 'life_insurance', 'mortgage_lending'];
+const MFG_FILES = ['_common', 'semiconductors', 'chemical_mfg', 'manufacturing', 'paper_packaging', 'medical_devices', 'computer_electronics', 'automotive', 'aerospace_space', 'machinery', 'food_beverage',
+  'pharmaceuticals', 'mining', 'oil_gas_downstream_refining', 'consumer_goods', 'genomics_biotech'];
+const DISPATCH_FILES = ['electric_power_generation', 'renewables', 'electric_utility', 'water_utilities', 'waste_management', 'public_safety', 'rail_transit', 'mining', 'telecommunication',
+  'transport_shipping', 'semiconductors', 'machinery', 'medical_devices', 'construction', 'staffing_hr', 'oil_gas_midstream', 'airlines'];
+const LOT_FILES = ['semiconductors', 'computer_electronics', 'pharmaceuticals', 'medical_devices', 'food_beverage', 'chemical_mfg', 'consumer_goods', 'manufacturing', 'aerospace_space', 'genomics_biotech',
+  'machinery', 'automotive'];
+const SALES_LEAD_FILES = ['automotive', 'retail', 'grocery', 'ecommerce', 'advertising', 'consumer_goods', 'telecommunication', 'media_broadcasting', 'real_estate', 'travel_hospitality',
+  'insurance_pandc', 'life_insurance', 'banking', 'mortgage_lending', 'staffing_hr', 'pharmaceuticals'];
 const TOUR = [...((html.match(/const STEPS = \[([\s\S]*?)\n  \];/) || [])[1] || '').matchAll(/\b(?:title|body):"((?:[^"\\]|\\.)*)"/g)].map(m => JSON.parse('"' + m[1] + '"'));
 
 const SENSE = [
@@ -132,7 +143,7 @@ const SENSE = [
   { what: 'financial reconciliation read as making peace', src: /\breconcil/i,
     bad: { de: /versöhn/i, nl: /verzoen/i, sv: /försoning/i, da: /forsoning/i, fi: /sovinto|sovittel/i, ja: /和解/, zh: /和解/, ko: /화해/, he: /פיוס/, hi: /सुलह/ } },
   { what: 'a design space read as outer space', src: /\bdesign space\b/i,
-    bad: { de: /weltraum|weltall/i, nl: /ruimtevaart|heelal/i, es: /espacio exterior/i, fi: /avaruu/i, sv: /rymden/i, da: /verdensrum/i, it: /spazio cosmico/i, ja: /宇宙/, zh: /太空|宇宙/, ko: /우주/ } },
+    bad: { de: /weltraum|weltall/i, nl: /ruimtevaart|heelal/i, es: /espacio exterior/i, fi: /avaruu/i, sv: /rymden/i, da: /verdensrum/i, it: /spazio cosmico/i, ja: /宇宙/, zh: /太空|宇宙/, ko: /우주/, he: /חלל/ } },
   { what: 'a digital thread read as yarn', src: /\bdigital thread\b/i,
     bad: { de: /garn/i, nl: /garen/i, sv: /\bgarn/i, da: /\bgarn/i, fi: /lanka/i, fr: /\bfil à|\bfils? de laine/i, es: /hilo de coser|\bhilaza/i, it: /filato/i, pt: /\bfio de lã/i, ja: /糸/, zh: /纱|毛线/, ko: /실타래|털실/ } },
   { what: 'a legal or contract review read as a critique', src: /\b(legal|contract|document|privilege|compliance|contestable) reviews?\b/i,
@@ -223,7 +234,7 @@ const SENSE = [
     bad: { de: /verpackung/i, nl: /verpakking/i, sv: /förpackning/i, da: /emballage|indpakning/i, fi: /pakkau/i, fr: /emballage/i, es: /embalaje|empaque/i,
            it: /imballag|confezion/i, pt: /embalage/i, ja: /包装|梱包/, zh: /包装/, ko: /포장/, he: /אריזה/, ar: /تغليف|التعبئة/ } },
   { what: 'a fleet of aircraft, turbines or vehicles read as a navy', src: /\bfleets?\b/i, except: /\b(ships?|vessels?|tankers?|navy|naval|maritime|marine|ocean)\b/i,
-    notOn: ['shipping_ports'], bad: { fi: /(?<!lentokone|ilma-alusten |lentokoneiden )laivasto/i } },
+    notOn: ['shipping_ports'], bad: { fi: /(?<!lentokone|ilma-alusten |lentokoneiden )laivasto/i, ja: /艦隊/, ko: /함대/, zh: /舰队/ } },
   { what: 'a trial screen failure read as a display fault', src: /\bscreen[- ]fail/i,
     bad: { fi: /näyttövi|näytön (epäonnist|vi)/i, de: /bildschirm/i, nl: /scherm/i, sv: /skärm/i, da: /skærm/i, fr: /écran/i, es: /pantalla/i, it: /schermo/i, pt: /\btela\b/i,
            ja: /画面/, zh: /屏幕/, ko: /화면/, he: /מסך|הקרנ/, ar: /شاشة/ } },
@@ -242,10 +253,10 @@ const SENSE = [
   { what: 'identity resolution read as dissolving or screen resolution', src: /\b(identity|entity)[- ]resolution\b/i,
     bad: { sv: /upplösning/i, fi: /resoluutio/i, da: /opløsning/i, ja: /解像度/, zh: /分辨率/, ko: /해상도/, he: /רזולוציה/ } },
   { what: 'the drivers of a result read as device drivers or vehicle drivers',
-    src: /\b(?:exogenous|cost|churn|demand|value|margin|(?<!at-)risk|root[- ]cause|failure|delay|growth|price|pricing|revenue|key|performance|attrition|turnover|loss|claims?|yield|downtime|variance|velocity|volume|emissions?|spend|sales|lapse|readmission|utili[sz]ation|no-show|cancellation|satisfaction|engagement|consumption|uplift|profit|profitability|outcome|quality|scrap|defect)[- ]drivers?\b|\bdrivers? (?:of|behind)\b/i,
+    src: /\b(?:exogenous|contact|cost|churn|demand|value|margin|(?<!at-)risk|root[- ]cause|failure|delay|growth|price|pricing|revenue|key|performance|attrition|turnover|loss|claims?|yield|downtime|variance|velocity|volume|emissions?|spend|sales|lapse|readmission|utili[sz]ation|no-show|cancellation|satisfaction|engagement|consumption|uplift|profit|profitability|outcome|quality|scrap|defect)[- ]drivers?\b|\bdrivers? (?:of|behind)\b/i,
     except: /truck|delivery|bus\b|fleet|rideshare|ride-hail|JDBC|ODBC|device driver|driver[- ]app|driver (?:hours|safety|behaviou?r|scor)/i,
-    bad: { sv: /drivrutin/i, nl: /stuurprogramma/i, fi: /ajuri|kuljettaj|ohjai[mn]/i, fr: /\bpilotes?\b/i, es: /controlador/i, de: /\bfahrer/i, da: /drivprogram/i,
-           pt: /\bmotoristas?\b/i, it: /\bautist/i, ja: /運転手|運転者/, ko: /운전/, zh: /驱动程序|司机/, he: /נהג/, ar: /سائق|برنامج تشغيل/ } },
+    bad: { sv: /drivrutin|förare/i, nl: /stuurprogramma|chauffeur/i, fi: /ajuri|kuljettaj|ohjai[mn]/i, fr: /\bpilotes?\b/i, es: /controlador/i, de: /\bfahrer/i, da: /drivprogram|chauffør/i,
+           pt: /\bmotoristas?\b/i, it: /\bautist/i, ja: /運転手|運転者|連絡先ドライバー/, ko: /운전|연락처 드라이버/, zh: /驱动程序|司机/, he: /נהג|מנהלי ה?(?:קשר|התקשרות)/, ar: /سائق|برامج? تشغيل/ } },
   { what: 'work in flight read as air travel', src: /\bin[- ]flight\b/i,
     except: /in-flight (?:telemetry|entertainment|catering|service|connectivity|wi-?fi|sales|retail)|parameters\/sec in flight|(?:aircraft|planes?|drones?|UAVs?|satellites?|rockets?|missiles?|passengers?|cabin)\b[^.]{0,40}\bin[- ]flight/i,
     notOn: ['airlines', 'aerospace_space', 'travel_hospitality'],
@@ -364,11 +375,98 @@ const SENSE = [
     bad: { nl: /voordeel/i, ko: /혜택/, he: /הטב/ } },
   ...['Banner', 'Canvas', 'Slate'].map(name => ({ what: `the education system ${name} translated`, src: new RegExp('\\b' + name + '\\b'), onlyOn: ['education'],
     bad: Object.fromEntries(LANGS.map(l => [l, { test: t => !t.includes(name) }])) })),
-  ...['Databricks Vector Search', 'Anthropic', 'OpenAI', 'Amazon Bedrock', 'AWS Glue', 'Oracle', 'Sparkplug', 'Power BI', 'Pub/Sub', 'Event Hubs', 'Kinesis']
+  { what: 'an AI model read as a fashion or product model', src: /\bmodels?\b/i,
+    except: /\b(?:vehicles?|cars?|aircraft|engines?|devices?|phones?|handsets?|tractors?|equipment|trucks?|turbines?|meters?|products?|SKUs?|bikes?|boats?|appliances?|printers?)\s+models?\b|\bmodel[- ](?:years?|lines?|ranges?|numbers?|mix)\b/i,
+    bad: { he: heWord('(?:[ובלהשכ]{0,3}|[ושכ]{0,2}מה)דג(?:ם|מים|מי)'), zh: /型号/, ar: /الطراز|طراز|الطرز|طرز/ } },
+  { what: 'data modellers read as fashion models', src: /\bmodell?(?:ers?|ing)\b/i, bad: { he: /דוגמנ/ } },
+  { what: 'versioned data read as drafted or corrected text', src: /\bversioned\b/i, bad: { he: heWord('[ובלהשכ]{0,2}(?:מנוסח|מתוקן|מתוקנ)(?:ת|ים|ות)?') } },
+  { what: 'engineered features read as planned or programmed', src: /\bfeatures? (?:are |is )?engineered\b|\bengineered (?:in|on) Feature Store\b/i,
+    bad: { he: heWord('[ובלהשכ]{0,2}מתוכנ(?:ן|נת|נים|נות)') } },
+  { what: 'trading positions read as stances', src: /\bpositions?\b/i, except: /competitive position|regulatory positions/i, onlyOn: FIN_FILES,
+    bad: { he: heWord('(?:[ובלהשכ]{0,3}|[ושכ]{0,2}מה)עמד(?:ה|ות|ת)') } },
+  { what: 'replaying a record read as playing back media', src: /\breplay(?:ed|able)?\b/i, bad: { he: /להשמעה|מושמע|הושמע/ } },
+  { what: 'a security master read as security or protection', src: /\bsecurity masters?\b/i,
+    bad: { de: /sicherheits/i, fr: /sécurité/i, es: /seguridad/i, pt: /segurança/i, it: /sicurezza/i, nl: /beveiliging/i, sv: /säkerhet/i, da: /sikkerhed/i, fi: /turvallisuu|tietoturv/i,
+           ja: /セキュリティ/, zh: /安全/, ko: /보안/, ar: /أمن|الأمان/, hi: /सुरक्षा/, he: /אבטח/ } },
+  { what: 'financial instruments read as tools, apparatus or musical instruments', src: /\binstruments?\b/i, onlyOn: FIN_FILES.filter(f => f !== '_common'), except: /musical|measuring|\blab\b/i,
+    bad: { he: new RegExp('כלי נגינה|' + heWord('[ובלהשכ]{0,3}כלים?').source), ja: /楽器|器具/, zh: /乐器|仪器/, ko: /악기|기기/, fi: /soitin|soittimi/i } },
+  { what: 'trading or loan books read as books to read', src: /(?<!order )(?<!e-)\bbooks\b/i, onlyOn: ['exchanges', 'capital_markets_buyside', 'capital_markets_sellside', 'crypto_digital_assets', 'wealth_management', 'banking'],
+    except: /bookkeeping|books? value|books?[- ](?:and|&)[- ]records|clos(?:e|es|ed|ing) (?:the|its|their) books/i,
+    bad: { he: heWord('[ובלהשכ]{0,3}ספרים'), ja: /書籍|(?<!取引)本(?!番|部|社|格|来|質|日)/, zh: /书籍|图书/, ko: /도서|책/, hi: /किताब|पुस्तक/, fi: /kirjoja|kirjat/i } },
+  { what: 'Unity Catalog grants read as subsidies', src: /\b(?:Unity Catalog|UC|SQL|table|catalog|schema|access|privilege|permission)s? grants\b|\b(?:the|its|their|same) grants\b|\bsecurables?\b/i,
+    except: /research grant|federal grant|grantee|scholarship|endowment/i,
+    bad: { de: /zuschüss|stipendi|fördermittel/i, fr: /subvention/i, es: /subvenci/i, pt: /subsídio|bolsa/i, it: /sovvenzion|garantibil/i, nl: /subsidie/i, sv: /bidrag/i, da: /tilskud/i,
+           fi: /avustu/i, ja: /助成金|補助金/, zh: /拨款|补助/, ko: /보조금/, ar: /منح/, hi: /अनुदान/, he: /מענק/ } },
+  { what: 'a call, case or query resolution read as dissolving or screen resolution', src: /\b(?:case|query|call|ticket|311|contact|complaint|dispute)[- ]resolution\b|\bresolution (?:data|time|rates?)\b|Auto-Resolution|\bdrivers and resolution\b/i,
+    bad: { he: /רזולוציה/, sv: /upplösning/i, da: /opløsning/i, fi: /resoluutio|erottelukyk/i, de: /auflösung/i, nl: /resolutie/i, ja: /解像度/, zh: /分辨率/, ko: /해상도/ } },
+  { what: 'a variant call or basecall read as a phone call', src: /\bvariant call|\bbasecall/i,
+    bad: { he: /שיח/, sv: /samtal/i, da: /opkald/i, fi: /puhelu/i, de: /anruf/i, ja: /電話/, zh: /电话/, ko: /통화/, ar: /مكالم/ } },
+  { what: 'a caller identity read as a phone caller', src: /\bcallers?\b/i, except: /phone|call[- ]cent|contact[- ]cent|\bIVR\b|caller ID|911|emergency/i, bad: { he: /מתקשר/ } },
+  { what: 'typed records read as keyboard typing', src: /\btyped\b/i, bad: { he: /מוקלד|הוקלד|הקלד/ } },
+  { what: 'presentation slides read as playground slides', src: /\bslides\b/i, bad: { he: /מגלש/ } },
+  { what: 'a margin call read as page margins', src: /\bmargin calls?\b/i, bad: { he: /שוליים/ } },
+  { what: 'manufacturing yield read as an investment return', src: /\byield(?:s|ing)?\b(?! (?:curve|spread|to maturity|enhancement|farming))/i,
+    except: /dividend|\bROI\b|yield curve|bond|coupon|treasur|investment yield|portfolio yield|rental yield|crop|harvest|\bacre|hectare|agronom|grain|seed/i, onlyOn: MFG_FILES,
+    bad: { sv: /avkastning/i, fi: /tuotto(?!is)|tuoto(?!s|k)/i, he: /תשוא/, de: /rendite/i, ja: /利回り/, zh: /收益率/, ko: /수익률/, da: /afkast/i } },
+  { what: 'a chip fab read as fabulous', src: /\bfabs?\b/i,
+    bad: { sv: /fantastisk|fabulös|underbar/i, da: /fabelagtig|fantastisk/i, fi: /upea|mahtava|fantastinen|satumai/i, de: /fabelhaft|fantastisch|\btoll/i, fr: /fabuleu|fantastique/i,
+           es: /fabulos|fantástic/i, it: /favolos|fantastic/i, pt: /fabulos|fantástic/i, nl: /fabelachtig|fantastisch|geweldig/i, he: /מדהים|נהדר|אגדי|נפלא|אגדות/, ar: /رائع|خرافي|مذهل/ } },
+  { what: 'a process excursion read as a trip', src: /\bexcursions?\b/i,
+    bad: { he: /טיול|סיור/, ar: /رحل|نزه/, fr: /randonn|voyage/i, es: /paseo|viaje/i, it: /\bgit[ae]\b/i, pt: /passeio|viagem/i, de: /ausflug/i, nl: /uitstap/i, sv: /utflykt/i,
+           da: /udflugt/i, fi: /retki/i, ja: /遠足|旅行/, zh: /远足|旅行|游览/, ko: /소풍|여행|견학/, hi: /भ्रमण|यात्रा|सैर/ } },
+  { what: 'remaining useful life read as the rest of a life', src: /\bremaining[- ](?:useful[- ])?life\b|\bRUL\b/i,
+    bad: { he: /בחיים|שארית חיים|שאר החיים|השארת חיים|שנותרי החיים|שנותר[- ]חיים|שנותרו-שימושי|מודלים שימושיים שנותרו|שנותרו שימושיים/ } },
+  { what: 'a generating fleet read as vehicles', src: /\bfleets?\b/i, onlyOn: ['renewables', 'electric_power_generation'], bad: { ja: /車両/, ko: /차량/, zh: /车队|车辆/ } },
+  { what: 'a profit margin read as a trading deposit', src: /\bmargins?\b/i, notOn: ['exchanges', 'capital_markets_buyside', 'capital_markets_sellside', 'crypto_digital_assets'],
+    except: /margin calls?|(?:initial|variation|interest) margin|margin (?:usage|limits?|state|files?|requirements?|ledger|lending|accounts?)|prime brok|collateral|clear(?:ing|ed)|novated|off-margin|margin (?:and|&) (?:financing|collateral|settlement|default)/i,
+    bad: { ja: /証拠金/, zh: /保证金/, ko: /증거금/ } },
+  { what: 'a work, airport or compressor station read as a railway station', src: /\bstations?\b/i,
+    onlyOn: ['airlines', 'oil_gas_midstream', 'public_safety', 'aerospace_space', 'automotive', 'manufacturing', 'medical_devices', 'machinery', 'computer_electronics'],
+    except: /\b(?:ground|space|base|charging|weather|radio|gas|fuel|power|pump(?:ing)?|lift|train|rail|metro) stations?\b|police/i,
+    bad: { ja: /駅|路線/, zh: /车站/, ko: /(?<![가-힣])역(?:별|에|과|,| )|노선/, de: /bahnh/i, fr: /\bgares?\b/i } },
+  { what: 'a process or generating unit read as a unit of measure', src: /(?<![-\w])(?<!per )units?\b(?! of\b)/i, except: /per unit|unit of/i,
+    onlyOn: ['oil_gas_downstream_refining', 'chemical_mfg', 'renewables', 'electric_power_generation'], bad: { ja: /(?<!原)単位/, zh: /单位/, ko: /단위/ } },
+  { what: 'shipping an app read as sending freight', src: /^Ship (?:the|its|their|your)\b/, except: /shipments?|shipping/i,
+    bad: { de: /^(?:Versenden|Vermitteln)\b/, pt: /^Envie\b/, it: /^Spedisci\b/, nl: /^(?:Verzend|Verstuur|Stuur|Ship)\b/, sv: /^(?:Skicka|Ship)\b/, da: /^Send\b/, fi: /^(?:Lähetä|Toimita)\b/,
+           ja: /出荷/, he: /^שלח\b/, fr: /^Expédiez\b/, es: /^Envíe\b/, hi: /जहाज/, zh: /船舶|发货/, ko: /배송|발송/ } },
+  { what: 'operational dispatch read as shipping goods', src: /(?<![-\w])dispatch(?:es)?\b(?!-)/i, onlyOn: DISPATCH_FILES,
+    except: /dispatch advices?|dispatch to distribution points|relief[- ]items?|parcels?|ship-from|shipments?|freight|waybills?|cargo|deliver/i,
+    bad: { de: /versand|versend/i, ja: /発送|出荷/, zh: /发货|发运|运送/, ko: /발송|배송/, fr: /expédi/i, es: /envío/i, it: /spedizion/i, nl: /verzend/i, sv: /frakt|försändelse/i,
+           da: /forsendelse|afsendelse/i, fi: /lähetys|lähettäm/i, pt: /expedição|\benvio/i, he: /משלוח/, ar: /شحن/, hi: /शिपमेंट/ } },
+  { what: 'a test bin read as a container or a waste bin', src: /(?<![-\w])bins?\b/i, onlyOn: ['semiconductors', 'computer_electronics'],
+    except: /\b(?:trash|waste|recycling|storage|parts|wheelie|litter) bins?\b/i,
+    bad: { de: /behälter|tonne|mülleimer|kiste|abfall/i, sv: /behållare|soptunn|papperskorg|\blår|\blåd(?:a|or)\b|kärl/i, fi: /säiliö|roskakori|roskis|astia|laatik/i, it: /contenitor|cestin|bidon|secchio/i,
+           nl: /\bbak(?:ken)?\b|container|prullenbak|vuilnisbak|afvalbak/i, da: /beholder|skraldespand|spand|kasse|affald/i, fr: /\bbacs?\b|poubelle|corbeille/i, es: /contenedor|papelera|basura|\bcubos?\b/i,
+           pt: /lixeira|lixo|caixa|recipiente|contentor/i, he: new RegExp(heWord('פח').source + '|מיכל|' + heWord('סל').source), ar: /سلة|صندوق|حاوية|سلال(?!ة)/, zh: /垃圾|箱/, ko: /쓰레기|상자|휴지통/, ja: /ゴミ|箱/ } },
+  { what: 'a production lot read as a plot of land or as "a lot of"', src: /(?<![-\w])lots?\b/i, onlyOn: LOT_FILES, except: /\ba (?:whole )?lot\b|parking lots?|lots of|tax lots?/i,
+    bad: { he: /מגרש|חלקה|המון/, ko: /부지|주차/, nl: /perceel|kavel/i, sv: /tomt/i, fi: /tontti/i, de: /grundstück|parzelle/i, ar: /قطعة أرض/, hi: /भूखंड/, da: /(?<!på )\bgrund(?![a-zæøå])/i } },
+  { what: 'a circuit board read as a board of directors', src: /(?<![-\w])boards?\b/i, onlyOn: ['computer_electronics'],
+    except: /board of directors|the board (?:reads|approves|sees|asks)|board packs?|board[- ]level reporting|(?:CFO|CEO|executive|audit) (?:and )?(?:the )?board|board and (?:the )?(?:regulators?|auditors?|investors?)|board meetings?|quarterly board/i,
+    bad: { sv: /styrelse/i, da: /bestyrelse/i, zh: /董事会/, ar: /مجلس/, de: /vorstand|aufsichtsrat|gremium/i, fr: /conseil/i, es: /junta|directorio|consejo/i, pt: /conselho|diretoria/i,
+           nl: /bestuur|raad van/i, ja: /取締役会|役員会/, ko: /이사회/, he: /דירקטוריון|ועד/, fi: /hallitu|johtokun/i, it: /consiglio/i, hi: /निदेशक/ } },
+  { what: 'a quality disposition read as disposal or temperament', src: /\bdisposition/i, onlyOn: LOT_FILES,
+    bad: { ja: /処分|傾向|気質/, ko: /처분|성향|기질/, he: /נטייה|סילוק|השלכה/, fi: /hävit|luonne|taipumus|loppusijoitus/i, it: /smaltiment|predisposizione|indole/i, ar: /التخلص|الميل|مزاج|نزعة/,
+           de: /entsorgung|veranlagung|neigung/i, fr: /élimination|tempérament|mise au rebut/i, hi: /निपटान|स्वभाव|प्रवृत्ति/, es: /eliminación|temperamento/i, pt: /descarte|temperamento|eliminação/i,
+           nl: /verwijdering|\baanleg|neiging|afgevoerd/i, sv: /kassering|benägenhet/i, da: /bortskaffelse|tilbøjelighed|gemyt/i, zh: /倾向|性情|丢弃/ } },
+  { what: 'a lab reagent read as a respondent', src: /\breagents?\b/i, bad: { he: /מגיב/ } },
+  { what: 'a sequencing instrument read as a sequence', src: /\bsequencers?\b/i, except: /\bsequences?\b/i, bad: { he: /רצף/ } },
+  { what: 'team leads read as sales leads or referrals', src: /\bLeads?\b/, notOn: SALES_LEAD_FILES, except: /sales|marketing|CRM|prospect|lead[- ]?time|lead[- ]gen|zinc/i,
+    bad: { he: /לידים|הפניות/, it: /conduttor/i, sv: /\bLeads\b/, da: /\bLeads\b/, pt: /\bLeads\b/ } },
+  { what: 'a team of leads read as sales leads', src: /(?<!\b(?:Sales|Marketing|Team) )\bLeads\b/, notOn: SALES_LEAD_FILES, except: /sales|marketing|CRM|prospect|lead[- ]?time|lead[- ]gen|zinc/i,
+    bad: { ja: /リード(?!タイム)/, ko: /리드(?! ?타임)/ } },
+  { what: 'material properties read as real estate', src: /\bpropert(?:y|ies)\b/i, onlyOn: ['chemical_mfg'], except: /intellectual property|real estate|plant property/i,
+    bad: { fi: /kiinteist/i, sv: /fastighet/i, da: /ejendom/i, nl: /vastgoed|onroerend/i, de: /immobili/i, fr: /immobili/i, es: /inmobili|inmueble/i, pt: /imóve|imobili/i, it: /immobil/i,
+           ja: /不動産|物件/, zh: /房地产|物业/, ko: /부동산/, he: /נכס|נדל"ן/, ar: /عقار/, hi: /संपत्ति/ } },
+  ...['Databricks Vector Search', 'Anthropic', 'OpenAI', 'Amazon Bedrock', 'AWS Glue', 'Oracle', 'Sparkplug', 'Power BI', 'Pub/Sub', 'Event Hubs', 'Kinesis', 'SIX']
     .map(name => ({ what: `the name ${name} translated`, src: new RegExp(name.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')),
       bad: Object.fromEntries(LANGS.map(l => [l, { test: t => !t.includes(name) }])) })),
 ];
 const prose = s => { const w = s.trim().split(/\s+/); return w.length >= 3 && w.some(x => /^[a-z]{2,}/.test(x)); };
+const senseFails = (s, t, l, file, found) => {
+  const bare = found.reduce((x, f) => x.split(f).join(' '), t);
+  return SENSE.filter(r => r.bad[l] && r.src.test(s) && !(r.except && r.except.test(s)) && !(r.only && r.only.indexOf(s) < 0) &&
+    !(r.notOn && r.notOn.includes(file)) && !(r.onlyOn && !r.onlyOn.includes(file)) && r.bad[l].test(r.bad[l] instanceof RegExp ? bare : t)).map(r => r.what);
+};
 
 function offline(){
   const build = fs.existsSync(path.join(__dirname, 'build_i18n.js')) ? require('./build_i18n.js') : null;
@@ -391,15 +489,15 @@ function offline(){
       const found = build ? build.protect(s, l).found : [];
       const lost = found.find(f => (named.has(f) || named.has(one(f))) && !t.includes(f) && !(named.has(one(f)) && t.includes(one(f))));
       if(lost) fails.push(`[${l}] '${lost}' should read as written in '${s.slice(0, 60)}' => '${t.slice(0, 60)}'`);
-      const bare = found.reduce((x, f) => x.split(f).join(' '), t);
       const CJK = '[\u3000-\u30ff\u3400-\u9fff\uff00-\uffef]', esc = x => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const split = found.find(f => (l === 'ja' || l === 'zh') ? (new RegExp('^' + CJK).test(f) && new RegExp(CJK + ' +' + esc(f)).test(t)) || (new RegExp(CJK + '$').test(f) && new RegExp(esc(f) + ' +' + CJK).test(t))
         : l === 'he' && /^[\u05D0-\u05EA]/.test(f) && new RegExp('(^|[\\s(])[ובלמהשכ]{1,3}-\u2060?' + esc(f)).test(t));
       if(split) fails.push(`[${l}] '${split}' is cut off from the word next to it in '${s.slice(0, 60)}' => '${t.slice(0, 60)}'`);
-      for(const r of SENSE){
-        if(!r.bad[l] || !r.src.test(s) || (r.except && r.except.test(s)) || (r.only && r.only.indexOf(s) < 0) || (r.notOn && r.notOn.includes(from[s])) || (r.onlyOn && !r.onlyOn.includes(from[s]))) continue;
-        if(r.bad[l].test(r.bad[l] instanceof RegExp ? bare : t)) fails.push(`[${l}] ${r.what}: '${s.slice(0, 60)}' => '${t.slice(0, 60)}'`);
-      }
+      if(['de', 'nl', 'da', 'sv'].includes(l) && build && build.joinKept && build.joinKept(t, found, l) !== t) fails.push(`[${l}] a kept term does not join the words next to it in '${s.slice(0, 60)}' => '${t.slice(0, 60)}'`);
+      const colon = l === 'fi' && build && build.pinnedTerm && found.find(f => build.pinnedTerm(f, l) && new RegExp(esc(f) + ':\\p{L}', 'u').test(t));
+      if(colon) fails.push(`[fi] '${colon}' takes its case ending after a colon in '${s.slice(0, 60)}' => '${t.slice(0, 60)}'`);
+      for(const w of build && build.pinUnconfirmed ? build.pinUnconfirmed(s, t, l) : []) fails.push(`[${l}] no word in the translation confirms the sense '${w}' stands for in '${s.slice(0, 60)}' => '${t.slice(0, 60)}'`);
+      for(const what of senseFails(s, t, l, from[s], found)) fails.push(`[${l}] ${what}: '${s.slice(0, 60)}' => '${t.slice(0, 60)}'`);
     }
     for(const s of TOUR){
       if(prose(s) && !d[s]) fails.push(`[${l}] the tour text '${s.slice(0, 60)}' has no translation`);
@@ -511,7 +609,9 @@ async function rendered(){
   return { checked, fails, errors };
 }
 
-(async () => {
+module.exports = { senseFails };
+
+if(require.main === module) (async () => {
   const a = offline();
   console.log(`offline: ${LANGS.length} languages, ${a.n} translations, ${TOUR.length} tour strings, ${a.fails.length} problems`);
   if(a.partial) console.log('offline: tools/build_i18n.js is not in this checkout, so names that stay as written and full stops the English does not have are not checked');

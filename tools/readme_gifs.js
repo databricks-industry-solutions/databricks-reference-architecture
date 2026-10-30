@@ -158,26 +158,6 @@ const SCENES = {
       }
     },
   },
-  views: {
-    q: '?industry=banking' + AZ, at: [760, 700],
-    async run(a) {
-      await a.hold(1500);
-      await a.glideTo({ sel: '#view-seg button:nth-child(2)' }, 1000);
-      await a.hold(300);
-      await a.click();
-      await a.page.waitForFunction(() => viewMode === 'detailed');
-      await a.hold(400);
-      await a.glide(860, 700, 900);
-      await a.hold(2600);
-      await a.glideTo({ sel: '#view-seg button:nth-child(1)' }, 1000);
-      await a.hold(300);
-      await a.click();
-      await a.page.waitForFunction(() => viewMode === 'simple');
-      await a.hold(400);
-      await a.glide(860, 700, 900);
-      await a.hold(2200);
-    },
-  },
   'use-case': {
     q: '?industry=banking' + AZ, at: [760, 700],
     async run(a) {

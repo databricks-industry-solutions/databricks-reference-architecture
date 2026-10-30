@@ -1597,7 +1597,8 @@
   .panel.stack .ph-sub { margin-top:0; max-width:none; min-width:0; }
   .panel.stack .panel-cols { width:100%; }
   .panel.stack .pc-desc { font-size:10px; line-height:1.22; min-height:2.44em; }
-  .panel.stack .tagpill { white-space:nowrap; letter-spacing:0; padding-block:2px; padding-inline:2px 5px; gap:1px; font-size:9.5px; }
+  .panel.stack .tagpill { white-space:nowrap; letter-spacing:0; line-height:13.3px; padding-block:2px; padding-inline:2px 3px; gap:1px; font-size:11.5px; }
+  .panel.stack .tagpill svg { width:1em; height:1em; }
   .panel.stack .side-col { flex:0 0 auto; width:100%; flex-direction:row; gap:6px; }
   .panel.stack .side-col .schip { flex:1 1 0; min-width:0; justify-content:center;
     padding:3px 4px; font-size:10px; }
@@ -2571,6 +2572,11 @@
   body.view-simple { --glabelh:18px; }
   body.view-simple.deck-type #plat-top, body.view-simple.deck-type #platform { --pk:1.3; }
   body.view-simple.deck-type .plat-stack .band-row.cards:not(.gridrow) > .pcard.grow { flex-basis:auto; }
+  body.view-simple.deck-chips .panel.stack .panel-cols { display:flex; flex-wrap:wrap; justify-content:flex-start; align-content:start; gap:4px 6px; }
+  body.view-simple.deck-chips .panel.stack .panel-cols .pcol { flex:0 1 auto; padding:0; }
+  body.view-simple .panel.stack .tagpill { line-height:normal; padding-block:1px; }
+  body.view-simple.deck-chips .panel.stack .tagpill { font-size:var(--deck-chip, 11.5px); }
+  body.view-simple.deck-chips .panel.stack .ph-name { font-size:calc(var(--deck-chip, 11.5px) * 15 / 11.5); }
   body.view-simple .rtiles { gap:4px; }
   body.view-simple .rtiles:not(.paired) > .rtile:last-child:nth-child(odd), .rtiles > .rtile.wide { grid-column:1 / -1; }
   body.view-simple .rgroup { gap:4px; }
@@ -2659,11 +2665,17 @@
      button and re-fits; it deliberately repeats this test rather than depending
      on load order. -->
 <script>var URL_STATE_KEYS=["industry","cloud","shape","pal","theme","platform","zoom","display","view","lang","stage","region","hl","dock","box","boxn","panel","rstage","ravail","rsort","rq"];
+function boardQuery(){
+  var q=new URLSearchParams(location.search);
+  if(URL_STATE_KEYS.some(function(k){return q.get(k)!==null;})) return q;
+  var f=document.getElementById("frozen-link");
+  return f ? new URLSearchParams(f.textContent.trim()) : q;
+}
 (function(){try{
   /* A shared link carries the look it was shared in, and it has to win here
      rather than three scripts down, or the visitor sees this browser's own
      theme flash before the link's theme replaces it. */
-  var q=new URLSearchParams(location.search), qt=q.get("theme"), qp=q.get("pal");
+  var q=boardQuery(), qt=q.get("theme"), qp=q.get("pal");
   /* A shared link is authoritative: when the URL carries any board state, a
      MISSING theme/palette means "the default", so it must NOT fall back to this
      browser's saved look (which would repaint the sender's board). */
@@ -2703,7 +2715,7 @@
     <button class="hbtn" id="ind-btn" title="Specialise the boxes outside the platform for one industry: sources, ingestion, teams, use cases, apps and consumers"><span id="ind-ico">◈</span> <span id="ind-lbl">Pick an Industry (70 available)</span></button>
     <div class="pal-menu ind-menu" id="ind-menu"></div>
   </div>
-  <div class="seg" id="view-seg" title="Show the essential boxes in larger type, or every box with its captions"></div>
+  <div class="seg" id="view-seg" title="Show the essential boxes, or every box with its captions"></div>
   <div class="seg" id="display-seg" title="Show products by commercial brand name, or rooted back to their generic category"></div>
   <div class="seg" id="cloud-seg" title="Switch the cloud services band"></div>
   <div class="pal-wrap" id="region-wrap">
@@ -6632,7 +6644,7 @@ function paintViewSeg(){
   seg.classList.toggle("seg-off", editMode);
   seg.title = editMode
     ? "Edit mode shows every box; leave it to switch views"
-    : "Show the essential boxes in larger type, or every box with its captions";
+    : "Show the essential boxes, or every box with its captions";
   segButtons(seg, VIEW_MODES, viewMode, k=>{
     if(editMode || viewMode === k) return;
     viewMode = k; store.set(VIEW_LS, k);
@@ -7227,6 +7239,12 @@ function fitWords(){
   shrinkWords(board, k, true);
   pairRailTiles(board);
   shrinkWords(board, k, false);
+  board.querySelectorAll(".panel.stack").forEach(p=>{
+    const pills = [...p.querySelectorAll(".tagpill")].filter(e=> e.offsetParent);
+    if(!pills.some(e=> e.hasAttribute("data-wfit"))) return;
+    const size = Math.min(...pills.map(e=> parseFloat(getComputedStyle(e).fontSize)));
+    pills.forEach(e=>{ e.style.fontSize = size + "px"; e.setAttribute("data-wfit", ""); });
+  });
   board.querySelectorAll(".rgroup-t.rg-wrap").forEach(t=> t.classList.remove("rg-wrap"));
   const textW = el=>{ const r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().width / k; };
   board.querySelectorAll(".rg-label").forEach(el=>{
@@ -8089,7 +8107,7 @@ const HOME_URL = "https://databricks-industry-solutions.github.io/databricks-ref
 /* Read once per call rather than cached, because the audit harness drives the
    board through several industries in one page load. */
 function urlParam(k){
-  try { return new URLSearchParams(location.search).get(k); } catch(e){ return null; }
+  try { return boardQuery().get(k); } catch(e){ return null; }
 }
 /* An exported page has to be able to say "here is the living version of this
    picture", and that means a URL that reopens THIS board and not the default
@@ -8108,7 +8126,7 @@ const APP_BASE = /^https?:$/.test(location.protocol)
    browser's saved settings — following a link shows the sender's board, not the
    reader's own defaults. */
 function linkSeeded(){
-  try { const q = new URLSearchParams(location.search); return URL_STATE_KEYS.some(k=> q.get(k) !== null); }
+  try { const q = boardQuery(); return URL_STATE_KEYS.some(k=> q.get(k) !== null); }
   catch(e){ return false; }
 }
 /* The live board state as query params — the single source of truth shared by
@@ -8373,8 +8391,9 @@ function boardSvgMarkup(phase){
   wrap.setAttribute("data-lang", (typeof I18N !== "undefined" && I18N.lang) || "en");
   wrap.setAttribute("data-dir", document.documentElement.getAttribute("data-dir") || "ltr");
   wrap.setAttribute("dir", document.documentElement.getAttribute("dir") || "ltr");
+  const chip = document.body.style.getPropertyValue("--deck-chip");
   wrap.setAttribute("style", "width:" + w + "px;background:transparent;" +
-    (phase == null ? "" : "--dash-t:" + phase + ";"));
+    (phase == null ? "" : "--dash-t:" + phase + ";") + (chip ? "--deck-chip:" + chip + ";" : ""));
   const st = document.createElement("style"); st.textContent = exportCss();
   const clone = bd.cloneNode(true);
   /* .ph-max is interface, not architecture: it belongs on screen and nowhere in
@@ -8822,8 +8841,8 @@ function deckRunHeader(){
   return (ARCH.industry !== "generic" ? T(industryLabel(ARCH.industry)).toUpperCase() + " \u00b7 " : "") +
     "DATABRICKS";
 }
-async function boardCanvas(scale, phase){
-  const { w, h, svg } = boardSvgMarkup(phase);
+async function boardCanvas(scale, phase, markup){
+  const { w, h, svg } = markup || boardSvgMarkup(phase);
   const img = new Image();
   img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
   await img.decode();
@@ -9290,17 +9309,28 @@ function collectBoard(){
   try{ return collectBoardInner(); }
   finally{ document.body.classList.remove("exp-static"); settleFiniteAnimations(); syncFlows(); }
 }
-function deckType(on){
+const DECK_CHIP_PT = 7;
+const EXPORT_PT = { pptx:(W, H)=> pptxBoardFit(W, H).k / 12700, pdf:(W, H)=> pdfBoardFit(W, H).k };
+function exportType(kind, on){
   if(on && !simpleView()) return false;
   endIntro();
-  const b = document.body;
+  const b = document.body, board = document.querySelector(".board");
   b.classList.add("deck-switch");
   b.classList.toggle("deck-type", !!on);
-  fitBoard();
+  b.classList.toggle("deck-chips", !!on);
+  b.style.removeProperty("--deck-chip");
+  for(let i = 0, px = 0; ; i++){
+    fitBoard();
+    if(!on || i === 6) break;
+    const next = DECK_CHIP_PT / EXPORT_PT[kind](board.offsetWidth, board.offsetHeight);
+    if(Math.abs(next - px) < 0.005) break;
+    b.style.setProperty("--deck-chip", (px = next) + "px");
+  }
   void b.offsetHeight;
   b.classList.remove("deck-switch");
-  return b.classList.contains("deck-type");
+  return b.classList.contains("deck-chips");
 }
+function deckType(on){ return exportType("pptx", on); }
 function deckBoard(){
   if(!deckType(true)) return collectBoard();
   try{ return collectBoard(); }
@@ -9921,7 +9951,7 @@ function drawioXml(model){
   return '<mxfile host="app.diagrams.net" agent="' + xmlEsc(document.title) + '" type="device"><diagram id="board" name="' +
     xmlEsc(docTitle()) + '"><mxGraphModel dx="' + W + '" dy="' + H + '" grid="0" gridSize="10" guides="1" tooltips="1" ' +
     'connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="' + W + '" pageHeight="' + H + '" background="' +
-    model.bg + '" math="0" shadow="0"><root><mxCell id="0"/><mxCell id="1" parent="0"/>' + cells.join("") +
+    model.bg + '" adaptiveColors="none" math="0" shadow="0"><root><mxCell id="0"/><mxCell id="1" parent="0"/>' + cells.join("") +
     "</root></mxGraphModel></diagram></mxfile>";
 }
 
@@ -11033,10 +11063,15 @@ function exportHtmlDoc(){
   html.querySelector("#ai-panel")?.remove();
   html.querySelector("#ai-fab")?.remove();
   html.querySelector("#frozen-state")?.remove();
+  html.querySelector("#frozen-link")?.remove();
   html.querySelector("#idea-gc")?.remove();
   html.querySelector("#frozen-lang")?.remove();
   html.querySelector("#frozen-lang-code")?.remove();
   html.querySelector("head").appendChild(snap);
+  const linkSnap = document.createElement("script");
+  linkSnap.type = "text/plain"; linkSnap.id = "frozen-link";
+  linkSnap.textContent = stateParams().toString();
+  html.querySelector("head").appendChild(linkSnap);
   /* Freeze the active content language into the file so a downloaded copy opens
      in the same language offline, with its dictionary inlined (no network). */
   if(I18N.lang !== "en"){
@@ -11434,9 +11469,17 @@ function dsBoard(){
     'line-height:1.2;white-space:nowrap;overflow:hidden;' + (rtl ? "text-align:right;" : "") + '">' +
     xmlEsc(docTitle()) + '</div>';
 }
+const PDF_PAGE = { w:842, h:595, top:24, edge:6 };
+function pdfBoardFit(w, h){
+  const availW = PDF_PAGE.w - PDF_PAGE.edge * 2, availH = PDF_PAGE.h - PDF_PAGE.top - PDF_PAGE.edge;
+  return { availH, k:Math.min(availW / w, availH / h) };
+}
 async function boardPdfBlob(){
-  const model = collectBoard();
-  const { canvas, w, h } = await boardCanvas(Math.min(3, Math.sqrt(16e6 / (model.W * model.H))));
+  const pdf = exportType("pdf", true);
+  let model, markup;
+  try{ model = collectBoard(); markup = boardSvgMarkup(); }
+  finally{ if(pdf) exportType("pdf", false); }
+  const { canvas, w, h } = await boardCanvas(Math.min(3, Math.sqrt(16e6 / (model.W * model.H))), null, markup);
   const px = canvas.getContext("2d").getImageData(0, 0, w, h).data;
   const rgb = new Uint8Array(w * h * 3), alpha = new Uint8Array(w * h);
   for(let i=0, j=0, k=0; i<px.length; i+=4){ rgb[j++]=px[i]; rgb[j++]=px[i+1]; rgb[j++]=px[i+2]; alpha[k++]=px[i+3]; }
@@ -11452,7 +11495,7 @@ async function boardPdfBlob(){
      it rides as a second XObject (/Im1) above the kicker; RAST covers carry it in
      dsCover instead. */
   const coverLogoImg = await dbxLogoRgbOnBg(140, expBg(), expInk());
-  const PW = 842, PH = 595, M = 14;                        /* A4 landscape, points */
+  const PW = PDF_PAGE.w, PH = PDF_PAGE.h, M = 14;          /* A4 landscape, points */
   const TB = 26;                          /* title strip, points, above the board */
   const NM = 54;                          /* margin on the narrative pages, points */
   const enc = new TextEncoder();
@@ -11604,11 +11647,9 @@ async function boardPdfBlob(){
      allows instead of floating centred behind a wide margin (more zoom room).
      The board title anchors to the reading side (right for RTL content). */
   const boardDraw = im=>{
-    const TT = 24;                          /* title band from the top edge */
-    const BM = 6;                           /* tight side/bottom board margin */
+    const TT = PDF_PAGE.top;                /* title band from the top edge */
     const GAP = 14;
-    const availW = PW - BM * 2, availH = PH - TT - BM;
-    const k = Math.min(availW / w, availH / h);
+    const { availH, k } = pdfBoardFit(w, h);
     const dw = w * k, dh = h * k, dx = (PW - dw) / 2, dy = (PH - TT) - dh - Math.min(GAP, availH - dh);
     return "q " + dw.toFixed(2) + " 0 0 " + dh.toFixed(2) + " " + dx.toFixed(2) + " " + dy.toFixed(2) +
       " cm " + im + " Do Q\n";
@@ -12647,7 +12688,7 @@ const MOTION_REST_MS = 60000;
    does not run twice on a deep link. */
 async function seedFromUrl(){
   let q;
-  try { q = new URLSearchParams(location.search); } catch(e){ return false; }
+  try { q = boardQuery(); } catch(e){ return false; }
   if(!q.toString()) return false;
   /* Shape is body classes, so they are written the way seedView writes them.
      Going through applyShape would rebuild here and then again below. */
@@ -12727,7 +12768,7 @@ function paintBrandLogo(){
    query so no CDN edge can answer it): when its build differs from this build,
    reload once onto a cache-busting URL so the browser must pull the new HTML.
    BUILD here and app/version.json MUST be bumped together on every deploy. */
-const BUILD = "0.6.5";
+const BUILD = "0.6.6";
 async function staleReload(){
   try {
     const r = await fetch(APP_BASE + "version.json?_=" + Date.now(), { cache:"no-store" });

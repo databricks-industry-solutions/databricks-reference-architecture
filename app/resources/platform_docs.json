@@ -176,6 +176,14 @@
 "st": "Beta"
 },
 {
+"n": "Microsoft Graph Logs",
+"p": "ingestion/lakeflow-connect/microsoft-graph-logs",
+"st": "Beta",
+"stByCloud": {
+"azure": "Coming soon"
+}
+},
+{
 "n": "Microsoft OneDrive",
 "p": "ingestion/lakeflow-connect/onedrive",
 "st": "Beta"
@@ -369,6 +377,14 @@
 "n": "Workiva",
 "p": "ingestion/lakeflow-connect/workiva",
 "st": "Beta"
+},
+{
+"n": "Xero",
+"p": "ingestion/lakeflow-connect/xero",
+"st": "Beta",
+"stByCloud": {
+"azure": "Coming soon"
+}
 },
 {
 "n": "Zendesk Support",

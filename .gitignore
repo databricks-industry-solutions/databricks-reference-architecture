@@ -1,5 +1,6 @@
 __pycache__/
 tools/.markcache/
+tools/.content_refresh
 node_modules/
 package-lock.json
 

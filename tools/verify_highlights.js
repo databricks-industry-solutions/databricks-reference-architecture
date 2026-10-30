@@ -7,6 +7,7 @@ const CONNECTOR_EXEMPT = {
   "Salesforce Commerce Cloud": "the Salesforce connector reads Sales and Service Cloud, not Commerce Cloud",
   "Twilio Comms": "the catalog connector is SendGrid email, not Twilio messaging",
   "Twilio Event Streams": "the catalog connector is SendGrid email, not Twilio event streams",
+  "The Graph Indexer": "The Graph is a blockchain indexing protocol, not the Microsoft Graph that the Microsoft Graph Logs connector reads",
 };
 const ORPHAN_EXEMPT = {
   "Databricks Data + AI Platform": "the board title opens these in its side panel and carries no dots by design",

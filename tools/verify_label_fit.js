@@ -1,7 +1,7 @@
 const { chromium } = require("playwright");
 const fs = require("fs");
 const path = require("path");
-const { serve, boardReady, withView, VIEWS } = require("./lib_serve");
+const { serve, boardReady, withView, VIEWS, DECK_CHIP_PT, headChipRatio, deckChipAudit } = require("./lib_serve");
 
 const LANGS = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "app", "translations", "manifest.json"), "utf8")).languages.map(l => l.code);
 
@@ -98,11 +98,15 @@ function labelAudit(){
   const fails = [], words = [];
   let checked = 0, boards = 0;
   const inDeck = async measure => {
-    if (!(await page.evaluate(() => typeof deckType === "function" && (deckType(true), document.body.classList.contains("deck-type"))))) {
-      words.push(["the board has no PowerPoint layout to measure", "deck"]);
-      return null;
+    const out = [], ratio = await page.evaluate(headChipRatio);
+    for (const [kind, name] of [["pptx", "PowerPoint"], ["pdf", "PDF"]]) {
+      if (!(await page.evaluate(k => typeof exportType === "function" && exportType(k, true), kind))) {
+        words.push([`the board has no ${name} layout to measure`, kind]);
+        return null;
+      }
+      try { out.push([kind === "pptx" ? "deck" : kind, await measure(kind, ratio)]); } finally { await page.evaluate(k => exportType(k, false), kind); }
     }
-    try { return await measure(); } finally { await page.evaluate(() => deckType(false)); }
+    return out;
   };
   await page.goto(base, { waitUntil: "networkidle" });
   await boardReady(page);
@@ -119,11 +123,13 @@ function labelAudit(){
     r.out.forEach(m => fails.push(`[${view} ${lang} ${shape}] ${m}`));
     (await page.evaluate(wordAudit)).forEach(m => words.push([m, `${view} ${lang} ${shape}`]));
     if (view !== "simple") continue;
-    const d = await inDeck(async () => [await page.evaluate(labelAudit), await page.evaluate(wordAudit)]);
+    const d = await inDeck(async (kind, ratio) => [await page.evaluate(labelAudit), await page.evaluate(wordAudit), await page.evaluate(deckChipAudit, [DECK_CHIP_PT, kind, ratio])]);
     if (!d) continue;
-    checked += d[0].n;
-    d[0].out.forEach(m => fails.push(`[deck ${lang} ${shape}] ${m}`));
-    d[1].forEach(m => words.push([m, `deck ${lang} ${shape}`]));
+    d.forEach(([tag, m]) => {
+      checked += m[0].n;
+      m[0].out.forEach(x => fails.push(`[${tag} ${lang} ${shape}] ${x}`));
+      m[1].concat(m[2]).forEach(x => words.push([x, `${tag} ${lang} ${shape}`]));
+    });
   }
   const CLOUDS = ["azure", "aws", "gcp"];
   for (const view of VIEWS) for (const [li, lang] of LANGS.entries()) {
@@ -139,8 +145,8 @@ function labelAudit(){
       boards++;
       (await page.evaluate(wordAudit)).forEach(m => words.push([m, `${view} ${lang} ${ind} ${cloud}`]));
       if (view !== "simple") continue;
-      const d = await inDeck(() => page.evaluate(wordAudit));
-      if (d) d.forEach(m => words.push([m, `deck ${lang} ${ind} ${cloud}`]));
+      const d = await inDeck(async (kind, ratio) => (await page.evaluate(wordAudit)).concat(await page.evaluate(deckChipAudit, [DECK_CHIP_PT, kind, ratio])));
+      if (d) d.forEach(([tag, m]) => m.forEach(x => words.push([x, `${tag} ${lang} ${ind} ${cloud}`])));
     }
   }
   await browser.close();
@@ -151,5 +157,5 @@ function labelAudit(){
   console.log(`views: ${VIEWS.length}, languages: ${LANGS.length}, shapes: ${SHAPES.length}, labels checked: ${checked}, boards checked word by word: ${boards}`);
   if (errs.length) fails.push(...errs.slice(0, 5).map(e => "page error: " + e));
   if (fails.length) { console.log(`\nFAIL (${fails.length})`); fails.slice(0, 160).forEach(f => console.log("  - " + f)); process.exit(1); }
-  console.log("PASS: every panel, card, heading and band label fits its box, and no word anywhere on the board breaks across lines, sticks out of its box or is cut off, in both views and the PowerPoint layout of Simplified, every language, shape, board and cloud");
+  console.log("PASS: every panel, card, heading and band label fits its box, and no word anywhere on the board breaks across lines, sticks out of its box or is cut off, in both views and the PowerPoint and PDF layouts of Simplified, where every Genie and Agent Bricks chip reaches the slide and the page at 7pt inside its rectangle under a larger panel name, every language, shape, board and cloud");
 })().catch(e => { console.error(e); process.exit(2); });

@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
 const zlib = require("zlib");
-const { serve, boardReady, withView } = require("./lib_serve");
+const { serve, boardReady, withView, DECK_CHIP_PT, headChipRatio, deckChipAudit } = require("./lib_serve");
 
 const OUT = "/tmp/arch_exports";
 fs.rmSync(OUT, { recursive: true, force: true });
@@ -59,18 +59,18 @@ async function drawingProbe(edit) {
       const rec = byId[el.dataset.id]; return rec && rec.arr != null && el.getClientRects().length > 0; }).length,
     addBtns: document.querySelectorAll("#board .addbtn").length,
     maxImgFrac: Math.max(0, ...m.shapes.filter(s => s.t === "img").map(s => s.box.w * s.box.h)) / (m.W * m.H),
-    uniqLogos: exportLogos(m).uniq.length, f: {},
+    uniqLogos: exportLogos(m).uniq.length, bg: m.bg, dark: document.body.classList.contains("theme-dark"), f: {},
   };
   const dxText = drawioXml(m), dx = parse(dxText, "text/xml");
   if (dx) {
-    const cells = [...dx.querySelectorAll("mxCell")];
+    const cells = [...dx.querySelectorAll("mxCell")], gm = dx.querySelector("mxGraphModel");
     const ids = [...dx.querySelectorAll("mxCell[id], UserObject[id]")].map(e => e.getAttribute("id"));
     const idSet = new Set(ids);
     const style = c => c.getAttribute("style") || "";
     const values = cells.filter(c => /^text;/.test(style(c))).map(c => {
       const t = document.createElement("textarea"); t.innerHTML = c.getAttribute("value") || ""; return plain(t.value); });
     const dxLinks = [...dx.querySelectorAll("UserObject[link]")].map(e => e.getAttribute("link"));
-    out.f.drawio = { ok: true, bytes: dxText.length, text: dxText,
+    out.f.drawio = { ok: true, bytes: dxText.length, text: dxText, adaptive: gm && gm.getAttribute("adaptiveColors"), bg: gm && gm.getAttribute("background"),
       vertices: cells.filter(c => c.getAttribute("vertex") === "1" && style(c) !== "group").length,
       edges: cells.filter(c => c.getAttribute("edge") === "1").length,
       groups: dx.querySelectorAll("UserObject").length,
@@ -91,7 +91,7 @@ async function drawingProbe(edit) {
   let ex = null; try { ex = JSON.parse(exText); } catch (e) {}
   if (ex && ex.type === "excalidraw" && Array.isArray(ex.elements)) {
     const els = ex.elements, imgs = els.filter(e => e.type === "image"), exTexts = els.filter(e => e.type === "text").map(e => plain(e.text));
-    out.f.excalidraw = { ok: true, bytes: exText.length, text: exText, elements: els.length, imgs: imgs.length,
+    out.f.excalidraw = { ok: true, bytes: exText.length, text: exText, elements: els.length, imgs: imgs.length, bg: ex.appState && ex.appState.viewBackgroundColor,
       filesOk: imgs.every(e => ex.files[e.fileId] && /^data:image\/svg\+xml;base64,/.test(ex.files[e.fileId].dataURL)),
       groups: new Set(els.flatMap(e => e.groupIds)).size,
       textOk: texts.every(s => exTexts.includes(s.lines ? s.lines.map(l => l.txt).join("\n") : s.txt)),
@@ -102,7 +102,9 @@ async function drawingProbe(edit) {
   const vp = await vsdxParts(m), page1 = parse((vp.find(p => p.name === "visio/pages/page1.xml") || {}).data || "", "text/xml");
   const vShapes = page1 ? [...page1.getElementsByTagName("Shape")] : [];
   const vLinks = page1 ? [...page1.getElementsByTagName("Cell")].filter(c => c.getAttribute("N") === "Address").map(c => c.getAttribute("V")) : [];
-  out.f.vsdx = { b64: await zipB64(vp), bytes: 0, xmlBad: xmlBad(vp), names: vp.map(p => p.name), shapes: vShapes.length,
+  const vBg = vShapes.find(s => /^Background\./.test(s.getAttribute("NameU") || ""));
+  const vBgFill = vBg && [...vBg.children].find(c => c.tagName === "Cell" && c.getAttribute("N") === "FillForegnd");
+  out.f.vsdx = { b64: await zipB64(vp), bytes: 0, xmlBad: xmlBad(vp), names: vp.map(p => p.name), shapes: vShapes.length, bg: vBgFill && vBgFill.getAttribute("V"),
     groups: vShapes.filter(s => s.getAttribute("Type") === "Group").length, foreign: vShapes.filter(s => s.getAttribute("Type") === "Foreign").length,
     media: vp.filter(p => /^visio\/media\//.test(p.name)).length, links: vLinks.length, badLinks: vLinks.filter(u => !isDatabricksUrl(u)).length };
   out.f.vsdx.bytes = Math.round(out.f.vsdx.b64.length * 3 / 4);
@@ -122,7 +124,14 @@ function drawingChecks(r) {
   const boxes = n("rect") + n("text") + n("img"), lines = n("arrow") + n("line") + n("poly");
   const VSDX_PARTS = ["[Content_Types].xml", "_rels/.rels", "visio/document.xml", "visio/_rels/document.xml.rels",
     "visio/pages/pages.xml", "visio/pages/_rels/pages.xml.rels", "visio/pages/page1.xml", "visio/pages/_rels/page1.xml.rels"];
+  const dim = hex => { const v = parseInt(String(hex).replace("#", ""), 16);
+    return (0.2126 * (v >> 16 & 255) + 0.7152 * (v >> 8 & 255) + 0.0722 * (v & 255)) / 255 < 0.5; };
+  const bgHex = String(r.bg).toUpperCase();
   return [
+    ["the board on screen and its exported background are the same theme", r.dark === dim(r.bg) && r.dark === r.tag.endsWith("_dark")],
+    ["drawio keeps the board's colors in draw.io's light and dark themes", f.drawio.adaptive === "none" && String(f.drawio.bg).toUpperCase() === bgHex],
+    ["excalidraw canvas takes the board background", String(f.excalidraw.bg).toUpperCase() === bgHex],
+    ["vsdx background takes the board background", String(f.vsdx.bg).toUpperCase() === bgHex],
     ["tile groups == visible tiles", r.kinds.tile === r.leaves && r.leaves > 0],
     ["zones present", (r.kinds.zone || 0) >= (r.tag.endsWith("_platform") ? 1 : 5)],
     ["no edit buttons exported", r.tag.endsWith("_edit") ? r.addBtns > 0 : true],
@@ -355,17 +364,37 @@ const transparentOk = s => !!s && s.clear > 0.03 && s.solid > 0.3;
       try {
         const m = collectBoard();
         return { groups: m.groups.length, imgs: m.shapes.filter(s => s.t === "img").length, title: docTitle(), deck: document.body.classList.contains("deck-type"),
+          step: parseFloat(getComputedStyle(document.getElementById("platform")).getPropertyValue("--pk")) || 1,
           platNames: [...document.querySelectorAll("#plat-top .p-name, #platform .p-name")]
-            .filter(e => e.offsetParent && !e.closest("[data-wfit]") && !e.querySelector("[data-wfit]")).map(e => e.textContent.trim()) };
+            .filter(e => e.offsetParent && !e.closest("[data-wfit]") && !e.querySelector("[data-wfit]")).map(e => e.textContent.trim()),
+          chips: [...document.querySelectorAll(".board .panel.stack .tagpill")].filter(e => e.offsetParent).map(e => e.textContent.trim()) };
       } finally { if (deck) deckType(false); }
     });
-    const pdfB64 = await page.evaluate(async () => {
-      const blob = await boardPdfBlob();
-      if (!blob) return null;
-      const buf = new Uint8Array(await blob.arrayBuffer());
-      let bin = ""; for (let i = 0; i < buf.length; i++) bin += String.fromCharCode(buf[i]);
-      return btoa(bin);
-    });
+    const pdfRun = await page.evaluate(async ([audit, headRatio, want]) => {
+      const chipAudit = new Function("return " + audit)(), ratio = new Function("return " + headRatio)()(), orig = window.boardSvgMarkup;
+      let seen = null;
+      window.boardSvgMarkup = function () {
+        const r = orig.apply(this, arguments);
+        if (!seen) {
+          const bd = document.querySelector(".board");
+          seen = { W: bd.offsetWidth, step: parseFloat(getComputedStyle(document.getElementById("platform")).getPropertyValue("--pk")) || 1,
+            names: [...new Set([...document.querySelectorAll("#plat-top .p-name, #platform .p-name")].map(e => getComputedStyle(e).fontSize))].sort().join(" "),
+            chips: [...bd.querySelectorAll(".panel.stack .tagpill")].filter(e => e.offsetParent).map(e => [e.textContent.trim(), parseFloat(getComputedStyle(e).fontSize)]),
+            bad: document.body.classList.contains("deck-chips") ? chipAudit([want, "pdf", ratio]) : ["the PDF reads the board without its PDF layout"],
+            carried: /--deck-chip:[\d.]+px/.test(r.svg) };
+        }
+        return r;
+      };
+      try {
+        const blob = await boardPdfBlob();
+        if (!blob) return { b64: null, seen };
+        const buf = new Uint8Array(await blob.arrayBuffer());
+        let bin = ""; for (let i = 0; i < buf.length; i++) bin += String.fromCharCode(buf[i]);
+        return { b64: btoa(bin), seen };
+      } finally { window.boardSvgMarkup = orig; }
+    }, [deckChipAudit.toString(), headChipRatio.toString(), DECK_CHIP_PT]);
+    const pdfB64 = pdfRun.b64, pdfSeen = pdfRun.seen;
+    const screenAfterPdf = await page.evaluate(screenSig);
 
     const tag = caseTag(ind, cloud, view);
     const pptxPath = path.join(OUT, tag + ".pptx");
@@ -406,14 +435,33 @@ const transparentOk = s => !!s && s.clear > 0.03 && s.solid > 0.3;
     const boardTop = Math.min(...overview.map(b => b[1])), boardBottom = Math.max(...overview.map(b => b[1] + b[3]));
     const platPt = board.platNames.map(t => boardXml.match(new RegExp(`<a:rPr [^>]*sz="(\\d+)"[^>]*>(?:(?!</a:rPr>).)*</a:rPr><a:t>${esc(t).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</a:t>`)))
       .filter(Boolean).map(m => +m[1] / 100);
+    const sps = [...boardXml.matchAll(/<p:sp>([\s\S]*?)<\/p:sp>/g)].map(m => {
+      const b = m[1].match(/<a:off x="(-?\d+)" y="(-?\d+)"\/><a:ext cx="(\d+)" cy="(\d+)"\/>/);
+      return { box: b ? b.slice(1).map(Number) : null, rect: /name="box"/.test(m[1]), sz: +((m[1].match(/ sz="(\d+)"/) || [])[1] || 0),
+        t: [...m[1].matchAll(/<a:t>([^<]*)<\/a:t>/g)].map(x => x[1]).join("") };
+    }).filter(s => s.box);
+    const inside = (a, b) => a[0] >= b[0] - 2 && a[1] >= b[1] - 2 && a[0] + a[2] <= b[0] + b[2] + 2 && a[1] + a[3] <= b[1] + b[3] + 2;
+    const chipRuns = board.chips.map(c => {
+      const runs = sps.filter(s => !s.rect && s.t === esc(c));
+      const run = runs.find(s => sps.some(r => r.rect && inside(s.box, r.box) && r.box[2] < s.box[2] * 3)) || runs[0];
+      return { c, sz: run ? run.sz : 0, held: !!run && sps.some(r => r.rect && inside(run.box, r.box) && r.box[2] < run.box[2] * 3) };
+    });
+    const SZ = DECK_CHIP_PT * 100;
     const layout = {
+      chips: chipRuns.length, chips7: chipRuns.filter(r => r.sz === SZ && r.held).length,
+      chipBad: chipRuns.filter(r => !(r.sz === SZ && r.held)).map(r => `${r.c}@${r.sz / 100}pt${r.held ? "" : " outside"}`),
       platNames: board.platNames.length, platFound: platPt.length, platMin: Math.min(Infinity, ...platPt),
       outside: boxesOf(boardXml).filter(([x, y, cx, cy]) => x < 0 || y < 0 || x + cx > SW || y + cy > SH).length,
       fill: Math.max(span(0, 2) / (SW * (1 - PAD * 2)), span(1, 3) / (SH * (1 - PAD * 2) - BAND)),
       gap: (boardTop - titleBox[1] - titleBox[3]) / PT, titleEdge: titleBox[1] / PT, bottomEdge: (SH - boardBottom) / PT,
       pdf: pdfB64 ? pdfBoardBox(u8FromB64(pdfB64)) : null };
+    const pdfPt = layout.pdf && pdfSeen ? pdfSeen.chips.map(([c, px]) => [c, px * layout.pdf.w / pdfSeen.W]) : [];
+    layout.pdfChips = pdfPt.length;
+    layout.pdfChips7 = pdfPt.filter(([, pt]) => Math.round(pt * 100) === SZ).length;
+    layout.pdfChipBad = pdfPt.filter(([, pt]) => Math.round(pt * 100) !== SZ).map(([c, pt]) => `${c}@${pt.toFixed(2)}pt`)
+      .concat(pdfSeen ? pdfSeen.bad : ["the PDF never read the board"]).concat(pdfSeen && !pdfSeen.carried ? ["the PDF raster lost the chip size"] : []);
 
-    results.push({ tag, want: view, ...summary, slides: n, boardSlide, layout, screenBefore, screenAfter, pptxHasGenie: hasGenie, pptxHasDash: hasDash, pptxHasApp: hasApp, firstUc, ucInDeck, pdfPages, pdfAlpha, pptxBytes: u8FromB64(pptxB64).length, pdfBytes: pdfB64 ? u8FromB64(pdfB64).length : 0 });
+    results.push({ tag, want: view, ...summary, slides: n, boardSlide, layout, screenBefore, screenAfter, screenAfterPdf, pdfSeen, pptxHasGenie: hasGenie, pptxHasDash: hasDash, pptxHasApp: hasApp, firstUc, ucInDeck, pdfPages, pdfAlpha, pptxBytes: u8FromB64(pptxB64).length, pdfBytes: pdfB64 ? u8FromB64(pdfB64).length : 0 });
   }
 
   const b64Of = async (q, fn) => {
@@ -518,11 +566,32 @@ const transparentOk = s => !!s && s.clear > 0.03 && s.solid > 0.3;
   await offline.waitForTimeout(1500);
   const offlineDots = await offline.evaluate(() => document.querySelectorAll(".atom > .badge-dot[data-hl]").length);
   await offline.close();
+  const stateTrips = [];
+  for (const [want, scheme] of [
+    ["industry=banking&cloud=gcp&shape=t&pal=ocean&theme=dark&display=branded&view=detailed&lang=de&stage=beta&hl=video&region=us-east1", "light"],
+    ["industry=retail&cloud=aws&shape=s&theme=light&region=us-east-1&box=Unity%20Catalog", "dark"]]) {
+    await page.goto(`${BASE}?${want}`, { waitUntil: "networkidle" });
+    await boardReady(page);
+    await page.waitForTimeout(700);
+    const before = await page.evaluate(() => stateParams().toString());
+    const file = path.join(OUT, `settings_${scheme}_reader.html`);
+    fs.writeFileSync(file, await page.evaluate(() => exportHtmlDoc()));
+    const p = await browser.newPage({ viewport: { width: 1600, height: 1000 }, colorScheme: scheme });
+    await p.goto("file://" + file, { waitUntil: "load" });
+    await boardReady(p);
+    await p.waitForTimeout(1000);
+    const after = await p.evaluate(() => stateParams().toString());
+    await p.close();
+    const a = new URLSearchParams(before), b = new URLSearchParams(after);
+    stateTrips.push([scheme, [...new Set([...a.keys(), ...b.keys()])].filter(k => a.get(k) !== b.get(k)).map(k => `${k} ${a.get(k)} -> ${b.get(k)}`)]);
+  }
   const htmlChecks = [
     ["every boot resource is frozen into the export (" + bootNames.join(", ") + ")",
       bootNames.every(n => filled(frozen[n])), bootNames.filter(n => !filled(frozen[n])).join(", ") || "all present"],
     ["the exported file opens offline with every highlight dot", offlineDots > 0 && offlineDots === liveDots, `live=${liveDots} offline=${offlineDots}`],
     ["the exported file opens offline without page errors", offlineErrors.length === 0, offlineErrors.slice(0, 2).join(" | ")],
+    ["the exported file reopens with every board setting in a reader's light or dark browser", stateTrips.every(t => !t[1].length),
+      stateTrips.map(t => `${t[0]} reader: ${t[1].join(", ") || "same"}`).join("; ")],
   ];
 
   const live = LIVE ? await liveChecks(browser, path.join(OUT, "banking_azure"), (results.find(r => r.tag === "banking_azure") || {}).slides) : null;
@@ -579,6 +648,12 @@ const transparentOk = s => !!s && s.clear > 0.03 && s.solid > 0.3;
     checks.push(["the pdf board keeps its bottom margin", !!pb && pb.bottom >= 6 - 0.01]);
     checks.push(["the board slide names its platform products as the screen does", z.platNames >= 10 && z.platFound === z.platNames]);
     if (r.view === "simple") checks.push(["Simplified platform names reach the slide at 7.4pt or more", z.platMin >= 7.4]);
+    if (r.view === "simple") checks.push(["Simplified Genie and Agent Bricks chips reach the slide at 7pt inside their rectangles", z.chips >= 8 && z.chips7 === z.chips]);
+    if (r.view === "simple") checks.push(["Simplified Genie and Agent Bricks chips reach the PDF page at 7pt inside their rectangles under a larger panel name", z.pdfChips >= 8 && z.pdfChips7 === z.pdfChips && !z.pdfChipBad.length]);
+    checks.push(r.view === "simple"
+      ? ["the Simplified PDF sets the platform's type one step larger, as the PowerPoint does", !!r.pdfSeen && r.pdfSeen.step > 1 && r.pdfSeen.step === a.step]
+      : ["the Detailed PDF keeps the screen's platform type", !!r.pdfSeen && r.pdfSeen.step === 1 && r.pdfSeen.names === r.screenBefore.names]);
+    checks.push(["the PDF export gives the screen back unchanged", JSON.stringify(r.screenBefore) === JSON.stringify(r.screenAfterPdf)]);
     checks.push(["the screen shows the platform at its own type size", r.screenBefore.step === 1 && !r.screenBefore.deck]);
     checks.push(["the PowerPoint export gives the screen back unchanged", JSON.stringify(r.screenBefore) === JSON.stringify(r.screenAfter)]);
     checks.push([r.view === "simple" ? "the Simplified slide is read from the PowerPoint layout" : "the Detailed slide is read from the screen layout", a.deck === (r.view === "simple")]);
@@ -588,7 +663,7 @@ const transparentOk = s => !!s && s.clear > 0.03 && s.solid > 0.3;
     console.log(`● ${r.tag}  [${r.label}]  ${bad.length ? "❌" : "✅"}`);
     console.log(`   secs: ${secLine}`);
     console.log(`   ${r.view}  uc=${r.uc} genie=${r.genie} dash=${r.dash} apps=${r.apps} (screen ${r.screen.uc}/${r.screen.genie}/${r.screen.dash}/${r.screen.apps})  slides=${r.slides}(exp ${expSlides})  pdfPages=${r.pdfPages}  pptx=${(r.pptxBytes/1024).toFixed(0)}KB pdf=${(r.pdfBytes/1024).toFixed(0)}KB  board slide groups=${a.grpSp}/${a.groups} pics=${a.pics}/${a.imgs}`);
-    console.log(`   board slide fill=${z.fill.toFixed(3)} title gap=${z.gap.toFixed(1)}pt edges=${z.titleEdge.toFixed(1)}/${z.bottomEdge.toFixed(1)}pt outside=${z.outside} platform names ${z.platFound}/${z.platNames} min=${z.platMin}pt screen step=${r.screenBefore.step} height ${r.screenBefore.h}->${r.screenAfter.h}` +
+    console.log(`   board slide fill=${z.fill.toFixed(3)} title gap=${z.gap.toFixed(1)}pt edges=${z.titleEdge.toFixed(1)}/${z.bottomEdge.toFixed(1)}pt outside=${z.outside} platform names ${z.platFound}/${z.platNames} min=${z.platMin}pt chips ${z.chips7}/${z.chips} at 7pt${z.chipBad.length ? " (" + z.chipBad.slice(0, 4).join(", ") + ")" : ""} pdf chips ${z.pdfChips7}/${z.pdfChips}${r.view === "simple" && z.pdfChipBad.length ? " (" + z.pdfChipBad.slice(0, 4).join(", ") + ")" : ""} screen step=${r.screenBefore.step} height ${r.screenBefore.h}->${r.screenAfter.h}` +
       (pb ? `  pdf board ${pb.w.toFixed(0)}x${pb.h.toFixed(0)}pt top=${pb.top.toFixed(1)} baseline=${pb.baseline} bottom=${pb.bottom.toFixed(1)}` : "  pdf board not found"));
     console.log(`   firstUc=${JSON.stringify(r.firstUc)} inDeck=${r.ucInDeck}`);
     console.log(`   pdf board smask=${r.pdfAlpha.smask} clear=${r.pdfAlpha.smask ? (r.pdfAlpha.clear * 100).toFixed(1) + "%" : "n/a"}`);

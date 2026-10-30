@@ -36,12 +36,18 @@ See `README.md`. What every change here depends on:
   operational write-back store. Rerun it after a change to a board's rails and commit what it
   writes. On screen the platform shows the same tiles, icons, type and spacing in both views, and
   Simplified leaves out captions, capability tags and descriptions. Only the Simplified PowerPoint
-  sets the platform's names, labels and their small icons one fixed step larger, so they use the
-  room the captions leave on the slide: `deckBoard()` switches on `deck-type` (`--pk` in
+  and PDF set the platform's names, labels and their small icons one fixed step larger, so they use
+  the room the captions leave on the page: `exportType()` switches on `deck-type` (`--pk` in
   `app/index.html`) while the export reads the board and switches it off before the next paint.
-  The icon tiles and the capability chips inside Genie and Agent Bricks keep their size, and the
-  screen, the PDF and every other export keep the screen's type. In both views the cloud band
-  takes the size of the Genie Agents band, label column included.
+  The same layout sets the capability chips inside Genie and Agent Bricks at 7pt on the slide and
+  on the PDF page (`DECK_CHIP_PT`), sized from each page's own scale and wrapped onto as many rows
+  as they need so every rectangle holds its text, and sets the Genie and Agent Bricks names in the
+  proportion to their chips the screen shows, so a name always reads larger than its chips. On
+  screen the chips are 11.5px in both views, in three columns in Genie and two in Agent Bricks,
+  and a panel whose chip must shrink to fit gives all its chips that size; the PowerPoint and PDF
+  wrap their 7pt chips onto rows from the leading edge. The icon tiles
+  keep their size, and the screen and every other export keep the screen's type. In both views the
+  cloud band takes the size of the Genie Agents band, label column included.
 - No word ever breaks across lines, in any language. A name too long for its tile shrinks to fit,
   down to 10px, and a name that never wraps, such as a chip or a panel head, shrinks as a whole; a rail tile whose longest word still does not fit takes the whole width of its
   group. Names joined by a slash are written with spaced slashes ("Anthropic / OpenAI") so the
@@ -75,9 +81,9 @@ The full tree is in `README.md` under "Repository layout". Two files it does not
    them), bump `SCHEMA` by 1 in `app/index.html`. `SCHEMA` is a plain counter, NOT the
    semver. Pure CSS / render-logic / i18n-corpus changes do not need a bump.
    Verify: `grep -n "const SCHEMA" app/index.html`.
-6. **Two refreshes, Platform then Content, before any change and before any PR.** Before you
-   edit anything in this repo, and again right before you open a PR, run both and commit what
-   they change with your work:
+6. **Two refreshes, Platform then Content, only when you open a PR.** Run them when you are
+   asked to open a PR, never before or during a change, and commit what they change with your
+   work:
    - **Platform:** `python3 tools/refresh_public_data.py` re-reads everything the board takes
      from public Databricks pages: regional availability, release stages, the Lakeflow Connect
      connector catalog, certifications and Academy courses (§5).
@@ -89,7 +95,9 @@ The full tree is in `README.md` under "Repository layout". Two files it does not
 
    Run Platform first: the content checks read the connector catalog it refreshes. Each exits
    non-zero when a step fails or the data has drifted; fix that before you continue. `--check`
-   reports without writing.
+   reports without writing. Skip the Content refresh when the last one finished less than 72 hours
+   ago, unless you are asked to run it: `python3 tools/refresh_content.py --if-older 72` reads the
+   time each full run records in `tools/.content_refresh` and runs only when that is older.
 7. **Write for the reader, who may be a customer.** The board, its tour, the exports, the
    README and anything written about them are read by customers. Speak to the reader ("you",
    "your team", "a meeting"), never about them as someone being sold to: no selling verbs, no
@@ -245,20 +253,20 @@ entry, and the new one goes on the board where it belongs.
 
 ```bash
 python3 tools/refresh_public_data.py --check # Platform: regions, release stages, connectors, certifications, Academy: no drift, no release stage in any description
-python3 tools/refresh_content.py --check     # Content: demos and videos current, every tile shows its highlights, labels fit and are translated in every language, highlight links live
+python3 tools/refresh_content.py --check --if-older 72 # Content: demos and videos current, every tile shows its highlights, labels fit and are translated in every language, highlight links live; skipped within 72 hours of the last full refresh unless you are asked to run it
 python3 tools/regiongate.py --live          # region data consistent, every limited column owned by a board product or explained, every region-table row linked to its cloud's docs with a stage and its markers explained, the same rows on every cloud, every region in a Geo and with a flag, alias parity, source docs live
 node   tools/verify_all_sections.js         # 70 industries + the generic board, uc/genie/dash/app = 10/4/4/4, the deck's editable board slide builds, 0 page errors
 node   tools/verify_i18n_coverage.js        # translation coverage over the DATA corpus
 node   tools/verify_ui_i18n.js                # every string a reader sees is translated with the right sense in all fifteen languages: wrong-sense terms, names that stay as written, leftover tokens and the tour offline; the board, the panels, the tour, tooltips and the Excel headers on screen
 node   tools/verify_highlights.js           # every tile on every board and cloud draws the dots of the highlights that match it: one connector list for dot and callout, aliases, no orphaned resources
-node   tools/verify_label_fit.js            # every panel, card, heading and band label fits its box, and no heading runs under its zoom button, in all sixteen languages and every board shape; on every board, cloud and language in both views and in the PowerPoint layout of Simplified no word breaks across lines, sticks out of its box or is cut off
+node   tools/verify_label_fit.js            # every panel, card, heading and band label fits its box, and no heading runs under its zoom button, in all sixteen languages and every board shape; on every board, cloud and language in both views and in the PowerPoint and PDF layouts of Simplified no word breaks across lines, sticks out of its box or is cut off, and every Genie and Agent Bricks chip of those layouts reaches the slide and the page at 7pt inside its rectangle, under a panel name that keeps the screen's proportion to its chips
 node   tools/verify_core.js                 # every board and cloud, both views, Branded and Categorized: Simplified shows every core tile and every group's first tile, the cloud BI tool, model providers with Anthropic / OpenAI, storage, identity, catalog, ETL, streaming and one Compute tile, and no CI/CD, monitoring, operational store or orchestrator; Detailed keeps every tile
-node   tools/verify_alignment.js            # every board, cloud, shape and language in both views: platform-box titles centered and at their leading edge, tiles midway between top and bottom, arm cards evenly spaced, highlight dots clear of borders, every cloud, top-band and rail tile holding its content at its vertical middle, the cloud band the size of the Genie Agents band, medallion arrows on their cylinders' center line, the platform showing the same tiles, icons, type and spacing in both views on screen, the PowerPoint layout of Simplified holding every check above with its type one fixed step larger and giving the screen back unchanged, panel link arrows at the end of their rows
+node   tools/verify_alignment.js            # every board, cloud, shape and language in both views: platform-box titles centered and at their leading edge, tiles midway between top and bottom, arm cards evenly spaced, highlight dots clear of borders, every cloud, top-band and rail tile holding its content at its vertical middle, the cloud band the size of the Genie Agents band, medallion arrows on their cylinders' center line, the platform showing the same tiles, icons, type and spacing in both views on screen, one chip size in each Genie and Agent Bricks panel, the PowerPoint and PDF layouts of Simplified holding every check above with their type one fixed step larger, their Genie and Agent Bricks chips at 7pt inside their rectangles under a panel name in the screen's proportion, and giving the screen back unchanged, panel link arrows at the end of their rows
 node   tools/fill_simple.js --check          # every Simplified count recorded in a board's YAML still fills the free space of its rails, without growing the board in any shape, cloud or language
 python3 tools/linkgate.py                    # structural completeness, retired names, seller phrasing, outcome-map use cases still on their boards, every chip alias names a chip on some board and a LINKS entry (add --urls for live link check, --scope highlights to skip third-party citations)
 python3 tools/heightgate.py                  # every board in every shape against the reference height, no clipping, a board that does not load measured once more; a board already over it holds its height in tools/heightgate_baseline.json and may not grow (--tighten after one shrinks)
 node   tools/perfgate.js                     # motion rests at idle, reduced motion honoured, boot fetches once and in parallel; the opening intro plays once the board is built, ends on input and leaves nothing behind
-node   tools/verify_exports.js               # deck with its editable board slide + PDF, Simplified platform names at 7.4pt or more on the slide while the screen keeps its own type and comes back unchanged, the four drawing-app exports (shape parity, structure, links; --live also opens them in draw.io, excalidraw.com, LibreOffice), line breaks that keep every word whole, and the HTML export (every boot resource frozen, opens offline)
+node   tools/verify_exports.js               # deck with its editable board slide + PDF, Simplified platform names at 7.4pt or more and Genie and Agent Bricks chips at 7pt inside their rectangles under a larger panel name on the slide and on the PDF page, the Simplified PDF taking the PowerPoint's type step, while the screen keeps its own type and comes back unchanged after each export, the four drawing-app exports (shape parity, structure, links; --live also opens them in draw.io, excalidraw.com, LibreOffice), line breaks that keep every word whole, and the HTML export (every boot resource frozen, opens offline)
 node   tools/smoke_yaml.js                   # YAML descriptor round trip; edited, AI and imported tabs export what is on screen
 node   tools/smoke_share.js                  # share links and the address bar: every option in the URL, a copied link reopens the same board
 python3 tools/test_certifications.py         # certification builder + gate, offline: catalog drift, exam-guide evidence, mapping integrity
@@ -296,9 +304,9 @@ Anything landing on the canonical repo goes through a PULL REQUEST, never a dire
 
 ```bash
 git fetch upstream && git checkout -b <feature> upstream/main   # branch off the canonical main
-python3 tools/refresh_public_data.py && python3 tools/refresh_content.py   # §3 rule 6: Platform, then Content
 # ...edit, bump BUILD + version.json (+ SCHEMA if persisted content changed), run §6 gates...
-python3 tools/refresh_public_data.py && python3 tools/regiongate.py --live   # §5: regional availability checked against the public docs
+python3 tools/refresh_public_data.py && python3 tools/refresh_content.py --if-older 72   # §3 rule 6: Platform, then Content unless it ran in the last 72 hours
+python3 tools/regiongate.py --live                                               # §5: regional availability checked against the public docs
 node tools/verify_ui_i18n.js                                                     # §3 rule 8: every translation checked in all fifteen languages
 git push origin <feature>                                        # to your fork
 gh pr create --repo databricks-industry-solutions/databricks-reference-architecture \
@@ -317,9 +325,10 @@ git fetch upstream && git rebase upstream/main && git push --force-with-lease or
 
 ## 8. Release process
 
-A release is a merged PR into the canonical `main`. Both refreshes ran before the change (§3,
-rule 6); run them again right before the PR, Platform then Content, so the release ships current
-data and every tile shows its highlights, and ship any change with it. Bump `const BUILD` + `app/version.json`
+A release is a merged PR into the canonical `main`. Run both refreshes right before the PR,
+Platform then Content (§3, rule 6: Content is skipped when it ran in the last 72 hours, unless you
+are asked to run it), so the release ships current data and every tile shows its highlights, and
+ship any change with it. Bump `const BUILD` + `app/version.json`
 to the next single-digit semver (and `SCHEMA` if persisted content changed), pass all §6
 gates, open the PR, and tag `vX.Y.Z` after merge. The release notes go on that tag's GitHub
 release and cover a summary, highlights, per-change detail, regressions, validation, and upgrade

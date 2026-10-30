@@ -26,8 +26,8 @@ is, who uses it and where it runs, then export the board as a deck or an editabl
 
 ### Simplified or Detailed
 
-- **Simplified**, the default, keeps what you need to read the industry, in larger type: the first
-  entries of each group, the systems the industry can't be read without, such as a bank's core
+- **Simplified**, the default, keeps what you need to read the industry: the first entries of
+  each group, the systems the industry can't be read without, such as a bank's core
   banking system or a hospital's electronic health record, the use cases with Databricks customer
   stories, and the cloud services for storage, identity, the catalog, model providers, BI, ETL and
   streaming.
@@ -36,9 +36,8 @@ is, who uses it and where it runs, then export the board as a deck or an editabl
   capability tags and descriptions.
 - The Databricks Platform in the middle shows the same products in both views. Your choice is
   remembered, a shared link opens in the same view, and every export follows what is on screen.
-  A Simplified PowerPoint sets the platform's names one step larger, so they read at slide size.
-
-![Switching the banking board from Simplified to Detailed and back](docs/views.gif)
+  A Simplified PowerPoint or PDF sets the platform's names one step larger and the Genie and
+  Agent Bricks chips at 7pt, so they read at page size.
 
 ### Click any box
 
