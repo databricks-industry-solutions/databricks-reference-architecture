@@ -9,12 +9,21 @@ endpoint. The frontend's bridge path is unchanged.
 Auth: in a Databricks App the injected service-principal OAuth credentials are
 used automatically (WorkspaceClient()); locally it falls back to a CLI profile.
 """
+import logging
 import os
+import time
+import traceback
+import uuid
+from collections import deque
+from threading import Lock
+from urllib.parse import urlparse
 
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from openai import OpenAI
 from databricks.sdk import WorkspaceClient
+
+log = logging.getLogger("arch-ai")
 
 HERE = os.path.dirname(__file__)
 PARENT = os.path.dirname(HERE)  # .../app — the shared static board lives here
@@ -95,7 +104,29 @@ FALLBACK_ENDPOINTS = {
 }
 # Optional AI Gateway URL — when set, calls route through the Gateway so usage
 # counters / inference tables register. Falls back to the serving-endpoints path.
-AI_GATEWAY_URL = os.environ.get("AI_GATEWAY_URL", "")
+def _validate_gateway_url(url: str) -> str:
+    """Reject an AI_GATEWAY_URL that points off the Databricks trust boundary.
+
+    The workspace OAuth token is passed to this base_url as the API key, so a
+    misconfigured (config-drifted) URL would forward the token to an arbitrary
+    host. Require https and a Databricks workspace/gateway host — the current
+    workspace's own host, or a *.databricks.com / *.azuredatabricks.net /
+    *.gcp.databricks.com domain. Fail fast at startup rather than leak the token.
+    """
+    if not url:
+        return ""
+    u = urlparse(url)
+    ws_host = urlparse(os.environ.get("DATABRICKS_HOST", "")).netloc
+    allowed_suffixes = (".databricks.com", ".azuredatabricks.net", ".gcp.databricks.com")
+    host_ok = (ws_host and u.netloc == ws_host) or u.netloc.endswith(allowed_suffixes)
+    if u.scheme != "https" or not host_ok:
+        raise RuntimeError(
+            f"AI_GATEWAY_URL host is not an allowlisted Databricks host: {u.netloc!r}"
+        )
+    return url
+
+
+AI_GATEWAY_URL = _validate_gateway_url(os.environ.get("AI_GATEWAY_URL", ""))
 
 IS_DATABRICKS_APP = bool(os.environ.get("DATABRICKS_APP_NAME"))
 
@@ -110,9 +141,33 @@ def _version_key(version: str):
     return tuple(parts)
 
 
+def _is_databricks_foundation_model(ep) -> bool:
+    """True only if the endpoint serves a Databricks foundation model (not an
+    external or custom model). The `databricks-claude-*` name prefix alone is not
+    trustworthy: a user with CREATE-serving-endpoint permission could stand up a
+    `databricks-claude-opus-99` endpoint backed by their OWN model/external URL
+    and, being a higher version, shadow the real one — intercepting prompts or
+    injecting responses. A genuine pay-per-token Claude endpoint has a
+    `foundation_model` served entity and no `external_model`, so require that."""
+    config = getattr(ep, "config", None)
+    entities = getattr(config, "served_entities", None) or []
+    if not entities:
+        return False
+    for e in entities:
+        if getattr(e, "external_model", None) is not None:
+            return False
+        if getattr(e, "foundation_model", None) is None:
+            return False
+    return True
+
+
 def _discover_endpoints() -> dict:
     """Newest `databricks-claude-<family>-<version>` endpoint per family, from the
-    live workspace. Returns {family: endpoint_name}. Empty on any failure."""
+    live workspace. Returns {family: endpoint_name}. Empty on any failure.
+
+    Only Databricks foundation-model endpoints are eligible (see
+    _is_databricks_foundation_model); anything else matching the name prefix is
+    ignored, so discovery can't be hijacked by a look-alike endpoint."""
     best = {}  # family -> (version_key, name)
     try:
         w = _workspace_client()
@@ -123,6 +178,8 @@ def _discover_endpoints() -> dict:
             rest = name[len("databricks-claude-"):]        # e.g. "opus-5", "haiku-4-5"
             head, _, version = rest.partition("-")          # family, "-", version suffix
             if head not in TIER_BY_FAMILY or not version:
+                continue
+            if not _is_databricks_foundation_model(ep):
                 continue
             vk = _version_key(version)
             if head not in best or vk > best[head][0]:
@@ -244,6 +301,34 @@ def _llm_client() -> OpenAI:
     return OpenAI(api_key=token, base_url=base_url)
 
 
+# --- Per-user rate limiting ------------------------------------------------
+# All callers share one service-principal model-serving quota, so one user can
+# exhaust it (cost / DoS). Cap each user to RATE_MAX requests per RATE_WINDOW
+# seconds with a simple in-memory sliding window keyed on the forwarded email.
+# This is per-replica: with horizontal scaling the effective global cap is
+# RATE_MAX x replica_count, which is acceptable for throttling a single abuser.
+RATE_MAX = int(os.environ.get("RATE_LIMIT_PER_MIN", "10"))
+RATE_WINDOW = 60.0
+_rate_hits: dict[str, deque] = {}
+_rate_lock = Lock()
+
+
+def _rate_limited(user_key: str) -> bool:
+    """Record a hit for user_key; return True if it exceeds the window budget."""
+    now = time.monotonic()
+    with _rate_lock:
+        dq = _rate_hits.get(user_key)
+        if dq is None:
+            dq = deque()
+            _rate_hits[user_key] = dq
+        while dq and now - dq[0] > RATE_WINDOW:
+            dq.popleft()
+        if len(dq) >= RATE_MAX:
+            return True
+        dq.append(now)
+        return False
+
+
 @app.get("/health")
 def health():
     return {"ok": True, "models": model_tiers()}
@@ -311,9 +396,19 @@ async def generate(req: Request):
     # Per-user audit: the proxy runs under the App SP (one identity for all users),
     # so attribute each call to the authenticated user for accountability. stdout
     # is collected as the app log.
+    user_email = req.headers.get("x-forwarded-email", "unknown")
     print("audit generate user=%s model=%s text_bytes=%d images=%d"
-          % (req.headers.get("x-forwarded-email", "unknown"), model, prompt_size, img_count),
+          % (user_email, model, prompt_size, img_count),
           flush=True)
+
+    # Throttle per user so one caller can't drain the shared SP's serving quota.
+    if _rate_limited(user_email):
+        print("audit rate_limited user=%s" % user_email, flush=True)
+        return JSONResponse(
+            {"error": "Rate limit exceeded. Please wait a moment and try again."},
+            status_code=429,
+            headers={"Retry-After": str(int(RATE_WINDOW))},
+        )
 
     messages = []
     if system:
@@ -344,8 +439,17 @@ async def generate(req: Request):
                 status_code=502,
             )
         return {"text": text}
-    except Exception as err:  # surfaces cleanly in the chat UI as an error bubble
-        return JSONResponse({"error": str(err)}, status_code=502)
+    except Exception:
+        # Never surface raw exception text to the client: it can embed the
+        # workspace host, endpoint URLs and SDK request fragments. Log the full
+        # traceback server-side (collected as the app log) under a correlation id
+        # and return only a generic message plus that id for support lookups.
+        corr = uuid.uuid4().hex[:12]
+        log.error("generate failed corr=%s\n%s", corr, traceback.format_exc())
+        return JSONResponse(
+            {"error": "Upstream model call failed.", "correlation_id": corr},
+            status_code=502,
+        )
 
 
 # Serve the composed page last so /health, /models and /generate win.
