@@ -3,7 +3,9 @@
   "Airflow / Dagster",
   "SQL Data Warehousing",
   "AI/BI Dashboards",
-  "Cloud ETL"
+  "Cloud ETL",
+  "ONE",
+  "ZEROOPS"
  ],
  "da": [
   "Business Intelligence",
@@ -18,10 +20,13 @@
   "Data Warehouse",
   "Transformation",
   "Region",
-  "Download Excel"
+  "Download Excel",
+  "DESIGNER",
+  "RUNTIME + MEMORY"
  ],
  "de": [
   "Business Intelligence",
+  "Engagement",
   "Marketing",
   "Onboarding",
   "Beta",
@@ -32,20 +37,27 @@
   "Transformation",
   "Region",
   "Demos",
-  "Videos"
+  "Videos",
+  "CODE",
+  "BUILDER",
+  "DESIGNER",
+  "SANDBOX",
+  "RUNTIME + MEMORY"
  ],
  "es": [
   "Marketing",
   "Beta",
   "Capital",
-  "Open Banking"
+  "Open Banking",
+  "RUNTIME + MEMORY"
  ],
  "fi": [
   "Business Intelligence",
   "Doha, Qatar (qatarcentral)",
   "Geo: Qatar",
   "Qatar",
-  "Enterprise Data Warehouse"
+  "Enterprise Data Warehouse",
+  "DESIGNER"
  ],
  "fr": [
   "Business Intelligence",
@@ -62,7 +74,12 @@
   "Certifications",
   "Core Banking",
   "Finance",
-  "Source"
+  "Source",
+  "AGENTS",
+  "CODE",
+  "DOCUMENTS",
+  "DESIGNER",
+  "RUNTIME + MEMORY"
  ],
  "it": [
   "Marketing",
@@ -71,17 +88,28 @@
   "Cloud",
   "Doha, Qatar (qatarcentral)",
   "Geo: Qatar",
-  "Qatar"
+  "Qatar",
+  "DESIGNER",
+  "SANDBOX",
+  "RUNTIME + MEMORY"
  ],
  "nl": [
   "Marketing",
   "Onboarding",
-  "Cloud"
+  "Cloud",
+  "AGENTS",
+  "CODE",
+  "DESIGNER",
+  "SANDBOX",
+  "RUNTIME + MEMORY"
  ],
  "pt": [
   "Marketing",
   "Beta",
-  "Capital"
+  "Capital",
+  "DESIGNER",
+  "SANDBOX",
+  "RUNTIME + MEMORY"
  ],
  "sv": [
   "Business Intelligence",
@@ -95,6 +123,7 @@
   "Data Warehouse",
   "Region",
   "Demos",
-  "Risk"
+  "Risk",
+  "DESIGNER"
  ]
 }

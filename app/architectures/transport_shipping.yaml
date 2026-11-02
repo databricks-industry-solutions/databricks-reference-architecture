@@ -3,6 +3,7 @@ description: 'For freight carriers and 3PLs: transportation and fleet management
 sources:
   - name: TMS & Planning
     icon: erp
+    simplified: 2
     tiles:
       - name: Oracle OTM
         icon: erp
@@ -53,6 +54,7 @@ sources:
             interval: Daily rating + scorecard refresh
   - name: WMS & Fulfillment
     icon: db
+    simplified: 3
     tiles:
       - name: Manhattan Active WMS
         icon: db
@@ -108,6 +110,7 @@ sources:
             interval: Continuous automation telemetry
   - name: Fleet & Telematics
     icon: iot
+    simplified: 2
     tiles:
       - name: Samsara Fleet
         icon: iot
@@ -153,6 +156,7 @@ sources:
             interval: Continuous (near real-time)
   - name: Carrier & Freight
     icon: partner
+    simplified: 2
     tiles:
       - name: project44 Visibility
         icon: api
@@ -203,6 +207,7 @@ sources:
             interval: Continuous message flow
   - name: Finance & Claims
     icon: chart
+    simplified: 2
     tiles:
       - name: SAP TM Settlement
         icon: market
@@ -256,6 +261,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 4
     tiles:
       - name: 'EDIFACT Transport'
         icon: zbraces
@@ -263,6 +269,7 @@ sources:
         summary: 'UN/EDIFACT transport messages (IFTMIN/IFTSTA) for freight instructions and status.'
         spec_url: https://unece.org/trade/uncefact/introducing-unedifact
       - name: 'X12 EDI'
+        core: true
         icon: zbraces
         fmt: 'X12'
         summary: 'ANSI X12 EDI transaction sets for shipments, tenders and status in logistics.'
@@ -372,6 +379,7 @@ pipelines:
           - Predictive Maintenance & Asset Health
           - Incident & Field Service Assistant
       - name: Warehouse Ops
+        core: true
         mark: Apps
         summary: DC managers on pick rate, labour balance and outbound cut-off, releasing waves so the dock clears before the carrier appointment closes.
         uses:
@@ -512,6 +520,7 @@ consumers:
         citations:
           - project44
       - name: Carrier Tender Portal
+        core: true
         icon: market
         summary: Loads tendered and accepted through governed APIs.
         citations:
@@ -533,6 +542,7 @@ consumers:
         citations:
           - samsara
       - name: WMS Wave Release
+        core: true
         icon: stream
         summary: Pick waves released to the floor based on cut-off optimisation.
   - name: Regulatory & Reporting
@@ -553,6 +563,7 @@ consumers:
         icon: product
         summary: Visibility and lane performance products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Shippers reading live ETA via Delta Sharing.
   - name: Databricks Apps
@@ -645,10 +656,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

@@ -53,7 +53,7 @@ INDUSTRIES_BATCH_WATER_UTILITIES = {
                 ]},
                 {"box": "SCADA & Operations", "ic": "stream", "tiles": [
                     tile("AVEVA PI System", "stream", "Historian for pumps, tanks, pressure and flow across the distribution network.", "aveva-pi",
-                         cat="Process/Time-Series Historian",
+                         cat="Process / Time-Series Historian",
                          what="Stores pump, tank, pressure and flow tags across the distribution network as the operational time-series system of record.",
                          users="Control-room operators, pump & energy leads and hydraulic modellers.",
                          data_out=data_out(

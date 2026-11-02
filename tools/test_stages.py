@@ -138,6 +138,18 @@ with patched(ss, get=get):
     products, missing, undocumented = ss.product_stages(staged, links)
 check("each box reads its own page per cloud", products["Box A"] == {"aws": "GA", "azure": "GA", "gcp": "Beta"}, products.get("Box A"))
 check("a page missing on one cloud reads Coming soon there and is recorded", products["Box B"]["gcp"] == "Coming soon" and missing == {"Box B": ["gcp"]}, (products.get("Box B"), missing))
+cap_links = {"Cap ok": {"doc": "a/", "docClouds": ["aws", "azure", "gcp"]}, "Cap new cloud": {"doc": "b/", "docClouds": ["aws"]},
+             "Cap gone": {"doc": "ltap/", "docClouds": ["azure", "aws", "gcp"]}, "Box B": {"doc": "b/", "docClouds": ["aws"]}, "No limit": {"doc": "a/"}}
+cap_pages = {k: v for k, v in pages.items() if k != D["gcp"] + "ltap/"}
+get, _ = site(cap_pages)
+with patched(ss, get=get):
+    drift = ss.doc_cloud_drift(staged, cap_links)
+check("a docClouds list that matches the docs, in any order, raises nothing",
+      not any(d.startswith("Cap ok") for d in drift), drift)
+check("a page published on a cloud docClouds leaves out is reported, so the tag can show there",
+      any(d.startswith("Cap new cloud") and d.endswith("exists on aws, azure") for d in drift), drift)
+check("a page gone from a cloud docClouds still lists is reported", any(d.startswith("Cap gone") and d.endswith("exists on aws, azure") for d in drift), drift)
+check("a staged box and an entry without docClouds are left to the box stage check", not any(d.startswith(("Box B", "No limit")) for d in drift), drift)
 check("LTAP reads its capability table on every cloud", products["LTAP"] == {"aws": "Beta", "azure": "Beta", "gcp": "Coming soon"}, products.get("LTAP"))
 check("a staged box without a docs path is listed as undocumented, not guessed", undocumented == ["Secret"] and "Secret" not in products, undocumented)
 get, _ = site({})
@@ -211,7 +223,7 @@ check("one problem line lists every place, with distinct snippets", len(p) == 1 
 with tempfile.TemporaryDirectory() as tmp:
     out_p, plat_p = os.path.join(tmp, "stages.json"), os.path.join(tmp, "platform_docs.json")
     fake = ({"generated": "2026-01-01", "products": {}, "missing": {}, "undocumented": [], "source": ss.SOURCE},
-            {"connectors": [{"n": "A", "p": LC + "a", "st": "Beta"}]}, ["X says Beta: stale"])
+            {"connectors": [{"n": "A", "p": LC + "a", "st": "Beta"}]}, ["X says Beta: stale"], [])
     argv = sys.argv
     try:
         sys.argv = ["scrape_stages.py"]
@@ -224,16 +236,26 @@ with tempfile.TemporaryDirectory() as tmp:
         check("a stage word in prose fails the refresh", code == 1, code)
         check("the refreshed data is still written when prose carries a stage", os.path.exists(out_p) and os.path.exists(plat_p))
         sys.argv = ["scrape_stages.py", "--check"]
-        with patched(ss, build=lambda: (fake[0], fake[1], []), OUT=out_p, PLATDOCS=plat_p), contextlib.redirect_stderr(open(os.devnull, "w")):
+        with patched(ss, build=lambda: (fake[0], fake[1], [], []), OUT=out_p, PLATDOCS=plat_p), contextlib.redirect_stderr(open(os.devnull, "w")):
             try:
                 ss.main()
                 code = 0
             except SystemExit as e:
                 code = e.code
         check("--check passes when the files match, ignoring the date", code == 0, code)
+        for mode in (["scrape_stages.py", "--check"], ["scrape_stages.py"]):
+            sys.argv = mode
+            with patched(ss, build=lambda: (fake[0], fake[1], [], ["AI Runtime: docClouds drift"]), OUT=out_p, PLATDOCS=plat_p), contextlib.redirect_stderr(open(os.devnull, "w")):
+                try:
+                    ss.main()
+                    code = 0
+                except SystemExit as e:
+                    code = e.code
+            check(f"a docClouds list out of step with the docs fails {' '.join(mode[1:]) or 'the refresh'}", code == 1, code)
+        sys.argv = ["scrape_stages.py", "--check"]
         moved = copy.deepcopy(fake[1])
         moved["connectors"][0]["st"] = "GA"
-        with patched(ss, build=lambda: (dict(fake[0], generated="2030-01-01"), moved, []), OUT=out_p, PLATDOCS=plat_p), contextlib.redirect_stderr(open(os.devnull, "w")):
+        with patched(ss, build=lambda: (dict(fake[0], generated="2030-01-01"), moved, [], []), OUT=out_p, PLATDOCS=plat_p), contextlib.redirect_stderr(open(os.devnull, "w")):
             try:
                 ss.main()
                 code = 0

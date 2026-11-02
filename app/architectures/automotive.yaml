@@ -3,6 +3,7 @@ description: 'Automotive OEMs: vehicle design and simulation, plant manufacturin
 sources:
   - name: Engineering & PLM
     icon: product
+    simplified: 3
     tiles:
       - name: Siemens Teamcenter
         icon: product
@@ -50,21 +51,8 @@ sources:
             interval: On change release + nightly
   - name: Procurement & ERP
     icon: erp
+    simplified: 2
     tiles:
-      - name: Ivalua
-        icon: erp
-        summary: Source-to-contract and procure-to-pay across raw, partial and assembled parts.
-        citations:
-          - ivalua
-        category: Source-to-Pay / Procurement
-        what_it_is: Runs source-to-contract and procure-to-pay across raw, partial and assembled parts, holding supplier contracts, purchase orders and lead-time commitments across the supply base.
-        who_uses_it: Procurement, Supplier management and Materials planning.
-        data_out:
-          batch:
-            types:
-              - structured
-            volume: 2-8 GB/day
-            interval: Nightly + hourly deltas
       - name: SAP S/4HANA
         icon: erp
         summary: ERP of record for procurement, inventory, production orders and finance.
@@ -79,6 +67,20 @@ sources:
               - structured
             volume: 20-80 GB/day
             interval: Nightly batch + hourly deltas
+      - name: Ivalua
+        icon: erp
+        summary: Source-to-contract and procure-to-pay across raw, partial and assembled parts.
+        citations:
+          - ivalua
+        category: Source-to-Pay / Procurement
+        what_it_is: Runs source-to-contract and procure-to-pay across raw, partial and assembled parts, holding supplier contracts, purchase orders and lead-time commitments across the supply base.
+        who_uses_it: Procurement, Supplier management and Materials planning.
+        data_out:
+          batch:
+            types:
+              - structured
+            volume: 2-8 GB/day
+            interval: Nightly + hourly deltas
   - name: Manufacturing MES
     icon: iot
     tiles:
@@ -126,6 +128,7 @@ sources:
             interval: Continuous sequencing events
   - name: Dealer & Retail
     icon: market
+    simplified: 2
     tiles:
       - name: CDK Global DMS
         icon: erp
@@ -270,6 +273,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'ASAM MDF'
         icon: zbraces
@@ -321,6 +325,7 @@ cloud_integrations:
             volume: 100s of MB (surveys)
             interval: Periodic study releases
       - name: Polk Registration
+        core: true
         icon: market
         summary: Vehicle registration and conquest data by geography.
         citations:
@@ -392,6 +397,7 @@ pipelines:
           - Engineering Program Management & Bid Creation
           - Supply & Materials Planning
       - name: Quality Engineering
+        core: true
         mark: AI/BI
         summary: Defect pareto, supplier PPM and containment across plants, tracked on warranty cost per vehicle, scrap rate and time-to-containment.
         uses:
@@ -536,6 +542,7 @@ consumers:
         citations:
           - telematics
       - name: Supplier Portal
+        core: true
         icon: zplug
         summary: ASN and quality alerts shared with tier-1 suppliers.
         citations:
@@ -547,6 +554,7 @@ consumers:
         icon: stream
         summary: Re-sequenced build orders sent to MES after disruption.
       - name: Recall Campaign List
+        core: true
         icon: gavel
         summary: Affected VINs pushed to dealer service systems.
       - name: Parts Allocation
@@ -561,6 +569,7 @@ consumers:
         icon: gavel
         summary: Safety defects and recall filings from governed case data.
       - name: EU CO2 Fleet Targets
+        core: true
         icon: share
         summary: Fleet emissions reported to regulators.
   - name: Published Products
@@ -570,6 +579,7 @@ consumers:
         icon: product
         summary: Vehicle and quality products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Suppliers and finance partners via Delta Sharing.
   - name: Databricks Apps
@@ -662,10 +672,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

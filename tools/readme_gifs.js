@@ -5,7 +5,7 @@ const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { chromium } = require('playwright');
-const { serve } = require('./lib_serve');
+const { serve, boardReady } = require('./lib_serve');
 
 const DOCS = path.join(__dirname, '..', 'docs');
 const VW = 1728, VH = 1180, CAPW = 1440, CAPH = Math.round(CAPW * VH / VW), OUTW = 960, FPS = 25;
@@ -200,7 +200,7 @@ const SCENES = {
     q: '?industry=banking' + AZ, at: [760, 700],
     async run(a) {
       await a.hold(600);
-      await a.glideTo({ sel: '#lang-btn' }, 1000);
+      await a.glideTo({ sel: '#opt-btn' }, 1000);
       await a.hold(250);
       await a.click();
       await a.page.waitForSelector('#lang-menu button[data-lang="ar"]', { state: 'visible' });
@@ -260,7 +260,7 @@ async function record(page, scene, dir) {
   return { frames: frames.sort((x, y) => x.t - y.t), start, end };
 }
 
-function encode(tl, dir, out) {
+function encode(tl, dir, out, crop) {
   if (!tl.frames.length) throw new Error('the screencast sent no frames');
   const step = 1 / FPS, seq = [];
   let j = 0;
@@ -273,26 +273,34 @@ function encode(tl, dir, out) {
   const list = path.join(dir, 'list.ffconcat');
   fs.writeFileSync(list, 'ffconcat version 1.0\n' + seq.map(([f, d]) => "file '" + f + "'\nduration " + d.toFixed(3) + '\n').join('') +
     "file '" + seq[seq.length - 1][0] + "'\n");
-  const tmp = out + '.part.gif';
-  const vf = 'scale=' + OUTW + ':-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=256:stats_mode=full[p];' +
-    '[b][p]paletteuse=dither=none:diff_mode=rectangle';
-  const r = spawnSync('ffmpeg', ['-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', list, '-vf', vf,
-    '-fps_mode', 'passthrough', '-loop', '0', tmp], { encoding: 'utf8' });
-  if (r.status !== 0) throw new Error('ffmpeg failed: ' + (r.stderr || '').trim());
+  const tmp = out + '.part.gif', rgb = path.join(dir, 'frames.mkv');
+  const k = CAPW / VW, px = v => Math.floor(v * k / 2) * 2;
+  const ffmpeg = args => {
+    const r = spawnSync('ffmpeg', ['-v', 'error', '-y'].concat(args), { encoding: 'utf8' });
+    if (r.status !== 0) throw new Error('ffmpeg failed: ' + (r.stderr || '').trim());
+  };
+  ffmpeg(['-f', 'concat', '-safe', '0', '-i', list, '-vf',
+    (crop ? 'crop=' + px(crop[2]) + ':' + px(crop[3]) + ':' + px(crop[0]) + ':' + px(crop[1]) + ',' : '') +
+    'scale=' + OUTW + ':-1:flags=lanczos,format=rgb24', '-c:v', 'ffv1', '-fps_mode', 'passthrough', rgb]);
+  ffmpeg(['-i', rgb, '-vf', 'split[a][b];[a]palettegen=max_colors=256:stats_mode=full[p];[b][p]paletteuse=dither=none:diff_mode=rectangle',
+    '-fps_mode', 'passthrough', '-loop', '0', tmp]);
+  const secs = seq.reduce((s, x) => s + x[1], 0);
+  const got = +spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', tmp], { encoding: 'utf8' }).stdout;
+  if (!(got > secs - 0.2)) throw new Error('the GIF runs ' + got.toFixed(2) + ' s of the ' + secs.toFixed(2) + ' s recorded');
   fs.renameSync(tmp, out);
-  return { frames: seq.length, secs: seq.reduce((s, x) => s + x[1], 0) };
+  return { frames: seq.length, secs };
 }
 
-(async () => {
+async function recordScenes(scenes, names, outDir) {
   if (spawnSync('ffmpeg', ['-version']).status !== 0) {
     console.error('readme_gifs needs ffmpeg on the PATH (brew install ffmpeg)');
-    process.exit(1);
+    return 1;
   }
-  const names = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(SCENES);
-  const unknown = names.filter(n => !SCENES[n]);
+  names = names.length ? names : Object.keys(scenes);
+  const unknown = names.filter(n => !scenes[n]);
   if (unknown.length) {
-    console.error('unknown GIF: ' + unknown.join(', ') + '; choose from ' + Object.keys(SCENES).join(', '));
-    process.exit(1);
+    console.error('unknown GIF: ' + unknown.join(', ') + '; choose from ' + Object.keys(scenes).join(', '));
+    return 1;
   }
   const server = await serve();
   const base = 'http://127.0.0.1:' + server.address().port + '/index.html';
@@ -300,7 +308,7 @@ function encode(tl, dir, out) {
   let failed = 0;
   try {
     for (const name of names) {
-      const scene = SCENES[name];
+      const scene = scenes[name];
       const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'readme-gif-'));
       const ctx = await browser.newContext({ viewport: { width: VW, height: VH }, deviceScaleFactor: 2, colorScheme: 'light', acceptDownloads: true });
       try {
@@ -311,12 +319,13 @@ function encode(tl, dir, out) {
         page.on('pageerror', e => errors.push(String(e)));
         await page.goto(base + scene.q, { waitUntil: 'networkidle', timeout: 90000 });
         await page.waitForFunction(() => typeof nameIndex !== 'undefined' && Object.keys(nameIndex).length > 10, null, { timeout: 60000 });
+        await boardReady(page);
         await page.addStyleTag({ content: FREEZE });
         await page.waitForTimeout(1600);
-        const out = path.join(DOCS, name + '.gif');
+        const out = path.join(outDir, name + '.gif');
         const tl = await record(page, scene, dir);
         if (errors.length) throw new Error('page errors: ' + errors.slice(0, 3).join(' | '));
-        const r = encode(tl, dir, out);
+        const r = encode(tl, dir, out, scene.crop);
         console.log(name + '.gif  ' + (fs.statSync(out).size / 1e6).toFixed(2) + ' MB  ' + r.frames + ' frames  ' + r.secs.toFixed(1) + ' s');
       } catch (e) {
         failed++;
@@ -330,5 +339,9 @@ function encode(tl, dir, out) {
     await browser.close();
     server.close();
   }
-  process.exit(failed ? 1 : 0);
-})();
+  return failed ? 1 : 0;
+}
+
+module.exports = { SCENES, recordScenes };
+
+if (require.main === module) recordScenes(SCENES, process.argv.slice(2), DOCS).then(code => process.exit(code));

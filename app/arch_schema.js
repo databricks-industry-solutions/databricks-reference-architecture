@@ -12,7 +12,7 @@
 
   Readable top level (what an author sees):
     name, description,
-    sources, cloud_integrations, pipelines, consumers   # each: [ {name, icon, from?, tail?, tiles:[...]} ]
+    sources, cloud_integrations, pipelines, consumers   # each: [ {name, icon, from?, tail?, simplified?, tiles:[...]} ]
     agent_usecases                                       # [ {name, icon, span, cols, tiles:[...]} ]
     medallion: { Bronze|Silver|Gold: {short, summary} }
     citation_index: { <slug>: {title, url} }
@@ -67,6 +67,7 @@
     var o = { name: g.box, icon: g.ic };
     if ('from' in g) o.from = g.from;
     if ('tail' in g) o.tail = g.tail;
+    if ('simple' in g) o.simplified = g.simple;
     o.tiles = (g.tiles || []).map(tileToY);
     return o;
   }
@@ -74,6 +75,7 @@
     var g = { box: y.name, ic: y.icon };
     if ('from' in y) g.from = y.from;
     if ('tail' in y) g.tail = y.tail;
+    if ('simplified' in y) g.simple = y.simplified;
     g.tiles = (y.tiles || []).map(tileToT);
     return g;
   }

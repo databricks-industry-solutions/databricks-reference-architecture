@@ -3,6 +3,7 @@ description: 'Higher-education-led with selected K-12 variants: student lifecycl
 sources:
   - name: Student Information
     icon: erp
+    simplified: 2
     tiles:
       - name: Ellucian Banner
         icon: erp
@@ -38,6 +39,7 @@ sources:
             volume: tens of events/sec
             interval: Continuous CDC
       - name: PowerSchool SIS
+        core: true
         icon: erp
         summary: 'Dominant K-12 student information system: enrollments, attendance, grades and state reporting across districts.'
         citations:
@@ -53,6 +55,7 @@ sources:
             interval: Nightly batch
   - name: Learning & Content
     icon: notebook
+    simplified: 3
     tiles:
       - name: Canvas LMS
         icon: notebook
@@ -106,6 +109,7 @@ sources:
             interval: Continuous / daily
   - name: Admissions & CRM
     icon: partner
+    simplified: 3
     tiles:
       - name: Slate by Technolutions
         icon: partner
@@ -157,6 +161,7 @@ sources:
             interval: Periodic file exchanges
   - name: Finance & Student Aid
     icon: market
+    simplified: 3
     tiles:
       - name: PowerFAIDS
         icon: market
@@ -217,6 +222,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 3
     tiles:
       - name: 'Ed-Fi'
         icon: zbraces
@@ -234,6 +240,7 @@ sources:
         summary: 'PESC XML standard for electronic academic transcripts and records.'
         spec_url: https://www.pesc.org/
       - name: 'OneRoster'
+        core: true
         icon: zbraces
         fmt: '1R'
         summary: '1EdTech standard for roster, enrolment and grade exchange.'
@@ -246,6 +253,20 @@ cloud_integrations:
   - name: 3rd Party
     icon: zplug
     tiles:
+      - name: IPEDS / State Reporting
+        icon: gavel
+        summary: Federal and state compliance file layouts consumed inbound for validation before submission season.
+        citations:
+          - ipeds
+        category: Regulatory Reporting Data
+        what_it_is: Supplies federal and state compliance file layouts consumed for validation before submission season.
+        who_uses_it: Institutional research, Compliance and Finance teams.
+        data_out:
+          batch:
+            types:
+              - structured
+            volume: sub-GB per submission
+            interval: Per reporting cycle
       - name: Ed-Fi Data Standard
         icon: api
         summary: Interoperable student and assessment APIs normalised on ingest for state reporting and district exchange.
@@ -275,20 +296,6 @@ cloud_integrations:
               - semi-structured
             volume: tens-hundreds of events/sec at peak
             interval: Continuous (launch / passback)
-      - name: IPEDS / State Reporting
-        icon: gavel
-        summary: Federal and state compliance file layouts consumed inbound for validation before submission season.
-        citations:
-          - ipeds
-        category: Regulatory Reporting Data
-        what_it_is: Supplies federal and state compliance file layouts consumed for validation before submission season.
-        who_uses_it: Institutional research, Compliance and Finance teams.
-        data_out:
-          batch:
-            types:
-              - structured
-            volume: sub-GB per submission
-            interval: Per reporting cycle
 pipelines:
   - name: Business
     icon: zbrief
@@ -358,10 +365,11 @@ pipelines:
           - Learning Analytics
           - Curriculum Optimisation
       - name: Admissions & Enrollment
+        core: true
         mark: CustomerLake
         summary: Recruitment yield by channel and territory, melt between deposit and day one, and section fill measured against instructional and housing capacity.
         uses:
-          - - Enrollment Forecast
+          - - Enrollment Forecasting
             - Cohort scenarios scored on instructional and housing capacity.
           - - CustomerLake
             - Prospect journeys joined to application and enrollment outcomes.
@@ -488,6 +496,7 @@ consumers:
         citations:
           - ellucian-banner
       - name: Canvas Grade Passback
+        core: true
         icon: notebook
         summary: Final grades and outcome mastery pushed to the LMS of record after faculty approval, with the SIS retaining authority for the official transcript.
         citations:
@@ -520,6 +529,7 @@ consumers:
         citations:
           - ipeds
       - name: FERPA Audit Trail
+        core: true
         icon: share
         summary: Directory and disclosure logs filed from contracted Gold products for compliance review.
   - name: Published Products
@@ -529,6 +539,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Consortia, researchers and state agencies accessing governed products, reducing bespoke exports with copies and transfer behavior dependent on the sharing mode.
   - name: Databricks Apps
@@ -621,10 +632,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

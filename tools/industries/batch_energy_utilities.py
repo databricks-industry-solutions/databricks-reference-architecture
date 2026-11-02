@@ -55,7 +55,7 @@ INDUSTRIES_BATCH_ENERGY_UTILITIES = {
                 ]},
                 {"box": "SCADA & Grid Ops", "ic": "stream", "tiles": [
                     tile("AVEVA PI Historian", "db", "Substation analogs, breaker operations and equipment alarms at SCADA sampling rates.", "osisoft-pi",
-                         cat="Process/Time-Series Historian",
+                         cat="Process / Time-Series Historian",
                          what="Stores substation analogs, breaker operations and equipment alarms at SCADA sampling rates as the grid time-series system of record.",
                          users="Control-centre operators, protection engineers and grid analytics teams.",
                          data_out=data_out(
@@ -181,7 +181,7 @@ INDUSTRIES_BATCH_ENERGY_UTILITIES = {
                     ],
                     ucs=["Vegetation Management", "Capital Planning", "Voltage Management"]),
                 biz("Regulatory & Rates", "AI/BI", "Regulatory affairs on cost-of-service studies, class revenue requirements and rate design that survives a commission challenge.",
-                    [["Rate Case Analytics", "Cost allocation and class revenue requirements on governed ledgers."], ["AI/BI", "Regulatory KPIs the commission and board read."], ["Unity Catalog", "One definition of revenue and plant investment across finance and operations."]],
+                    [["Rate Case Submissions", "Cost allocation and class revenue requirements on governed ledgers."], ["AI/BI", "Regulatory KPIs the commission and board read."], ["Unity Catalog", "One definition of revenue and plant investment across finance and operations."]],
                     sub=[
                         ["Rate Design", "class revenue requirements and cost causation that survives challenge."],
                         ["Regulatory Affairs", "commission filings, data requests and the reliability record."],

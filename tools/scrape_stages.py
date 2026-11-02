@@ -242,6 +242,19 @@ def product_stages(staged, links):
     return products, missing, undocumented
 
 
+def doc_cloud_drift(staged, links):
+    limited = {n: L for n, L in links.items()
+               if n not in staged and isinstance(L, dict) and L.get("doc") and isinstance(L.get("docClouds"), list)}
+    prefetch(DOCS[c] + L["doc"] for L in limited.values() for c in CLOUDS)
+    drift = []
+    for name, L in sorted(limited.items()):
+        have = [c for c in CLOUDS if get(DOCS[c] + L["doc"]) is not None]
+        if sorted(have) != sorted(L["docClouds"]):
+            drift.append(f"{name}: links.json docClouds lists {', '.join(L['docClouds'])}, but its docs page "
+                         f"{L['doc']} exists on {', '.join(have) or 'no cloud'}")
+    return drift
+
+
 def discover_connectors():
     found = {}
     for idx in CONNECTOR_INDEXES:
@@ -394,6 +407,7 @@ def build():
     arch = board_arch()
     staged = staged_tiles(arch)
     products, missing, undocumented = product_stages(staged, links)
+    drift = doc_cloud_drift(staged, links)
     connectors, added, dropped = connector_catalog(platdocs)
     data = {
         "generated": datetime.date.today().isoformat(),
@@ -417,7 +431,7 @@ def build():
                      f"({', '.join(undocumented)}); {len(connectors)} connectors"
                      f"{'; new: ' + ', '.join(added) if added else ''}"
                      f"{'; gone from docs: ' + ', '.join(dropped) if dropped else ''}\n")
-    return data, new_platdocs, problems
+    return data, new_platdocs, problems, drift
 
 
 def main():
@@ -428,7 +442,9 @@ def main():
                                              "stage in the board's descriptions.")
     ap.add_argument("--check", action="store_true", help="scrape and diff against the committed files; exit 1 on drift")
     args = ap.parse_args()
-    data, platdocs, problems = build()
+    data, platdocs, problems, drift = build()
+    for d in drift:
+        sys.stderr.write(f"docClouds out of date: {d}\n")
     new_stages, new_platdocs = dump_stages(data), dump_platdocs(platdocs)
     if args.check:
         def strip_date(s):
@@ -441,7 +457,7 @@ def main():
             sys.stderr.write(f"{n} is stale — re-run tools/scrape_stages.py\n")
         for p in problems:
             sys.stderr.write(f"stage in prose: {p}\n")
-        if stale or problems:
+        if stale or problems or drift:
             sys.exit(1)
         sys.stderr.write("stages.json and platform_docs.json up to date; no description carries a release stage\n")
         return
@@ -452,7 +468,7 @@ def main():
     sys.stderr.write(f"wrote {OUT} and {PLATDOCS}\n")
     for p in problems:
         sys.stderr.write(f"stage in prose: {p}\n")
-    if problems:
+    if problems or drift:
         sys.exit(1)
 
 

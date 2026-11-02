@@ -182,6 +182,15 @@ def yaml_to_terse(fp: pathlib.Path) -> dict:
     return json.loads(out.stdout)
 
 
+def carry_simple(rendered: dict, existing: dict) -> dict:
+    for rid, groups in rendered["rails"].items():
+        held = {g["box"]: g["simple"] for g in (existing.get("rails") or {}).get(rid, []) if g.get("simple")}
+        for g in groups:
+            if g["box"] in held:
+                g["simple"] = held[g["box"]]
+    return rendered
+
+
 def load_batches():
     merged = {}
     for path in sorted(BATCH_DIR.glob("batch*.py")):
@@ -206,13 +215,16 @@ def main():
     for iid, ind in sorted(batches.items()):
         rendered = render_industry(ind)
         fp = ARCH_DIR / f"{iid}.yaml"
+        existing = yaml_to_terse(fp) if fp.exists() else None
+        if existing:
+            carry_simple(rendered, existing)
         if check:
             # Compare on the terse structure, not the YAML text, so cosmetic
             # formatting never causes a false mismatch: the descriptor is correct
             # iff it rehydrates to the same board the batch source builds.
-            if not fp.exists():
+            if existing is None:
                 mismatches.append(f"{iid} (missing file)")
-            elif yaml_to_terse(fp) != rendered:
+            elif existing != rendered:
                 mismatches.append(iid)
         else:
             fp.write_text(terse_to_yaml(rendered), encoding="utf-8")

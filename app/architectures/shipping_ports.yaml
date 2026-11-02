@@ -3,6 +3,7 @@ description: 'For port and terminal operators, container-terminal-led with bulk-
 sources:
   - name: Terminal Operating
     icon: erp
+    simplified: 2
     tiles:
       - name: Navis N4 TOS
         icon: erp
@@ -58,6 +59,7 @@ sources:
             interval: Nightly batch + hourly deltas
   - name: Vessel & Traffic
     icon: stream
+    simplified: 2
     tiles:
       - name: Port Community System
         icon: api
@@ -104,6 +106,7 @@ sources:
             interval: Hourly / daily API pulls
   - name: Cargo & Customs
     icon: gavel
+    simplified: 2
     tiles:
       - name: Descartes Customs
         icon: gavel
@@ -152,6 +155,7 @@ sources:
             interval: Continuous documents / daily batch
   - name: Equipment & Yard
     icon: iot
+    simplified: 3
     tiles:
       - name: Kalmar Insight
         icon: iot
@@ -168,6 +172,7 @@ sources:
             volume: hundreds of readings/sec
             interval: Continuous equipment telemetry
       - name: Identec RFID Gates
+        core: true
         icon: stream
         summary: Automated gate OCR, RFID and chassis identification at in-gate and out-gate.
         citations:
@@ -197,6 +202,7 @@ sources:
             interval: Continuous (seconds)
   - name: Finance & Tariffs
     icon: market
+    simplified: 2
     tiles:
       - name: Jade Master Terminal
         icon: erp
@@ -274,20 +280,6 @@ cloud_integrations:
   - name: 3rd Party
     icon: zplug
     tiles:
-      - name: UN/EDIFACT COPRAR / CODECO
-        icon: stream
-        summary: COPRAR and CODECO vessel and gate moves and IFTMIN and IFTSTA transport messages from shipping lines, parsed on arrival.
-        citations:
-          - edifact
-        category: EDI Transaction Messages
-        what_it_is: Carries COPRAR/CODECO vessel and gate moves and IFTMIN/IFTSTA transport messages from shipping lines, parsed on arrival and matched to units.
-        who_uses_it: Terminal Operations, Customs Compliance and Integration Engineers.
-        data_out:
-          stream:
-            types:
-              - semi-structured
-            volume: tens-hundreds of messages/sec
-            interval: Continuous message flow
       - name: Port Authority AIS Feed
         icon: api
         summary: AIS-derived berth occupancy estimates from the port authority, distinct from PCS pilot-order and port-call events.
@@ -302,7 +294,22 @@ cloud_integrations:
               - semi-structured
             volume: tens of events/sec
             interval: Continuous (near real-time)
+      - name: UN/EDIFACT COPRAR / CODECO
+        icon: stream
+        summary: COPRAR and CODECO vessel and gate moves and IFTMIN and IFTSTA transport messages from shipping lines, parsed on arrival.
+        citations:
+          - edifact
+        category: EDI Transaction Messages
+        what_it_is: Carries COPRAR/CODECO vessel and gate moves and IFTMIN/IFTSTA transport messages from shipping lines, parsed on arrival and matched to units.
+        who_uses_it: Terminal Operations, Customs Compliance and Integration Engineers.
+        data_out:
+          stream:
+            types:
+              - semi-structured
+            volume: tens-hundreds of messages/sec
+            interval: Continuous message flow
       - name: Customs Single Window
+        core: true
         icon: gavel
         summary: Government clearance status and inspection results consumed inbound.
         citations:
@@ -380,6 +387,7 @@ pipelines:
           - Order Processing Automation
           - Demand Forecasting
       - name: Landside Logistics
+        core: true
         mark: Model Serving
         summary: Truck appointment and rail planners on gate queues and intermodal handoff, matching slots to yard density before demurrage accrues.
         uses:
@@ -504,6 +512,7 @@ consumers:
         icon: api
         summary: Berth windows and crane availability shared to shipping lines over Delta Sharing.
       - name: Trucker Appointment Portal
+        core: true
         icon: apps
         summary: Gate slots and container availability pushed to drayage carriers.
       - name: Rail Ramp Partners
@@ -532,6 +541,7 @@ consumers:
         citations:
           - pcs
       - name: Customs Audit Trail
+        core: true
         icon: share
         summary: Declaration and inspection evidence from contracted Gold products.
   - name: Published Products
@@ -541,10 +551,12 @@ consumers:
         icon: product
         summary: Terminal performance products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Carriers and shippers reading live dwell and berth data via Delta Sharing.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Berth Planner
         icon: gauge
@@ -633,10 +645,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

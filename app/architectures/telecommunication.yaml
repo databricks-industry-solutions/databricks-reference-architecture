@@ -3,6 +3,7 @@ description: 'Mobile and fixed operators: network inventory and performance, cus
 sources:
   - name: BSS & Billing
     icon: erp
+    simplified: 2
     tiles:
       - name: Amdocs CES
         icon: erp
@@ -63,6 +64,7 @@ sources:
             interval: Continuous
   - name: OSS & Inventory
     icon: db
+    simplified: 2
     tiles:
       - name: Ericsson ENM
         icon: stream
@@ -122,6 +124,7 @@ sources:
             volume: 100s-1000s of telemetry msgs/sec
             interval: Continuous
       - name: NETSCOUT nGeniusONE
+        core: true
         icon: observ
         summary: Packet-level service assurance and probe telemetry for voice, data and VoLTE across the network.
         citations:
@@ -158,6 +161,7 @@ sources:
             volume: tens of case events/sec
             interval: Continuous CDC
       - name: Genesys Cloud CX
+        core: true
         icon: chat
         summary: Contact centre queues, IVR paths and agent handle times.
         citations:
@@ -305,6 +309,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'CDR'
         icon: zbraces
@@ -426,7 +431,7 @@ pipelines:
         mark: CustomerLake
         summary: Product owners on offer uptake, upsell and retention campaigns, scoring next-best-offer per subscriber before the contract renewal window.
         uses:
-          - - Offer Management
+          - - Next Best Offer
             - Propensity-scored upsell before renewal, delivered through the Churn Prevention Hub.
           - - CustomerLake
             - Segments without copying profiles into a separate CDP.
@@ -442,6 +447,7 @@ pipelines:
           - Next Best Offer
           - Location Data Monetization
       - name: Customer Care
+        core: true
         mark: Apps
         summary: Care leaders on first-contact resolution, handle time and complaint drivers, putting subscriber and network context beside every ticket.
         uses:
@@ -569,6 +575,7 @@ consumers:
         citations:
           - gsma-tap
       - name: MVNO Usage Portal
+        core: true
         icon: share
         summary: Wholesale usage and rating detail delivered to MVNO partners.
       - name: Tower Co SLA Feed
@@ -597,6 +604,7 @@ consumers:
         icon: gavel
         summary: Call completion and coverage metrics filed to the regulator.
       - name: Lawful Intercept Audit
+        core: true
         icon: share
         summary: Governed access logs contributing to lawful-intercept audit evidence alongside applicable authorization and case records.
   - name: Published Products
@@ -606,6 +614,7 @@ consumers:
         icon: product
         summary: Network and subscriber products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Partners reading live usage via Delta Sharing.
   - name: Databricks Apps
@@ -698,10 +707,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

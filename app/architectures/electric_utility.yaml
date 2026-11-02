@@ -3,6 +3,7 @@ description: 'Electric transmission and distribution utilities and distribution 
 sources:
   - name: Metering & AMI
     icon: iot
+    simplified: 2
     tiles:
       - name: Itron OpenWay
         icon: iot
@@ -63,13 +64,14 @@ sources:
             interval: Continuous endpoint alarms
   - name: SCADA & Grid Ops
     icon: stream
+    simplified: 4
     tiles:
       - name: AVEVA PI Historian
         icon: db
         summary: Substation analogs, breaker operations and equipment alarms at SCADA sampling rates.
         citations:
           - osisoft-pi
-        category: Process/Time-Series Historian
+        category: Process / Time-Series Historian
         what_it_is: Stores substation analogs, breaker operations and equipment alarms at SCADA sampling rates as the grid time-series system of record.
         who_uses_it: Control-centre operators, protection engineers and grid analytics teams.
         data_out:
@@ -84,6 +86,7 @@ sources:
             volume: 10-100k samples/sec
             interval: Continuous (sub-second)
       - name: GE Vernova ADMS
+        core: true
         icon: gauge
         summary: 'Distribution management: fault location, switching orders and restoration state for the control centre.'
         citations:
@@ -98,6 +101,7 @@ sources:
             volume: 100s-1000s of events/sec
             interval: Continuous (near real-time)
       - name: ABB Ellipse EAM
+        core: true
         icon: erp
         summary: 'Enterprise asset management: work orders, inspections and equipment condition for grid plant.'
         citations:
@@ -180,6 +184,7 @@ sources:
             interval: Continuous (payments + notifications)
   - name: GIS & Outage Mgmt
     icon: globe
+    simplified: 3
     tiles:
       - name: Esri ArcGIS Utility
         icon: globe
@@ -197,6 +202,7 @@ sources:
             volume: 5-30 GB network model
             interval: Daily / weekly model syncs
       - name: Milsoft OMS
+        core: true
         icon: gauge
         summary: 'Outage management: trouble tickets, crew dispatch and ETR communicated to customers.'
         citations:
@@ -267,6 +273,7 @@ sources:
         summary: 'IEC Common Information Model for grid network topology and asset data exchange.'
         spec_url: https://webstore.iec.ch/en/publication/6199
       - name: 'IEC 61850'
+        core: true
         icon: zbraces
         fmt: '61850'
         summary: 'IEC standard for substation automation and protection communications.'
@@ -319,6 +326,7 @@ cloud_integrations:
             volume: 100s-1000s of events/sec
             interval: Continuous (event-driven)
       - name: Weather Data Services
+        core: true
         icon: globe
         summary: Forecast and actual temperature feeds consumed inbound for load forecasting models.
         category: Weather & Climate Data Provider
@@ -404,6 +412,7 @@ pipelines:
           - Demand Forecasting
           - Predictive Maintenance & Asset Health
       - name: Customer Operations
+        core: true
         mark: AI/BI
         summary: Contact centre and field service on high-bill complaints, move-in and move-out volume, payment arrangements and collections effectiveness.
         uses:
@@ -446,7 +455,7 @@ pipelines:
         mark: AI/BI
         summary: Regulatory affairs on cost-of-service studies, class revenue requirements and rate design that survives a commission challenge.
         uses:
-          - - Rate Case Analytics
+          - - Rate Case Submissions
             - Cost allocation and class revenue requirements on governed ledgers.
           - - AI/BI
             - Regulatory KPIs the commission and board read.
@@ -555,6 +564,7 @@ consumers:
         citations:
           - milsoft-oms
       - name: CIS Billing Adjustments
+        core: true
         icon: erp
         summary: High-bill remediation and payment-plan decisions written back into customer care and billing.
         citations:
@@ -580,6 +590,7 @@ consumers:
         icon: gavel
         summary: SAIDI, SAIFI and major-event-day reliability filings, plus interconnection application-backlog and applicable emissions records, produced from the same governed tables operations runs on.
       - name: Rate Case Submissions
+        core: true
         icon: share
         summary: Cost-of-service and class revenue studies filed from contracted Gold products.
   - name: Published Products
@@ -589,6 +600,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Municipalities, regulators and research partners accessing governed products, reducing bespoke exports with copies and transfer behavior dependent on the sharing mode.
   - name: Databricks Apps
@@ -681,10 +693,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

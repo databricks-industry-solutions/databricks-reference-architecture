@@ -3,6 +3,7 @@ description: 'Aerospace & defense OEMs and MRO providers: PLM and the digital th
 sources:
   - name: PLM & Engineering
     icon: dev
+    simplified: 3
     tiles:
       - name: CATIA / 3DEXPERIENCE
         icon: dev
@@ -20,6 +21,7 @@ sources:
             volume: GBs (CAD + MBSE models)
             interval: On design release
       - name: Siemens Teamcenter
+        core: true
         icon: erp
         summary: PLM for BOM, requirements, change orders and configuration management where Teamcenter is the incumbent digital thread.
         citations:
@@ -65,6 +67,7 @@ sources:
             interval: Per simulation run
   - name: Manufacturing & ERP
     icon: erp
+    simplified: 2
     tiles:
       - name: Siemens Opcenter MES
         icon: compute
@@ -95,6 +98,7 @@ sources:
             volume: hundreds of events/sec
             interval: Continuous production events
       - name: SAP S/4HANA
+        core: true
         icon: erp
         summary: The ERP of record for procurement, inventory, production orders and finance across the aerospace and space business.
         citations:
@@ -125,7 +129,7 @@ sources:
         summary: 'Process and test historian: equipment, engine and test-stand time-series underpinning SPC, OEE and anomaly detection.'
         citations:
           - avevapi
-        category: Process/Time-Series Historian
+        category: Process / Time-Series Historian
         what_it_is: Stores equipment, engine and test-stand time-series underpinning SPC, OEE and anomaly detection.
         who_uses_it: Reliability engineering, test engineering and Data science.
         data_out:
@@ -152,6 +156,7 @@ sources:
             volume: 1-5 GB/cycle
             interval: Weekly + monthly reporting cycles
       - name: Oracle Primavera P6
+        core: true
         icon: sheet
         summary: 'Integrated master schedule: activities, critical path and resource loading across the program and its suppliers.'
         citations:
@@ -268,6 +273,7 @@ sources:
             volume: 1-20k params/sec (fleet)
             interval: Continuous in-flight telemetry
       - name: Test & Flight Data
+        core: true
         icon: iot
         summary: Flight-test, DFDR and test-stand instrumentation, the ground truth for qualification, reliability and anomaly investigation.
         category: Test & Flight Instrumentation
@@ -306,6 +312,7 @@ sources:
         summary: 'Avionics data bus standard for digital information transfer between aircraft systems.'
         spec_url: https://www.aviation-ia.com/product-categories/arinc-standards
       - name: 'CCSDS Telemetry'
+        core: true
         icon: zbraces
         fmt: 'TM'
         summary: 'CCSDS space packet telemetry standard for downlinking spacecraft data.'
@@ -422,10 +429,11 @@ pipelines:
           - Product & Process Traceability
           - Design Space Simulation & Exploration
       - name: Mfg & Quality
+        core: true
         mark: Lakehouse//RT
         summary: Production and assembly on rate, takt and station performance, quality and MRB on nonconformance and first-pass yield, and supply chain on part availability and supplier quality across the extended aerospace supply base.
         uses:
-          - - Yield & MRB Cockpit
+          - - Manufacturing Yield & Supply
             - Station yield and nonconformance flagged before a unit is at risk.
           - - Lakehouse//RT
             - Live MES and historian state at the latency a pulse line moves at.
@@ -559,6 +567,7 @@ consumers:
         icon: share
         summary: Tier-1 and component suppliers reading live demand, quality and forecast tables over Delta Sharing rather than nightly file exchange.
       - name: Prime & Gov Sharing
+        core: true
         icon: globe
         summary: Primes, subcontractors and government customers reading contracted program data over governed sharing, reducing duplicate extracts.
       - name: Digital Twin Exchange
@@ -573,6 +582,7 @@ consumers:
         citations:
           - teamcenter
       - name: MES Disposition
+        core: true
         icon: compute
         summary: Lot hold, release and rework decisions written back to the MES at the station.
         citations:
@@ -605,6 +615,7 @@ consumers:
         citations:
           - cobra
       - name: ITAR & Export Filing
+        core: true
         icon: gavel
         summary: Export-control markings, license usage and technical-data-access records produced from governed tables under Unity Catalog.
       - name: AS9100 Compliance
@@ -700,10 +711,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

@@ -2,7 +2,7 @@
 /* The dump linkgate.py gates on: serves app/ over HTTP (lib_serve), loads
  * index.html in Playwright's own isolated Chromium (never the user's default
  * Chrome profile, which locks --headless=new on this machine), loads EVERY
- * industry board, and extracts { LINKS, prodNames, personas, genSrc, inds, chipAlias, chips, load_failed }
+ * industry board, and extracts { LINKS, prodNames, personas, genSrc, genBoard, cloudNames, inds, chipAlias, chips, load_failed }
  * to the file given as argv[2]. PW_DUMP_URL (or argv[3]) points it at an
  * already running server instead. */
 const { chromium } = require('playwright');
@@ -59,9 +59,23 @@ const OUT = process.argv[2] || '/tmp/gate_dump.json';
         (Array.isArray(o)?o:Object.values(o)).forEach(walk); })({ a:ARCH, i:INDUSTRIES });
       out.chips = Object.keys(chips);
     } catch(e){ out.chip_error=String(e); }
+    function teamRefs(rails, top, o){
+      var names={}, tops={};
+      ['src','ing','ppl','cons'].forEach(function(k){ ((rails&&rails[k])||[]).forEach(function(g){ (g.tiles||[]).forEach(function(t){ if(t&&typeof t.n==='string') names[t.n]=1; }); }); });
+      (top||[]).forEach(function(s){ (s.tiles||[]).forEach(function(t){ if(t&&typeof t.n==='string'){ names[t.n]=1; tops[t.n]=1; } }); });
+      o.names=Object.keys(names); o.top=Object.keys(tops); o.teams=[];
+      ((rails&&rails.ppl)||[]).forEach(function(g){ (g.tiles||[]).forEach(function(t){ if(isPersonaTile(t)) o.teams.push({n:t.n, ucs:t.ucs||[], uses:personaProductNames(t)}); }); });
+      return o;
+    }
+    try {
+      out.genBoard = teamRefs({ src:ARCH.rails.src.groups, ing:ARCH.rails.ing.groups, ppl:ARCH.rails.ppl.groups, cons:ARCH.rails.cons.groups }, ARCH.top.secs, {});
+      var cn={}; (function walk(o){ if(!o||typeof o!=='object')return; if(typeof o.n==='string') cn[o.n]=1; (Array.isArray(o)?o:Object.values(o)).forEach(walk); })(ARCH.cloud);
+      out.cloudNames = Object.keys(cn);
+    } catch(e){ out.team_error=String(e); }
     try {
       Object.keys(INDUSTRIES).forEach(function(id){
         var ind=INDUSTRIES[id], o={uc:[], src:[], cites:[]};
+        teamRefs(ind.rails, ind.top, o);
         ((ind.rails&&ind.rails.src)||[]).forEach(function(g){ (g.tiles||[]).forEach(function(t){ o.src.push(srow(t)); }); });
         (ind.top||[]).forEach(function(s){ if(/Business Use Cases|Use Cases/i.test(s.title)){ (s.tiles||[]).forEach(function(t){
           o.uc.push({n:t.n, stories:(t.stories||[]).map(function(x){return x.u;})}); }); } });
@@ -77,6 +91,6 @@ const OUT = process.argv[2] || '/tmp/gate_dump.json';
   if (errs.length) process.stderr.write('PAGE ERRORS: ' + JSON.stringify(errs.slice(0, 5)) + '\n');
   fs.writeFileSync(OUT, JSON.stringify(out));
   process.stderr.write(`dump written: ${OUT}  LINKS=${Object.keys(out.LINKS).length} prod=${out.prodNames.length} inds=${Object.keys(out.inds).length} load_failed=${loadFailed.length}\n`);
-  if (out.links_error || out.prod_error || out.ind_error || out.persona_error || out.chip_error)
-    process.stderr.write('EXTRACT ERRORS: ' + JSON.stringify({l:out.links_error,p:out.prod_error,i:out.ind_error,t:out.persona_error,c:out.chip_error}) + '\n');
+  if (out.links_error || out.prod_error || out.ind_error || out.persona_error || out.chip_error || out.team_error)
+    process.stderr.write('EXTRACT ERRORS: ' + JSON.stringify({l:out.links_error,p:out.prod_error,i:out.ind_error,t:out.persona_error,c:out.chip_error,r:out.team_error}) + '\n');
 })();

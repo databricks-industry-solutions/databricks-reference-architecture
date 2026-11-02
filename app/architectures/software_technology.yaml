@@ -3,6 +3,7 @@ description: 'B2B and SaaS software: product-led activation and conversion, usag
 sources:
   - name: CRM & Sales
     icon: crm
+    simplified: 3
     tiles:
       - name: Salesforce Sales Cloud
         icon: crm
@@ -73,6 +74,7 @@ sources:
             interval: Hourly
   - name: Billing & Metering
     icon: market
+    simplified: 2
     tiles:
       - name: Stripe Billing
         icon: market
@@ -142,6 +144,7 @@ sources:
             interval: Continuous
   - name: Product Telemetry
     icon: stream
+    simplified: 2
     tiles:
       - name: Segment CDP
         icon: custlake
@@ -222,6 +225,7 @@ sources:
             volume: 0.2-1 GB/day
             interval: Daily + webhook
       - name: Jira Software
+        core: true
         icon: sheet
         summary: Issues, sprints and cycle time, the planning system of record joined to delivery and incident data.
         citations:
@@ -301,6 +305,7 @@ sources:
             volume: 0.1-0.5 GB/day
             interval: Nightly
       - name: NetSuite ERP
+        core: true
         icon: erp
         summary: General ledger, revenue and expense, the finance system of record reconciled against billing and metering.
         citations:
@@ -333,6 +338,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'SPDX'
         icon: zbraces
@@ -480,6 +486,7 @@ pipelines:
           - AI-Driven Product Design and Prototyping
           - Automated User Feedback Analysis
       - name: Platform & Security
+        core: true
         mark: Lakeflow
         summary: The CTO on developer velocity and reliability; platform engineering on the pipelines and the golden signals; the security and trust team on entitlement drift and access telemetry.
         uses:
@@ -564,6 +571,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -601,6 +609,7 @@ consumers:
         citations:
           - salesforce
       - name: Usage to Billing
+        core: true
         icon: gauge
         summary: Rated consumption written to Stripe and Zuora so invoices match what was actually used.
         citations:
@@ -627,6 +636,7 @@ consumers:
         icon: gavel
         summary: Access and change evidence for SOC 2 and ISO 27001 produced from the same governed tables the company runs on.
       - name: Privacy & DSAR
+        core: true
         icon: zshield
         summary: GDPR and CCPA subject access and deletion requests anchored on one governed customer record that coordinates discovery across source, derived and downstream systems, with fulfillment through the applicable system workflows.
   - name: Databricks Apps
@@ -719,10 +729,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

@@ -3,6 +3,7 @@ description: 'Retail and commercial banking: core ledger, payments, lending, fra
 sources:
   - name: Core Banking
     icon: erp
+    simplified: 3
     tiles:
       - name: Temenos Transact
         icon: erp
@@ -94,6 +95,7 @@ sources:
             volume: 1-5 GB/day
             interval: Daily feed
       - name: SWIFT FIN Messages
+        core: true
         icon: api
         summary: Cross-border payment instructions and confirmations.
         citations:
@@ -109,6 +111,7 @@ sources:
             interval: Continuous message flow
   - name: Digital Channels
     icon: apps
+    simplified: 2
     tiles:
       - name: Temenos Infinity
         icon: apps
@@ -144,6 +147,7 @@ sources:
             volume: tens of events/sec
             interval: Continuous CDC
       - name: NICE Actimize
+        core: true
         icon: gavel
         summary: AML alerts, cases and SAR workflow.
         citations:
@@ -176,6 +180,7 @@ sources:
             volume: GBs (reference + scores)
             interval: Daily / monthly refresh
       - name: FIS Ambit Focus
+        core: true
         icon: chart
         summary: ALM, liquidity and interest rate risk measurement.
         citations:
@@ -253,6 +258,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'ISO 20022'
         icon: zbraces
@@ -319,6 +325,7 @@ cloud_integrations:
             volume: 1-4 GB/day
             interval: Daily + on-demand
       - name: Experian Bureau
+        core: true
         icon: custlake
         summary: Credit bureau pulls and attribute refreshes.
         citations:
@@ -396,6 +403,7 @@ pipelines:
           - Customer 360
           - Regulatory Reporting
       - name: Risk & Compliance
+        core: true
         mark: Lakehouse//RT
         summary: Credit, market and operational risk with regulatory reporting, run on PD/LGD, fraud loss rate and AML alert-to-SAR conversion.
         uses:
@@ -539,6 +547,7 @@ consumers:
         icon: gauge
         summary: Credit limits adjusted in core from early warning triggers.
       - name: Fraud Block Rules
+        core: true
         icon: gavel
         summary: Card blocks propagated to authorization switches.
         citations:
@@ -557,6 +566,7 @@ consumers:
         citations:
           - axiomsl
       - name: FinCEN SAR Filing
+        core: true
         icon: share
         summary: Suspicious activity reports assembled from AML cases.
         citations:
@@ -568,10 +578,12 @@ consumers:
         icon: product
         summary: Customer and exposure products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Partners and regulators via governed sharing.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Branch Performance
         icon: chart
@@ -660,10 +672,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

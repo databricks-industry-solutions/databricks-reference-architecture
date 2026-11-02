@@ -28,8 +28,8 @@ def report(done):
 def main():
     ap = argparse.ArgumentParser(description="Platform refresh: re-read everything the board takes from public Databricks "
                                              "pages: regional availability, release stages and the Lakeflow Connect "
-                                             "connector catalog, certifications, and Academy courses. Run it with the "
-                                             "content refresh before any change to the repo and commit what it changes.")
+                                             "connector catalog, certifications, and Academy courses. Run it before the "
+                                             "content refresh when you open a PR and commit what it changes.")
     ap.add_argument("--check", action="store_true",
                     help="report drift without writing; exit 1 if any data is stale or a description carries a release stage")
     args = ap.parse_args()

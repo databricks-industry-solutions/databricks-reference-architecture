@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-21",
+ "generated": "2026-10-30",
  "missing": {
   "Databricks Sandbox": [
    "gcp"
@@ -95,8 +95,8 @@
    "gcp": "Public Preview"
   },
   "LTAP": {
-   "aws": "Beta",
-   "azure": "Beta",
+   "aws": "Private Preview",
+   "azure": "Private Preview",
    "gcp": "Coming soon"
   },
   "Lakebase": {

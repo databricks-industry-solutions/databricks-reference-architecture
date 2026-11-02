@@ -70,6 +70,7 @@ sources:
             volume: form events on save
             interval: Continuous CDC on eCRF
       - name: Veeva Vault CTMS
+        core: true
         icon: sheet
         summary: Site feasibility, monitoring visits and enrollment tracking.
         citations:
@@ -104,6 +105,7 @@ sources:
             interval: Continuous at randomization
   - name: GxP Manufacturing
     icon: stream
+    simplified: 2
     tiles:
       - name: Werum PAS-X
         icon: stream
@@ -140,6 +142,7 @@ sources:
             volume: 100s-1000s of events/sec
             interval: Continuous on the line
       - name: SAP S/4HANA PP
+        core: true
         icon: erp
         summary: Production orders, material consumption and co-product yields.
         citations:
@@ -171,6 +174,7 @@ sources:
             volume: 1-8 GB/day
             interval: Nightly batch + result release
       - name: MasterControl QMS
+        core: true
         icon: gavel
         summary: Deviations, CAPA and change control tied to batches and sites.
         citations:
@@ -233,6 +237,7 @@ sources:
             volume: 1-5 GB/day
             interval: Nightly sync + intraday
       - name: Veeva CRM
+        core: true
         icon: custlake
         summary: HCP engagement, consent and medical inquiry workflows.
         citations:
@@ -296,6 +301,7 @@ sources:
         summary: 'Electronic Common Technical Document for regulatory drug submissions to agencies.'
         spec_url: https://www.fda.gov/drugs/electronic-regulatory-submission-and-review/electronic-common-technical-document-ectd
       - name: 'ICH E2B(R3)'
+        core: true
         icon: zbraces
         fmt: 'E2B'
         summary: 'ICH standard for electronic transmission of individual case safety reports.'
@@ -354,6 +360,7 @@ cloud_integrations:
             volume: GBs (quarterly case files)
             interval: Quarterly reference releases
       - name: GS1 EPCIS Pharma
+        core: true
         icon: stream
         summary: Serialization and distribution events for DSCSA traceability.
         citations:
@@ -415,6 +422,7 @@ pipelines:
           - Protocol Deviation
           - Demand & Supply
       - name: Mfg & Supply
+        core: true
         mark: Lakehouse//RT
         summary: Plant and supply on batch release rate, yield and cold-chain integrity when a launch scales past the demand the supply plan forecast.
         uses:
@@ -538,7 +546,7 @@ pipelines:
             cares: disproportionality and NLP models over ICSR and case text.
         ucs:
           - Lead Optimization / QSAR
-          - Assay & Screening Analytics
+          - Enrollment Forecast
           - Yield Optimisation
           - Safety Signal Detect
       - name: App Developers
@@ -566,6 +574,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart
@@ -596,11 +605,13 @@ consumers:
           - mastercontrol
   - name: Partners & CMO
     icon: partner
+    simplified: 3
     tiles:
       - name: CMO Batch Exchange
         icon: share
         summary: Batch genealogy and release status shared to contract manufacturers over Delta Sharing.
       - name: CRO Data Transfer
+        core: true
         icon: api
         summary: Clinical datasets exchanged with audit trail not unsecured email.
         citations:
@@ -628,6 +639,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: CROs, CMOs and regulators reading live tables with no copy.
   - name: Databricks Apps
@@ -706,6 +718,7 @@ consumers:
           - Regulatory Affairs
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni
@@ -720,10 +733,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

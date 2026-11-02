@@ -3,6 +3,7 @@ description: 'For a hotel, resort or travel operator: property management, centr
 sources:
   - name: PMS & Operations
     icon: erp
+    simplified: 3
     tiles:
       - name: Oracle OPERA Cloud
         icon: erp
@@ -53,6 +54,7 @@ sources:
             interval: Nightly batch + intraday deltas
   - name: CRS & Distribution
     icon: market
+    simplified: 2
     tiles:
       - name: Amadeus iHotelier
         icon: globe
@@ -98,6 +100,7 @@ sources:
             interval: Continuous (ARI + bookings)
   - name: Revenue Management
     icon: chart
+    simplified: 2
     tiles:
       - name: IDeaS G3 RMS
         icon: market
@@ -144,6 +147,7 @@ sources:
             interval: Multiple shops daily
   - name: Guest & Loyalty
     icon: custlake
+    simplified: 2
     tiles:
       - name: Salesforce Loyalty
         icon: custlake
@@ -211,6 +215,7 @@ sources:
             volume: sub-GB/day
             interval: Hourly / nightly sync
       - name: Agilysys InfoGenesis
+        core: true
         icon: erp
         summary: Outlet POS for restaurants, bars and room charges to folio.
         citations:
@@ -243,6 +248,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'OpenTravel XML'
         icon: zbraces
@@ -294,6 +300,7 @@ cloud_integrations:
             volume: sub-GB/day
             interval: Weekly + monthly benchmark files
       - name: GDS Booking Messages
+        core: true
         icon: stream
         summary: Amadeus and Sabre hotel booking notifications parsed on arrival.
         citations:
@@ -367,6 +374,7 @@ pipelines:
           - Conversational Booking
           - Disruption Response
       - name: Front Office & Ops
+        core: true
         mark: Lakehouse//RT
         summary: GMs and front office on arrivals, housekeeping turn and service recovery, clearing rooms and VIP flags before the guest reaches the desk.
         uses:
@@ -495,6 +503,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -507,6 +516,7 @@ consumers:
         summary: Revenue science notebooks against governed PMS and RMS data.
   - name: Distribution & OTA
     icon: partner
+    simplified: 2
     tiles:
       - name: Channel Rate API
         icon: api
@@ -541,6 +551,7 @@ consumers:
           - mews
   - name: Regulatory & Reporting
     icon: gavel
+    simplified: 2
     tiles:
       - name: Tourism Tax Filings
         icon: gavel
@@ -557,6 +568,7 @@ consumers:
         icon: product
         summary: Portfolio performance products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Owners and brands reading live KPIs via Delta Sharing.
   - name: Databricks Apps
@@ -649,10 +661,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

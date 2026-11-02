@@ -178,7 +178,7 @@ INDUSTRIES_BATCH_HEALTHCARE = {
                     ],
                     ucs=["Readmission Reduction", "Research Cohorts"]),
                 biz("Quality & Safety", "AI/BI", "Infection prevention, sepsis-bundle compliance and hospital-acquired-condition reduction, catching the deterioration before the public measure does.",
-                    [["Quality Dashboard", "Core measures and HAC rates before public reporting."], ["AI/BI", "Mortality and complication indices on governed definitions."], ["Genie One", "Ask which units drove last month's CLABSI count."]],
+                    [["eCQM Quality Measures", "Core measures and HAC rates before public reporting."], ["AI/BI", "Mortality and complication indices on governed definitions."], ["Genie One", "Ask which units drove last month's CLABSI count."]],
                     sub=[
                         ["VP Quality", "core-measure attainment and the mortality and complication indices."],
                         ["Infection Prevention", "HAC, CLABSI and sepsis-bundle compliance across the units."],

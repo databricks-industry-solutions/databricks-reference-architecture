@@ -56,6 +56,16 @@
 "st": "Beta"
 },
 {
+"n": "Azure DevOps",
+"p": "ingestion/lakeflow-connect/azure-devops",
+"st": "Beta"
+},
+{
+"n": "Box Audit Logs",
+"p": "ingestion/lakeflow-connect/box-audit-logs",
+"st": "Beta"
+},
+{
 "n": "Celigo",
 "p": "ingestion/lakeflow-connect/celigo",
 "st": "Beta"
@@ -64,6 +74,11 @@
 "n": "Confluence",
 "p": "ingestion/lakeflow-connect/confluence",
 "st": "GA"
+},
+{
+"n": "Cribl",
+"p": "ingestion/lakeflow-connect/cribl",
+"st": "Beta"
 },
 {
 "n": "CrowdStrike Falcon Event Stream",
@@ -103,10 +118,7 @@
 {
 "n": "Google Analytics Aggregated",
 "p": "ingestion/lakeflow-connect/google-analytics-aggregated",
-"st": "Beta",
-"stByCloud": {
-"azure": "Coming soon"
-}
+"st": "Beta"
 },
 {
 "n": "Google Drive",
@@ -157,6 +169,19 @@
 "n": "Microsoft Dynamics 365",
 "p": "ingestion/lakeflow-connect/d365",
 "st": "GA"
+},
+{
+"n": "Microsoft Entra ID",
+"p": "ingestion/lakeflow-connect/microsoft-entra-id",
+"st": "Beta"
+},
+{
+"n": "Microsoft Graph Logs",
+"p": "ingestion/lakeflow-connect/microsoft-graph-logs",
+"st": "Beta",
+"stByCloud": {
+"azure": "Coming soon"
+}
 },
 {
 "n": "Microsoft OneDrive",
@@ -229,6 +254,11 @@
 "st": "Beta"
 },
 {
+"n": "PayPal",
+"p": "ingestion/lakeflow-connect/paypal",
+"st": "Beta"
+},
+{
 "n": "Pendo",
 "p": "ingestion/lakeflow-connect/pendo-overview",
 "st": "Beta"
@@ -241,6 +271,11 @@
 {
 "n": "Productboard",
 "p": "ingestion/lakeflow-connect/productboard",
+"st": "Beta"
+},
+{
+"n": "QuickBooks",
+"p": "ingestion/lakeflow-connect/quickbooks",
 "st": "Beta"
 },
 {
@@ -314,6 +349,11 @@
 "st": "Beta"
 },
 {
+"n": "Vimeo",
+"p": "ingestion/lakeflow-connect/vimeo",
+"st": "Beta"
+},
+{
 "n": "Wiz Audit Logs",
 "p": "ingestion/lakeflow-connect/wiz-audit-logs",
 "st": "Beta"
@@ -339,6 +379,14 @@
 "st": "Beta"
 },
 {
+"n": "Xero",
+"p": "ingestion/lakeflow-connect/xero",
+"st": "Beta",
+"stByCloud": {
+"azure": "Coming soon"
+}
+},
+{
 "n": "Zendesk Support",
 "p": "ingestion/lakeflow-connect/zendesk-support-overview",
 "st": "GA"
@@ -351,6 +399,11 @@
 {
 "n": "Zoho Books",
 "p": "ingestion/lakeflow-connect/zoho-books",
+"st": "Beta"
+},
+{
+"n": "Zoho CRM",
+"p": "ingestion/lakeflow-connect/zoho-crm",
 "st": "Beta"
 }
 ],

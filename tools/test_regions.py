@@ -48,6 +48,20 @@ check("one section listing two clouds splits by cloud, footnote marks stripped (
 check("a cloud the page does not list reads as not available", listed(sr.parse_product_page(BOTH_CLOUDS, GCP)) == [])
 check("a page without a region heading lists nothing", listed(sr.parse_product_page("<h2>Overview</h2><code>us-east-1</code>", AWS)) == [])
 check("a 'Supported regions' heading also counts", listed(sr.parse_product_page("<h3>Supported regions</h3><code>us-west-2</code>", AWS)) == ["us-west-2"])
+REQUIREMENTS_LIKE = ('<h2 id="requirements">Requirements</h2><p>You need the following:</p><ul>'
+                     "<li><p>A workspace in a supported region:</p><p><code>us-east-1</code>, <code>us-west-2</code></p>"
+                     "<p>GovCloud regions are not supported.</p></li><li><p>Run <code>eu-west-1</code> elsewhere</p></li></ul>"
+                     '<h2 id="share">Share an app</h2><code>ap-south-1</code>')
+check("a 'supported region:' list counts only inside the item that names it",
+      listed(sr.parse_product_page(REQUIREMENTS_LIKE, AWS)) == ["us-east-1", "us-west-2"],
+      listed(sr.parse_product_page(REQUIREMENTS_LIKE, AWS)))
+check("the Requirements section is the anchor of a 'supported region:' list", sr.product_anchor(REQUIREMENTS_LIKE) == "requirements",
+      sr.product_anchor(REQUIREMENTS_LIKE))
+check("a 'supported region:' sentence outside a list counts up to the next heading",
+      listed(sr.parse_product_page("<h2>Requirements</h2><p>Use a workspace in a supported region:</p><p><code>us-west-2</code></p>"
+                                   "<h2>Share</h2><code>us-east-1</code>", AWS)) == ["us-west-2"])
+check("a Requirements section without the supported-region sentence lists nothing",
+      listed(sr.parse_product_page('<h2 id="requirements">Requirements</h2><code>us-east-1</code>', AWS)) == [])
 
 SUPPORTED_PAGE = "<table><tr><th>Region</th><th>Location</th></tr>{}</table>"
 FEATURE_PAGE = ('<h2 id="ai-and-machine-learning-features-availability">AI and machine learning features availability</h2>'

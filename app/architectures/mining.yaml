@@ -3,6 +3,7 @@ description: 'A mining operator running pit and underground operations, processi
 sources:
   - name: Fleet & Dispatch
     icon: iot
+    simplified: 2
     tiles:
       - name: Modular Mining DISPATCH
         icon: iot
@@ -54,13 +55,14 @@ sources:
             interval: Per-blast + daily updates
   - name: Plant & Processing
     icon: stream
+    simplified: 2
     tiles:
       - name: AVEVA PI System
         icon: iot
         summary: Mill throughput, reagent flows and recovery tags from concentrator historians.
         citations:
           - aveva-pi
-        category: Process/Time-Series Historian
+        category: Process / Time-Series Historian
         what_it_is: Stores mill throughput, reagent flows and recovery tags from concentrator plants as the processing time-series system of record.
         who_uses_it: Plant metallurgists, concentrator operators and reliability engineers.
         data_out:
@@ -94,6 +96,7 @@ sources:
             volume: hundreds of readings/sec
             interval: Continuous equipment telemetry
       - name: IBM Maximo
+        core: true
         icon: gauge
         summary: Work orders, component lifing and preventive-maintenance schedules for the mobile fleet and fixed plant.
         citations:
@@ -108,6 +111,7 @@ sources:
             volume: 1-5 GB/day work orders
             interval: Nightly + event-driven
       - name: LIMS Assay Lab
+        core: true
         icon: gavel
         summary: Sample preparation, assay results and QA/QC duplicates for grade control.
         citations:
@@ -123,6 +127,7 @@ sources:
             interval: Per-batch + daily
   - name: Commercial & ERP
     icon: erp
+    simplified: 2
     tiles:
       - name: SAP IS-Mining
         icon: erp
@@ -168,6 +173,7 @@ sources:
             interval: Per-vessel + daily updates
   - name: Safety & Environment
     icon: gavel
+    simplified: 2
     tiles:
       - name: Intelex EHS
         icon: gavel
@@ -229,6 +235,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'OMF'
         icon: zbraces
@@ -338,6 +345,7 @@ pipelines:
           - Operations Resource Efficiency
           - Predictive Maintenance & Asset Health
       - name: Processing
+        core: true
         mark: AI/BI
         summary: Mill stability, reagent consumption and recovered metal per tonne milled when feed grade and ore hardness shift through the shift.
         uses:
@@ -381,7 +389,7 @@ pipelines:
         mark: Unity Catalog
         summary: Fatal-risk protocols, Scope 1 emissions and community commitments the board signs, tracked on TRIFR and permit-breach counts before audit.
         uses:
-          - - Safety Dashboard
+          - - Workforce Safety
             - Leading indicators and permit breaches before audit.
           - - Unity Catalog
             - Lineage from sensor to regulatory disclosure.
@@ -490,6 +498,7 @@ consumers:
         citations:
           - aveva-pi
       - name: Maintenance Work Order
+        core: true
         icon: erp
         summary: Predicted component failures raised in CMMS before the truck leaves service.
         citations:
@@ -508,6 +517,7 @@ consumers:
         citations:
           - metal-bulletin
       - name: Rail & Port Partners
+        core: true
         icon: globe
         summary: Nomination and stow data exchanged without nightly spreadsheet reconciliation.
         citations:
@@ -521,6 +531,7 @@ consumers:
         citations:
           - intelex
       - name: Emissions & Tailings
+        core: true
         icon: share
         summary: Scope 1 and water disclosures filed from contracted Gold products.
         citations:
@@ -532,6 +543,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Traders, smelters and joint-venture partners reading live tables with no copy.
   - name: Databricks Apps
@@ -624,10 +636,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

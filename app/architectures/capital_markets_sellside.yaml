@@ -24,6 +24,7 @@ sources:
             volume: 1-10k order/exec events/sec at peak
             interval: Continuous CDC (near real-time)
       - name: Broadridge
+        core: true
         icon: erp
         summary: Post-trade processing, books-and-records and settlement management across asset classes for the broker-dealer.
         citations:
@@ -126,6 +127,7 @@ sources:
             volume: 5-20 GB/day evaluated prices
             interval: End-of-day + intraday snaps
       - name: Security Master
+        core: true
         icon: db
         summary: 'The golden instrument and issuer record: identifiers, terms and corporate actions every position and trade resolves against.'
         category: Security Master / Reference Data
@@ -224,6 +226,7 @@ sources:
             volume: tens of status events/sec
             interval: Continuous status flow
       - name: SWIFT Network
+        core: true
         icon: stream
         summary: Interbank messaging for settlement, confirmations and custody instructions across counterparties and agents.
         citations:
@@ -348,6 +351,7 @@ sources:
         summary: 'Financial Information eXchange protocol for order management and execution reporting.'
         spec_url: https://www.fixtrading.org/standards/fix-protocol/
       - name: 'FpML'
+        core: true
         icon: zbraces
         fmt: 'FpML'
         summary: 'XML standard for OTC derivatives trade representation and lifecycle processing.'
@@ -377,6 +381,18 @@ cloud_integrations:
   - name: 3rd Party
     icon: zplug
     tiles:
+      - name: Market Data Bus
+        icon: stream
+        summary: Existing Kafka and multicast market-data topics carrying ticks, quotes and reference updates land here and are drawn generically on the reference board.
+        category: Streaming Market Data Bus
+        what_it_is: Existing Kafka and multicast market-data topics carrying ticks, quotes and reference updates consumed into the lakehouse.
+        who_uses_it: Market-data engineering and quant research.
+        data_out:
+          stream:
+            types:
+              - semi-structured
+            volume: 50k-500k ticks/sec at peak
+            interval: Continuous streaming
       - name: FIX Protocol Feeds
         icon: stream
         summary: Streaming FIX order, execution and market-data sessions parsed on arrival and landed as structured events.
@@ -391,18 +407,6 @@ cloud_integrations:
               - semi-structured
             volume: 1-10k messages/sec at peak
             interval: Continuous (sub-second)
-      - name: Market Data Bus
-        icon: stream
-        summary: Existing Kafka and multicast market-data topics carrying ticks, quotes and reference updates land here and are drawn generically on the reference board.
-        category: Streaming Market Data Bus
-        what_it_is: Existing Kafka and multicast market-data topics carrying ticks, quotes and reference updates consumed into the lakehouse.
-        who_uses_it: Market-data engineering and quant research.
-        data_out:
-          stream:
-            types:
-              - semi-structured
-            volume: 50k-500k ticks/sec at peak
-            interval: Continuous streaming
       - name: Vendor Data APIs
         icon: api
         summary: Bloomberg, LSEG and FactSet request/response and file APIs consumed inbound through managed ELT connectors.
@@ -463,6 +467,7 @@ pipelines:
           - Trade Lifecycle
           - Market & Credit Risk
       - name: Risk Management
+        core: true
         mark: AI/BI
         summary: The CRO and market risk on VaR, stress and limit usage across books; credit risk on counterparty and issuer exposure; treasury and collateral on margin and funding under stress.
         uses:
@@ -582,6 +587,7 @@ pipelines:
 consumers:
   - name: BI & Productivity
     icon: chart
+    from: bi
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -611,6 +617,7 @@ consumers:
         icon: db
         summary: Orders and trading restrictions written back into ION Fidessa, while settlement and books-and-records updates return to Broadridge, so each decision reaches the right path.
       - name: Risk Limit Writeback
+        core: true
         icon: gauge
         summary: Updated limits and exposure flags pushed back into the risk and OMS systems the desk trades against.
       - name: Alert & Case Queue
@@ -635,10 +642,12 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Allocators, administrators and partners reading live tables through governed sharing that reduces separately maintained extracts.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: TCA Workbench
         icon: market
@@ -727,10 +736,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

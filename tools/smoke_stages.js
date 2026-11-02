@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 const { chromium } = require('playwright');
-const { serve, boardReady } = require('./lib_serve');
+const { serve, boardReady, withView } = require('./lib_serve');
 
 const results = [];
 function check(name, cond, detail) { results.push({ name, ok: !!cond, detail }); console.log((cond ? 'PASS ' : 'FAIL ') + name + (detail ? ' :: ' + detail : '')); }
@@ -16,7 +16,7 @@ function check(name, cond, detail) { results.push({ name, ok: !!cond, detail });
     await ctx.addInitScript(() => { try { localStorage.setItem('dbx-arch-tour-v1', '1'); } catch (e) {} });
     const page = await ctx.newPage();
     page.on('pageerror', e => errors.push(e.message));
-    await page.goto(base + q, { waitUntil: 'networkidle' });
+    await page.goto(withView(base + q, 'detailed'), { waitUntil: 'networkidle' });
     await boardReady(page);
     await page.waitForTimeout(500);
     return { ctx, page };

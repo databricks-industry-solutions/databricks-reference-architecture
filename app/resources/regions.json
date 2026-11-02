@@ -304,7 +304,7 @@
        "Asia": "Available",
        "Australia & New Zealand": "Available",
        "Europe": "Available",
-       "India": "Available*",
+       "India": "Available",
        "Mainland China": "Available*",
        "Middle East and Africa": "Available*"
       },
@@ -349,7 +349,7 @@
        "Asia": "Available†",
        "Australia & New Zealand": "Available",
        "Europe": "Available",
-       "India": "Available*",
+       "India": "Available",
        "Mainland China": "Available*",
        "Middle East and Africa": "Available*"
       },
@@ -364,7 +364,7 @@
        "Asia": "Available†",
        "Australia & New Zealand": "Available",
        "Europe": "Available",
-       "India": "Available*",
+       "India": "Available",
        "Mainland China": "Available*",
        "Middle East and Africa": "Available*"
       },
@@ -1330,7 +1330,7 @@
      },
      "⥂": {
       "c": true,
-      "t": "Region supported only when cross geography routing is enabled. Foundation Model API workloads that rely on GPU compute availability require cross geography routing."
+      "t": "Region supported only when cross geography routing is enabled. Foundation Model API workloads that rely on GPU compute availability require cross geography routing. Some models are available in a region marked ⥂ without cross geography routing. For per-model regional availability, see Foundation models hosted on Databricks."
      }
     },
     "serverless-availability": {
@@ -1515,8 +1515,8 @@
     "Genie App Builder (product page)": {
      "cat": "Product page",
      "doc": "https://docs.databricks.com/aws/en/dev-tools/databricks-apps/genie-app-builder",
-     "sec": "requirements-and-availability",
-     "src": "https://docs.databricks.com/aws/en/dev-tools/databricks-apps/genie-app-builder#requirements-and-availability",
+     "sec": "requirements",
+     "src": "https://docs.databricks.com/aws/en/dev-tools/databricks-apps/genie-app-builder#requirements",
      "st": "Beta"
     },
     "Knowledge Assistant": {
@@ -1859,7 +1859,7 @@
     },
     {
      "code": "us-east-1",
-     "loc": "US East (Northern Virginia, formerly Oregon)"
+     "loc": "US East (Northern Virginia)"
     },
     {
      "code": "us-east-2",
@@ -1871,7 +1871,7 @@
     },
     {
      "code": "us-west-1",
-     "loc": "US West (Oregon)"
+     "loc": "US West (Northern California)"
     },
     {
      "code": "us-west-2",
@@ -2220,12 +2220,12 @@
        "Brazil": "Available*",
        "Canada": "Available*",
        "EU Data boundary": "Available",
-       "India": "Available*",
+       "India": "Available",
        "Japan": "Available",
        "Mexico": "Available*",
        "Qatar": "Available*",
        "South Africa": "Available*",
-       "South Korea": "Available*",
+       "South Korea": "Available",
        "UAE": "Available*",
        "United Kingdom": "Available",
        "United States": "Available"
@@ -2286,12 +2286,12 @@
        "Brazil": "Available*",
        "Canada": "Available*",
        "EU Data boundary": "Available",
-       "India": "Available*",
+       "India": "Available",
        "Japan": "Available",
        "Mexico": "Available*",
        "Qatar": "Available*",
        "South Africa": "Available*",
-       "South Korea": "Available*",
+       "South Korea": "Available",
        "UAE": "Available*",
        "United Kingdom": "Available*",
        "United States": "Available"
@@ -2308,12 +2308,12 @@
        "Brazil": "Available*",
        "Canada": "Available*",
        "EU Data boundary": "Available",
-       "India": "Available*",
+       "India": "Available",
        "Japan": "Available",
        "Mexico": "Available*",
        "Qatar": "Available*",
        "South Africa": "Available*",
-       "South Korea": "Available*",
+       "South Korea": "Available",
        "UAE": "Available*",
        "United Kingdom": "Available*",
        "United States": "Available"
@@ -3126,25 +3126,25 @@
      "japaneast": true,
      "japanwest": false,
      "jioindiawest": false,
-     "koreacentral": false,
+     "koreacentral": true,
      "mexicocentral": false,
      "northcentralus": true,
      "northeurope": true,
      "norwayeast": false,
      "qatarcentral": false,
-     "southafricanorth": false,
+     "southafricanorth": true,
      "southcentralus": true,
      "southeastasia": true,
      "southindia": false,
-     "swedencentral": false,
+     "swedencentral": true,
      "switzerlandnorth": false,
      "switzerlandwest": false,
-     "uaenorth": false,
+     "uaenorth": true,
      "uksouth": true,
      "ukwest": false,
      "usgovaz": false,
      "usgovva": false,
-     "westcentralus": false,
+     "westcentralus": true,
      "westeurope": true,
      "westindia": false,
      "westus": true,
@@ -5373,7 +5373,7 @@
        "Asia": "Available",
        "Australia & New Zealand": "Available",
        "Europe": "Available",
-       "India": "Available*",
+       "India": "Available",
        "Mainland China": "Available*",
        "Middle East and Africa": "Available*"
       },
@@ -5418,7 +5418,7 @@
        "Asia": "Available†",
        "Australia & New Zealand": "Available",
        "Europe": "Available",
-       "India": "Available*",
+       "India": "Available",
        "Mainland China": "Available*",
        "Middle East and Africa": "Available*"
       },
@@ -5433,7 +5433,7 @@
        "Asia": "Available†",
        "Australia & New Zealand": "Available",
        "Europe": "Available",
-       "India": "Available*",
+       "India": "Available",
        "Mainland China": "Available*",
        "Middle East and Africa": "Available*"
       },
@@ -6731,7 +6731,7 @@
    ]
   }
  },
- "generated": "2026-10-21",
+ "generated": "2026-10-30",
  "sources": {
   "aws": {
    "designated": "https://docs.databricks.com/aws/en/resources/designated-services",

@@ -45,6 +45,18 @@ DRIVER = r"""
     var board = document.getElementById("board");
     var dw = parseFloat(getComputedStyle(document.body).getPropertyValue("--designw"));
     var clip = 0, squeezed = 0, clipped = [];
+    function textLines(n){
+      var tops = [], walk = document.createTreeWalker(n, NodeFilter.SHOW_TEXT), t;
+      while((t = walk.nextNode())){
+        if(!t.textContent.trim()) continue;
+        var rg = document.createRange(); rg.selectNodeContents(t);
+        Array.prototype.forEach.call(rg.getClientRects(), function(r){
+          if(r.width < 0.5) return;
+          if(!tops.some(function(y){ return Math.abs(y - r.top) < r.height / 2; })) tops.push(r.top);
+        });
+      }
+      return tops.length;
+    }
     /* .rg-label is in this list because it is the one label on the board that
        cannot wrap: a group header is nowrap, so an over-long industry group name
        is silently cut rather than reflowed, and a clip check that skipped it
@@ -54,18 +66,14 @@ DRIVER = r"""
         clip++;
         if(clipped.length < 4) clipped.push(n.textContent.trim());
       }
-      var lh = parseFloat(getComputedStyle(n).lineHeight) || 14;
-      if(Math.round(n.getBoundingClientRect().height / lh) >= 3 &&
-         n.textContent.trim().split(/\s+/).length <= 2) squeezed++;
+      if(textLines(n) >= 3 && n.textContent.trim().split(/\s+/).length <= 2) squeezed++;
     });
     return { h: board.offsetHeight,
              scale: Math.round(board.getBoundingClientRect().width / dw * 1000) / 1000,
              clip: clip, squeezed: squeezed, clipped: clipped };
   }
-  /* Every shape, not just the one the board opens on. The pockets are half-width
-     in h90, so a group name that fits the Z clips there; checking only the
-     default shape passed "Industry Messaging" as clean. */
-  var SHAPES = ["z", "s", "t", "rt", "h90"];
+  /* Every shape, not just the one the board opens on. */
+  var SHAPES = ["z", "s", "t", "rt"], VIEWS = ["detailed", "simple"];
   var ids = (window.HG_ONLY && window.HG_ONLY.length) ? window.HG_ONLY : ["generic"].concat(INDUSTRY_CATALOG.map(function(row){ return row[0]; })
     .filter(function(id){ return !INDUSTRY_BUILT || INDUSTRY_BUILT.has(id); }));
   var res = {}, failed = [];
@@ -82,16 +90,18 @@ DRIVER = r"""
       let loaded = false;
       for(let attempt = 0; attempt < 3 && !loaded; attempt++){ loaded = await loadIndustry(id); if(!loaded) await wait(500); }
       if(!loaded){ failed.push(id + " (" + (await whyNot(id)) + ")"); continue; }
-      for(var j = 0; j < SHAPES.length; j++){
+      for(var v = 0; v < VIEWS.length; v++) for(var j = 0; j < SHAPES.length; j++){
+        viewMode = VIEWS[v];
         await applyIndustry(id, false);
         try { applyShape(SHAPES[j], false); } catch(e){}
         await wait(300);
-        res[id + "@" + SHAPES[j]] = measure();
+        if(document.body.classList.contains("view-simple") !== (VIEWS[v] === "simple")) continue;
+        res[id + "@" + SHAPES[j] + (VIEWS[v] === "simple" ? ".simple" : "")] = measure();
       }
     }
     var pre = document.createElement("pre");
     pre.id = "GATE";
-    pre.textContent = JSON.stringify({ res: res, failed: failed, expected: ids.length * SHAPES.length });
+    pre.textContent = JSON.stringify({ res: res, failed: failed, expected: ids.length * SHAPES.length * VIEWS.length });
     document.body.appendChild(pre);
   }
   (typeof INTRO_DONE !== "undefined" ? INTRO_DONE : Promise.resolve()).then(run);
@@ -228,10 +238,9 @@ def main():
     # 32px sits between the two things this gate has to tell apart. A row added to
     # a corner pocket costs ~45px and is the regression worth failing on, because
     # the platform block beside the pocket grows to match it. A top band carrying
-    # more industry tiles legitimately measures up to ~25px taller in h90, where
-    # its tiles are narrow enough for a sublabel to take a second line, and that
-    # is content, not a layout fault. Verified: airlines fails at 8 on the top
-    # band alone, and still fails at 32 with one pocket tile added.
+    # more industry tiles legitimately measures taller when its tiles are narrow
+    # enough for a sublabel to take a second line, and that is content, not a
+    # layout fault.
     ap.add_argument("--tolerance", type=int, default=32,
                     help="design px an industry may exceed the reference by; "
                          "under one pocket row, over a top-band content difference")
@@ -251,7 +260,7 @@ def main():
         return 1
     res = out["res"]
     # The reference board is the budget, per shape: a shape legitimately has its
-    # own height, so comparing an industry in h90 against the reference in z
+    # own height, so comparing an industry in t against the reference in z
     # would convict the shape rather than the industry.
     for key in sorted(k for k in res if k.startswith("generic@")):
         r = res[key]

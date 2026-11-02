@@ -3,6 +3,7 @@ description: Seasonal collections, omnichannel retail, demand sensing, and susta
 sources:
   - name: PLM & Design
     icon: product
+    simplified: 2
     tiles:
       - name: Centric PLM
         icon: product
@@ -50,6 +51,7 @@ sources:
             interval: On-iteration / daily sync
   - name: ERP & Supply
     icon: erp
+    simplified: 2
     tiles:
       - name: Infor CloudSuite Fashion
         icon: erp
@@ -85,6 +87,7 @@ sources:
             volume: hundreds of events/sec
             interval: Continuous CDC
       - name: Blue Yonder WMS
+        core: true
         icon: stream
         summary: Warehouse execution, pick paths and store replenishment.
         citations:
@@ -140,6 +143,7 @@ sources:
             volume: thousands of events/sec at peak
             interval: Continuous clickstream + orders
       - name: Oracle Xstore POS
+        core: true
         icon: market
         summary: Store transactions, associates and endless aisle lookups.
         citations:
@@ -160,6 +164,7 @@ sources:
             interval: Continuous (near real-time)
   - name: Manufacturing
     icon: zplug
+    simplified: 2
     tiles:
       - name: Lectra Fashion
         icon: zplug
@@ -254,6 +259,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'X12 EDI'
         icon: zbraces
@@ -282,6 +288,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: Edited Retail Intel
         icon: market
@@ -371,6 +378,7 @@ pipelines:
           - Demand Sensing
           - Size Curve Optimization
       - name: Planning & Allocation
+        core: true
         mark: Model Serving
         summary: Open-to-buy, size curves and replenishment against demand forecasts, balancing receipt plans, in-stock rate and markdown liability.
         uses:
@@ -531,6 +539,7 @@ consumers:
         icon: stream
         summary: Door-level allocations pushed to WMS before pick waves.
       - name: Price & Markdown
+        core: true
         icon: market
         summary: Markdown recommendations written to POS and commerce.
         citations:
@@ -547,6 +556,7 @@ consumers:
         icon: gavel
         summary: Digital product passport attributes assembled from PLM and supply chain.
       - name: Modern Slavery Reports
+        core: true
         icon: share
         summary: Supplier audit status filed from governed facility data.
         citations:
@@ -558,6 +568,7 @@ consumers:
         icon: product
         summary: Style and sell-through products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Wholesale partners reading inventory via Delta Sharing.
   - name: Databricks Apps
@@ -650,10 +661,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

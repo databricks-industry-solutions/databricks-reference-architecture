@@ -64,9 +64,9 @@
    "1235",
    "3406",
    "1231",
-   "1230",
    "1232",
-   "1745"
+   "1745",
+   "1744"
   ]
  },
  "byProduct": {
@@ -187,18 +187,6 @@
    "roles": [],
    "slug": "introduction-to-python-for-data-science-and-data-engineering",
    "t": "Introduction to Python for Data Science and Data Engineering"
-  },
-  "1230": {
-   "langs": {
-    "en": "https://customer-academy.databricks.com/learn/course/1230/databricks-platform-administration-fundamentals"
-   },
-   "level": "Introductory",
-   "rank": 0,
-   "roles": [
-    "Platform Administrator"
-   ],
-   "slug": "databricks-platform-administration-fundamentals",
-   "t": "Databricks Platform Administration Fundamentals"
   },
   "1231": {
    "langs": {
@@ -337,6 +325,18 @@
    ],
    "slug": "aws-databricks-networking-and-security-fundamentals",
    "t": "AWS Databricks Networking and Security Fundamentals"
+  },
+  "1744": {
+   "langs": {
+    "en": "https://customer-academy.databricks.com/learn/course/1744/gcp-databricks-platform-administration-fundamentals"
+   },
+   "level": "Introductory",
+   "rank": 0,
+   "roles": [
+    "Platform Administrator"
+   ],
+   "slug": "gcp-databricks-platform-administration-fundamentals",
+   "t": "GCP Databricks Platform Administration Fundamentals"
   },
   "1745": {
    "langs": {
@@ -511,6 +511,8 @@
   "2967": {
    "langs": {
     "en": "https://customer-academy.databricks.com/learn/course/2967/databricks-performance-optimization",
+    "es": "https://customer-academy.databricks.com/learn/course/7414/databricks-performance-optimization-spanish",
+    "fr": "https://customer-academy.databricks.com/learn/course/7413/databricks-performance-optimization-french",
     "ja": "https://customer-academy.databricks.com/learn/course/3079/databricks-performance-optimization-japanese",
     "ko": "https://customer-academy.databricks.com/learn/course/3081/databricks-performance-optimization-korean",
     "pt-br": "https://customer-academy.databricks.com/learn/course/3080/databricks-performance-optimization-portuguese-br"
@@ -895,7 +897,7 @@
    "t": "Get Started with Databricks Apps"
   }
  },
- "generated": "2026-10-21",
+ "generated": "2026-10-30",
  "levels": [
   "Introductory",
   "Onboarding",

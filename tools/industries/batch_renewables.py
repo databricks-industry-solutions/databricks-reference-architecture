@@ -38,7 +38,7 @@ INDUSTRIES_BATCH_RENEWABLES = {
                             "iot",
                             "The operational historian of record: high-frequency SCADA and PPC time-series from every turbine, inverter and plant controller, the source of availability and performance signals.",
                             "pi",
-                            cat="Process/Time-Series Historian",
+                            cat="Process / Time-Series Historian",
                             what="Stores high-frequency SCADA and plant-controller time-series from every turbine, inverter and site controller as the operational system of record for availability and performance.",
                             users="Performance engineers, reliability engineers and production analysts.",
                             data_out=data_out(
@@ -188,7 +188,7 @@ INDUSTRIES_BATCH_RENEWABLES = {
                     "ic": "network",
                     "tiles": [
                         tile(
-                            "Revenue Meters/MDM",
+                            "Revenue Meters / MDM",
                             "db",
                             "Certified revenue-grade meter reads and the meter data management estate, the billed basis for generation, export and settlement.",
                             cat="Revenue Metering / MDM",
@@ -524,7 +524,7 @@ INDUSTRIES_BATCH_RENEWABLES = {
                               "Which sites show the largest soiling or degradation losses?",
                               "What is fleet performance ratio by technology and OEM?"]),
                     genie("Trading & PPA", "Explore positions, forecast generation, imbalance and PPA settlement across the portfolio.",
-                          feeds=["ION Commodities ETRM", "ICE Power Markets", "ERCOT / CAISO", "Revenue Meters/MDM"],
+                          feeds=["ION Commodities ETRM", "ICE Power Markets", "ERCOT / CAISO", "Revenue Meters / MDM"],
                           teams=["Energy Trading", "PPA Origination", "Battery Schedulers"],
                           questions=[
                               "What is our open position by node for tomorrow?",

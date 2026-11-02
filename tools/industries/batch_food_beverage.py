@@ -100,7 +100,7 @@ INDUSTRIES_BATCH_FOOD_BEVERAGE = {
                          users="Sales & Marketing, Supply Chain and Insights teams.",
                          data_out=data_out(
                              batch=flow(["structured"], "2-10 GB/week", "Weekly / monthly syndicated feed"))),
-                    tile("Circana/IRI Panel", "chart", "Household panel and causal analytics for category and brand performance.", "circana",
+                    tile("Circana / IRI Panel", "chart", "Household panel and causal analytics for category and brand performance.", "circana",
                          cat="Consumer Panel / Consumption Data",
                          what="Provides household-panel and causal analytics for category and brand performance used in promotion and share analysis.",
                          users="Sales & Marketing, Category and Insights teams.",
@@ -231,7 +231,7 @@ INDUSTRIES_BATCH_FOOD_BEVERAGE = {
                           "What is days of supply and short-dated risk by SKU?",
                           "Which shipments are at risk of missing the delivery window?"]),
                 genie("Commercial & Trade", "Ask about promotion ROI, share and distribution across retailers.",
-                      feeds=["NielsenIQ POS", "Circana/IRI Panel", "Trade Promotion Mgmt"],
+                      feeds=["NielsenIQ POS", "Circana / IRI Panel", "Trade Promotion Mgmt"],
                       teams=["Sales & Marketing", "Supply Chain", "CEO & COO"],
                       questions=[
                           "Which promotions drove incremental volume versus base?",

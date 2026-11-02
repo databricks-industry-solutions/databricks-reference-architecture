@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 const { chromium } = require('playwright');
-const { serve, boardReady } = require('./lib_serve');
+const { serve, boardReady, withView } = require('./lib_serve');
 
 const results = [];
 function check(name, cond, detail) { results.push({ name, ok: !!cond, detail }); console.log((cond ? 'PASS ' : 'FAIL ') + name + (detail ? ' :: ' + detail : '')); }
@@ -11,12 +11,12 @@ function check(name, cond, detail) { results.push({ name, ok: !!cond, detail });
   const base = 'http://127.0.0.1:' + server.address().port + '/index.html';
   const browser = await chromium.launch();
   const errors = [];
-  const open = async (q, width) => {
+  const open = async (q, width, view) => {
     const ctx = await browser.newContext({ viewport: { width: width || 1600, height: 1000 } });
     await ctx.addInitScript(() => { try { localStorage.setItem('dbx-arch-tour-v1', '1'); } catch (e) {} });
     const page = await ctx.newPage();
     page.on('pageerror', e => errors.push(e.message));
-    await page.goto(base + q, { waitUntil: 'networkidle' });
+    await page.goto(withView(base + q, view || 'detailed'), { waitUntil: 'networkidle' });
     await boardReady(page);
     await page.waitForTimeout(500);
     return { ctx, page };
@@ -83,6 +83,27 @@ function check(name, cond, detail) { results.push({ name, ok: !!cond, detail });
         qatar.serverless === true && qatar.serving === true && qatar.uc === false && qatar.westServerless === false, JSON.stringify(qatar));
     }
     await ctx.close();
+  }
+
+  {
+    const rowsIn = async (view) => {
+      const { ctx, page } = await open('?cloud=azure', null, view);
+      await page.click('#region-btn');
+      await page.click('#region-menu button[data-region="qatarcentral"]');
+      await page.waitForTimeout(300);
+      const r = await page.evaluate(() => {
+        const dimmed = n => { const a = [...document.querySelectorAll('.atom')].find(x => byId[x.dataset.id] && byId[x.dataset.id].tile.n === n); return a ? a.classList.contains('rg-off') : null; };
+        return { simple: document.body.classList.contains('view-simple'), open: !!document.querySelector('#d-body .rg-table'),
+          rows: regionRowsNow.map(x => x.n + '|' + x.avail).sort().join('\n'), serving: dimmed('Model Serving'), uc: dimmed('Unity Catalog') };
+      });
+      await ctx.close();
+      return r;
+    };
+    const s = await rowsIn('simple'), d = await rowsIn('detailed');
+    check('Simplified, the default view: Qatar Central dims Model Serving, keeps Unity Catalog lit and opens the region panel',
+      s.simple && !d.simple && s.open && s.serving === true && s.uc === false, JSON.stringify({ simple: s.simple, open: s.open, serving: s.serving, uc: s.uc }));
+    check('the region panel lists the same rows with the same availability in Simplified and Detailed', s.rows === d.rows && s.rows.length > 0,
+      s.rows.split('\n').length + ' vs ' + d.rows.split('\n').length);
   }
 
   const DOCS_OF = { aws: ['https://docs.databricks.com/aws/en/'], gcp: ['https://docs.databricks.com/gcp/en/'],

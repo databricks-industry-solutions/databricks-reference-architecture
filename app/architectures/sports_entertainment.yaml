@@ -3,6 +3,7 @@ description: 'Teams, venues and media rights: ticketing and fan engagement, game
 sources:
   - name: Ticketing & CRM
     icon: erp
+    simplified: 3
     tiles:
       - name: Ticketmaster Archtics
         icon: erp
@@ -24,6 +25,7 @@ sources:
             volume: thousands of scans/sec at ingress
             interval: Continuous on event day
       - name: Salesforce Marketing Cloud
+        core: true
         icon: custlake
         summary: Fan profiles, membership tiers, service cases and campaign responses.
         citations:
@@ -89,6 +91,7 @@ sources:
             volume: thousands of events/sec at peak
             interval: Continuous on event day
       - name: Catapult Sports
+        core: true
         icon: iot
         summary: 'GPS and IMU player tracking: load, sprint distance and injury risk flags.'
         citations:
@@ -109,7 +112,22 @@ sources:
             interval: Continuous during sessions
   - name: Broadcast & OTT
     icon: partner
+    simplified: 2
     tiles:
+      - name: Deltatre OTT Platform
+        icon: api
+        summary: Streaming concurrency, start-over and device telemetry for direct-to-consumer.
+        citations:
+          - deltatre
+        category: OTT Streaming Platform
+        what_it_is: Delivers direct-to-consumer streaming and emits concurrency, start-over and device telemetry for engagement.
+        who_uses_it: Direct-to-consumer, Digital product and Audience teams.
+        data_out:
+          stream:
+            types:
+              - semi-structured
+            volume: tens of thousands of events/sec at peak
+            interval: Continuous during streams
       - name: Grabyo Clipping
         icon: stream
         summary: Live clipping, highlights and social publishing from broadcast feeds.
@@ -125,20 +143,6 @@ sources:
               - unstructured
             volume: high-bitrate clips + metadata
             interval: Continuous during broadcast
-      - name: Deltatre OTT Platform
-        icon: api
-        summary: Streaming concurrency, start-over and device telemetry for direct-to-consumer.
-        citations:
-          - deltatre
-        category: OTT Streaming Platform
-        what_it_is: Delivers direct-to-consumer streaming and emits concurrency, start-over and device telemetry for engagement.
-        who_uses_it: Direct-to-consumer, Digital product and Audience teams.
-        data_out:
-          stream:
-            types:
-              - semi-structured
-            volume: tens of thousands of events/sec at peak
-            interval: Continuous during streams
       - name: Nielsen Sports
         icon: chart
         summary: TV and digital audience measurement for rights valuation.
@@ -155,6 +159,7 @@ sources:
             interval: Daily / weekly measurement
   - name: Sponsorship & Ads
     icon: market
+    simplified: 2
     tiles:
       - name: SponsorUnited
         icon: partner
@@ -219,6 +224,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'SportsML'
         icon: zbraces
@@ -244,6 +250,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: Stats Perform Feeds
         icon: api
@@ -328,6 +335,7 @@ pipelines:
           - Event Attendance & Revenue
           - Fan Churn Prediction
       - name: Fan Engagement
+        core: true
         mark: CustomerLake
         summary: CRM teams on membership growth, churn before renewal and personalised offers scored on spend stitched across ticketing and concessions.
         uses:
@@ -436,6 +444,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -453,6 +462,7 @@ consumers:
         icon: api
         summary: Personalised upsell and parking offers served in the team app.
       - name: Sponsor Reporting API
+        core: true
         icon: share
         summary: Activation proof and impression delivery to sponsors over Delta Sharing.
       - name: Broadcaster Data Feed
@@ -494,6 +504,7 @@ consumers:
         icon: product
         summary: Fan and performance products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: League partners reading live attendance via Delta Sharing.
   - name: Databricks Apps
@@ -586,10 +597,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

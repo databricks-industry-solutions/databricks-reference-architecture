@@ -133,6 +133,7 @@ sources:
             volume: hundreds of events/sec
             interval: Continuous safety events
       - name: Lift Sensors & RFID
+        core: true
         icon: partner
         summary: Automated lift counts and container identification on trucks.
         citations:
@@ -164,6 +165,7 @@ sources:
             volume: 0.5-2 GB/day tickets
             interval: Continuous tickets + daily batch
       - name: Landfill Gas Monitor
+        core: true
         icon: iot
         summary: Gas extraction, flare and wellfield readings for compliance.
         citations:
@@ -178,6 +180,7 @@ sources:
             volume: tens-hundreds of readings/sec
             interval: Continuous wellfield monitoring
       - name: Machinex MRF SCADA
+        core: true
         icon: stream
         summary: Material recovery throughput, contamination and bale weights.
         citations:
@@ -242,6 +245,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'EPA Waste Manifest'
         icon: zbraces
@@ -292,6 +296,7 @@ cloud_integrations:
             volume: MBs-GBs
             interval: Monthly / quarterly filings
       - name: Recycling Market Indices
+        core: true
         icon: market
         summary: Commodity bale price indices for MRF revenue planning.
         category: Commodity Price Index Provider
@@ -349,6 +354,7 @@ pipelines:
           - Fleet Predictive Maintenance
           - Driver & Workforce Safety
       - name: Disposal & MRF
+        core: true
         mark: Apps
         summary: Landfill and MRF managers on remaining airspace, throughput and commodity revenue, balancing inbound tons against permitted daily capacity.
         uses:
@@ -476,6 +482,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -495,6 +502,7 @@ consumers:
         citations:
           - amcs
       - name: Municipal Reporting API
+        core: true
         icon: share
         summary: Diversion and tonnage reports shared to city contracts over Delta Sharing.
         citations:
@@ -540,6 +548,7 @@ consumers:
         icon: product
         summary: Diversion and route performance products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Municipal clients reading live tonnage via Delta Sharing.
   - name: Databricks Apps
@@ -632,10 +641,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

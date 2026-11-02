@@ -53,7 +53,7 @@ INDUSTRIES_BATCH_CHEMICAL_MFG = {
                 ]},
                 {"box": "MES & Historian", "ic": "iot", "tiles": [
                     tile("AVEVA PI System", "iot", "Historian tags, events and asset framework.", "aveva-pi",
-                         cat="Process/Time-Series Historian",
+                         cat="Process / Time-Series Historian",
                          what="Collects historian tags, events and the asset framework underpinning batch analytics, OEE and reliability.",
                          users="Process engineering, reliability and Data science.",
                          data_out=data_out(
@@ -234,7 +234,7 @@ INDUSTRIES_BATCH_CHEMICAL_MFG = {
                 ]},
                 {"box": "Operational Writeback", "ic": "opdb", "tiles": [
                     tile("Setpoint Advisor", "gauge", "Optimized setpoints pushed to DCS within guardrails."),
-                    tile("Batch Hold/Release", "gavel", "Quality holds propagated to MES and warehouse.", "opcenter-psm"),
+                    tile("Batch Hold / Release", "gavel", "Quality holds propagated to MES and warehouse.", "opcenter-psm"),
                     tile("Maintenance Work Orders", "zplug", "Predicted failures raised in Maximo.", "maximo"),
                 ]},
                 {"box": "Regulatory & Reporting", "ic": "gavel", "tiles": [

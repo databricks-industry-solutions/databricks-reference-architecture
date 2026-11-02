@@ -40,6 +40,7 @@ sources:
             volume: 0.5-3 GB/day metadata + proxies
             interval: Daily
       - name: Imagine Nexio
+        core: true
         icon: iot
         summary: Channel playout automation, primary and backup chain state and splice events.
         citations:
@@ -71,6 +72,7 @@ sources:
             volume: 10-100k play events/sec
             interval: Continuous
       - name: Conviva Experience
+        core: true
         icon: observ
         summary: Startup time, rebuffering and device-level QoE for every stream session.
         citations:
@@ -85,6 +87,7 @@ sources:
             volume: 50k-500k QoE events/sec
             interval: Continuous
       - name: Zuora Media
+        core: true
         icon: market
         summary: Subscription plans, renewals and billing events for direct-to-consumer offers.
         citations:
@@ -105,6 +108,7 @@ sources:
             interval: Continuous CDC
   - name: Ad Sales & Traffic
     icon: market
+    simplified: 3
     tiles:
       - name: WideOrbit WO Traffic
         icon: market
@@ -121,6 +125,7 @@ sources:
             volume: 1-3 GB/day
             interval: Hourly / nightly
       - name: FreeWheel Ad Server
+        core: true
         icon: stream
         summary: Dynamic ad insertion, pod structure and impression delivery on streaming inventory.
         citations:
@@ -180,6 +185,7 @@ sources:
             volume: 0.5-3 GB/day
             interval: Daily
       - name: Rightsline
+        core: true
         icon: gavel
         summary: Title rights, windows and territory restrictions governing what can air where.
         citations:
@@ -212,6 +218,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'MXF'
         icon: zbraces
@@ -336,6 +343,7 @@ pipelines:
           - Personalised Recommend
           - Audience Measurement
       - name: Ad Sales
+        core: true
         mark: CustomerLake
         summary: Upfront guarantees, scatter pricing and makegood liability when delivery under-runs against the reach and frequency by demo the desk sold.
         uses:
@@ -487,6 +495,7 @@ consumers:
         citations:
           - wideorbit
       - name: Playout Playlist
+        core: true
         icon: stream
         summary: Approved schedules pushed to automation after rights clearance.
         citations:
@@ -505,6 +514,7 @@ consumers:
         citations:
           - dalet
       - name: Agency Data Feeds
+        core: true
         icon: api
         summary: Post-campaign delivery and reach files served from governed products not email.
         citations:
@@ -528,6 +538,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Agencies, studios and platforms reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
@@ -620,10 +631,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

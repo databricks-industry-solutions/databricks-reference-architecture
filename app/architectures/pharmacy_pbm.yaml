@@ -3,6 +3,7 @@ description: 'Retail, mail and specialty pharmacies and the pharmacy benefit man
 sources:
   - name: Pharmacy Systems
     icon: erp
+    simplified: 2
     tiles:
       - name: McKesson EnterpriseRx
         icon: erp
@@ -142,6 +143,7 @@ sources:
             interval: Continuous (network)
   - name: Formulary & Pricing
     icon: sheet
+    simplified: 2
     tiles:
       - name: First Databank FDB
         icon: db
@@ -172,6 +174,7 @@ sources:
             volume: GBs (drug reference + pricing)
             interval: Weekly / on release
       - name: Model N Rebates
+        core: true
         icon: market
         summary: 'Revenue and rebate management: manufacturer rebate contracts, formulary rebate accrual and payment reconciliation.'
         citations:
@@ -262,6 +265,7 @@ sources:
             interval: Daily split-billing cycle
   - name: Wholesale & Dispensing
     icon: compute
+    simplified: 4
     tiles:
       - name: Cencora Supply
         icon: storage
@@ -345,6 +349,7 @@ sources:
         summary: 'NCPDP Telecommunication standard for real-time pharmacy claim adjudication.'
         spec_url: https://www.ncpdp.org/Standards-Development/Standards-Information
       - name: 'NCPDP SCRIPT'
+        core: true
         icon: zbraces
         fmt: 'SCRP'
         summary: 'NCPDP SCRIPT standard for electronic prescribing between prescribers and pharmacies.'
@@ -455,6 +460,7 @@ pipelines:
           - Medication Adherence
           - Formulary Management
       - name: Network Pricing
+        core: true
         mark: AI/BI
         summary: Network contracting on pharmacy reimbursement, the pricing team on MAC lists and AWP, and underwriting on client pricing guarantees and effective rate.
         uses:
@@ -479,7 +485,7 @@ pipelines:
         mark: Lakehouse//RT
         summary: Retail pharmacy operations on dispensing workflow and throughput, mail and specialty on fulfillment and patient support, and inventory on stock, replenishment and 340B accumulation.
         uses:
-          - - Pharmacy management system
+          - - Dispensing Queue
             - Fill volume, wait time and out-of-stock risk monitored in the external pharmacy-management workspace.
           - - Lakehouse//RT
             - Live dispensing and inventory state at the latency a pharmacy moves at.
@@ -571,6 +577,7 @@ consumers:
         icon: globe
         summary: Net cost, utilization and guarantee attainment shared to plan sponsors and consultants over governed access.
       - name: Manufacturer Share
+        core: true
         icon: share
         summary: Rebate-eligible utilization and market data shared to manufacturers over Delta Sharing without a copy.
       - name: Provider Exchange
@@ -608,10 +615,12 @@ consumers:
         icon: product
         summary: Published, contracted claims and rebate products discoverable in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Plan sponsors, manufacturers and covered entities reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Rebate Cockpit
         icon: market
@@ -631,6 +640,7 @@ consumers:
         summary: Claims, prescriber and pharmacy behaviour scored for fraud, waste and abuse so special investigations work the highest-value cases first.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Rebate & Net Cost
         icon: aibi
@@ -700,10 +710,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

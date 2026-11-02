@@ -1,6 +1,6 @@
 # Databricks Reference Architecture
 
-An interactive reference architecture for the Databricks Data + AI Platform, specialised for
+An interactive reference architecture for the Databricks Data + AI Platform, specialized for
 seventy industries on Azure, AWS and GCP, in sixteen languages. Click any box to see what it
 is, who uses it and where it runs, then export the board as a deck or an editable diagram.
 
@@ -13,7 +13,7 @@ is, who uses it and where it runs, then export the board as a deck or an editabl
 ### Seventy industries
 
 - **Seventy industries** plus the Standard Reference Architecture, in a searchable picker. Each
-  one specialises the sources, ingestion, teams, consumers, use cases and apps; the platform in
+  one specializes the sources, ingestion, teams, consumers, use cases and apps; the platform in
   the middle stays the same.
 - **Every board** carries ten use cases, four Genie Agents, four AI/BI dashboards and four
   Databricks Apps written for that industry. Use cases with a Databricks customer story come first.
@@ -23,6 +23,21 @@ is, who uses it and where it runs, then export the board as a deck or an editabl
   its standards body.
 
 ![Six of the seventy boards: banking, healthcare, manufacturing, telecommunications, electric utility and retail](docs/six-industries.gif)
+
+### Simplified or Detailed
+
+- **Simplified**, the default, keeps what you need to read the industry: the first entries of
+  each group, the systems the industry can't be read without, such as a bank's core
+  banking system or a hospital's electronic health record, the use cases with Databricks customer
+  stories, and the cloud services for storage, identity, the catalog, model providers, BI, ETL and
+  streaming.
+- **Detailed** adds everything else: the remaining sources, teams, consumers, use cases and cloud
+  services, including CI/CD, monitoring, operational stores and orchestrators, with their captions,
+  capability tags and descriptions.
+- The Databricks Platform in the middle shows the same products in both views. Your choice is
+  remembered, a shared link opens in the same view, and every export follows what is on screen.
+  A Simplified PowerPoint or PDF sets the platform's names one step larger and the Genie and
+  Agent Bricks chips at 7pt, so they read at page size.
 
 ### Click any box
 
@@ -60,7 +75,8 @@ is, who uses it and where it runs, then export the board as a deck or an editabl
   pass WCAG AA, and light or dark.
 - **Highlights** mark the boxes that carry a customer story, connector, tour, demo, course,
   certification, video or solution accelerator.
-- Live data flows, a platform zoom, a docked details panel, a guided tour and a feedback form.
+- Live data flows, a platform zoom, a docked details panel, a guided tour and a feedback form. The
+  Options menu holds the platform shape, language, palette, tour and dock.
 
 ![Switching the banking board to Arabic](docs/language.gif)
 
@@ -69,7 +85,7 @@ is, who uses it and where it runs, then export the board as a deck or an editabl
 - **Links:** every option is in the address bar, so a copied link reopens the same board, and
   each industry shares with its own preview card.
 - **Decks:** PDF and PowerPoint, with a contents page, the board, and a page for each use case,
-  Genie Agent, dashboard and app. The PowerPoint ends with an editable copy of the board.
+  Genie Agent, dashboard and app. In the PowerPoint, the board is built from editable shapes.
 - **Files:** PNG, an animated GIF, standalone HTML, editable draw.io, Visio, SVG and Excalidraw,
   and a YAML descriptor you can edit and import back.
 - **Your own copy:** Edit clones a board into a tab of your own to rework and export. Tabs and
@@ -157,7 +173,7 @@ app/
   architectures/           one YAML board per industry (70) plus manifest.json, fetched on demand
   resources/               reference tables as JSON: accelerators, tile aliases, connectors, links,
                            references, regions, release stages, Academy courses, certifications and
-                           platform doc catalogues, plus each cloud's service icons (resources/logos/)
+                           platform doc catalogs, plus each cloud's service icons (resources/logos/)
   translations/            one folder per language (English source plus fifteen), fetched on demand
   assets/                  the Databricks mark, the default share cover, and per-industry cards (assets/og/)
   share/                   per-industry, per-cloud share stubs (280) that unfurl a preview card
@@ -169,7 +185,7 @@ docs/                      the GIFs in this README, recorded by tools/readme_gif
 tools/                     generators and gates: palettes (palgen.py), product marks and cloud logos (markgen.py),
                            the installer (build_installer.py), region data (scrape_regions.py),
                            release stages and connectors (scrape_stages.py), the Academy,
-                           certification and demo catalogues (build_academy.py,
+                           certification and demo catalogs (build_academy.py,
                            build_certifications.py, build_demos.py), the platform and content
                            refreshes (refresh_public_data.py, refresh_content.py with
                            refresh_videos.py), the outcome-map use-case list (outcome_map.json),

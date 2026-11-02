@@ -24,6 +24,7 @@ sources:
             volume: 1-5k events/sec at peak
             interval: Continuous (near real-time)
       - name: Sabre / Travelport GDS
+        core: true
         icon: globe
         summary: Global distribution systems carrying agency and OTA bookings, ticket coupons and schedule feeds into the airline estate.
         citations:
@@ -43,6 +44,7 @@ sources:
             volume: hundreds of messages/sec
             interval: Continuous message flow
       - name: PROS Revenue Management
+        core: true
         icon: market
         summary: Origin and destination forecasting, bid price and availability control. Supplies the demand forecasts and fare class recommendations the commercial team prices against.
         citations:
@@ -88,6 +90,7 @@ sources:
             volume: 1-5 GB/day schedule + rotation data
             interval: Nightly batch + planning-cycle refresh
       - name: AIMS Crew Management
+        core: true
         icon: people
         summary: Crew pairing, rostering, qualifications and flight time limitation tracking, the source of legality and standby state.
         citations:
@@ -143,6 +146,7 @@ sources:
             volume: hundreds of milestone events/sec
             interval: Continuous (near real-time)
       - name: ACARS / OOOI Messages
+        core: true
         icon: stream
         summary: Out, Off, On and In movement messages from the aircraft, the ground truth for block and air times and for delay attribution.
         citations:
@@ -225,6 +229,7 @@ sources:
             volume: 1-10k parameters/sec in flight
             interval: Continuous during flight
       - name: CHAMP Cargospot
+        core: true
         icon: product
         summary: 'Air cargo management: air waybills, ULD build-up, capacity and revenue for the freight side of the operation.'
         citations:
@@ -261,6 +266,7 @@ sources:
             volume: 1-5 GB per settlement cycle
             interval: Scheduled BSP settlement cycles
       - name: Loyalty & FFP
+        core: true
         icon: custlake
         summary: Frequent flyer accruals, redemptions, tier status and partner earn, the profile every personalised offer is scored against.
         category: Frequent Flyer / Loyalty Platform
@@ -325,6 +331,7 @@ sources:
         summary: 'IATA Aviation Information Data Exchange for real-time flight status and movement messaging.'
         spec_url: https://www.iata.org/en/publications/info-data-exchange/
       - name: 'SSIM'
+        core: true
         icon: zbraces
         fmt: 'SSIM'
         summary: 'IATA Standard Schedules Information Manual format for exchanging flight schedules.'
@@ -413,7 +420,7 @@ pipelines:
             - The forecast, override history and revenue at risk on a flight before a bid price is touched.
           - - Continuous Pricing & NDC
             - Offers priced per shopping request rather than against a filed fare ladder.
-          - - Loyalty & Ancillary
+          - - Ancillary Merchandising
             - Seats, bags and lounge access merchandised per passenger against the loyalty profile.
           - - Model Serving
             - Demand and willingness-to-pay models scored inside the offer path.
@@ -445,6 +452,7 @@ pipelines:
         ucs:
           - Network & Fleet Planning
       - name: Operations Control
+        core: true
         mark: Lakehouse//RT
         summary: Duty managers in the operations control centre on a disrupted day; ground and ramp teams on turnaround and baggage milestones; customer operations on IROPS rebooking and compensation.
         uses:
@@ -514,7 +522,7 @@ pipelines:
         summary: Demand, willingness-to-pay, disruption recovery and remaining-useful-life models, and whether they still hold six months after deployment.
         uses:
           - - Feature Store
-            - Features defined once and read identically in training and serving.
+            - Features defined once from tables, streams or request-time data, and read identically in training and serving.
           - - MLflow
             - Every run tracked for audit and reproduction.
           - - Model Serving
@@ -554,6 +562,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart
@@ -566,6 +575,7 @@ consumers:
         summary: Notebooks, VS Code and JetBrains against governed data and Genie Code.
   - name: Distribution & Partners
     icon: partner
+    simplified: 3
     tiles:
       - name: NDC Offer & Order API
         icon: api
@@ -573,6 +583,7 @@ consumers:
         citations:
           - ndc
       - name: Interline & Codeshare
+        core: true
         icon: partner
         summary: Partner carriers reading schedule, availability and disruption state over Delta Sharing rather than nightly file exchange.
       - name: Airport A-CDM Partners
@@ -589,6 +600,7 @@ consumers:
         citations:
           - amadeus-altea
       - name: AMOS Work Orders
+        core: true
         icon: erp
         summary: Predicted component removals raised as maintenance work orders against the tail, in the system engineering already works in.
         citations:
@@ -614,6 +626,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Lessors, maintenance partners and alliance members reading live tables, reducing separately maintained extracts and duplication, with recipient access and reuse scoped by agreements.
   - name: Databricks Apps
@@ -705,10 +718,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         short: 3rd-party harness
         icon: code
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         short: 3rd-party harness
         icon: code
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

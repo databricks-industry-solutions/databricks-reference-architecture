@@ -174,14 +174,14 @@
    "u": "https://www.databricks.com/learn/certification/context-engineer-associate"
   },
   "data-analyst-associate": {
-   "guide": "https://www.databricks.com/sites/default/files/2025-10/databricks-certified-data-analyst-associate-oct-2025.pdf",
+   "guide": "https://www.databricks.com/sites/default/files/2026-10/Databricks-Certified-Data-Analyst-Associate-Exam-Guide-August-2026.pdf",
    "kind": "Certification",
    "level": "Associate",
    "t": "Databricks Certified Data Analyst Associate",
    "u": "https://www.databricks.com/learn/certification/data-analyst-associate"
   },
   "data-engineer-associate": {
-   "guide": "https://www.databricks.com/sites/default/files/2026-05/databricks-certified-data-engineer-associate-exam-guide-may-2026-000.pdf",
+   "guide": "https://www.databricks.com/sites/default/files/2026-10/Databricks-Certified-Data-Engineer-Associate-Exam-Guide-August-2026.pdf",
    "kind": "Certification",
    "level": "Associate",
    "t": "Databricks Certified Data Engineer Associate",
@@ -249,6 +249,6 @@
    "u": "https://www.databricks.com/learn/certification/databricks-on-gcp"
   }
  },
- "generated": "2026-10-21",
+ "generated": "2026-10-30",
  "source": "https://www.databricks.com/learn/certification"
 }

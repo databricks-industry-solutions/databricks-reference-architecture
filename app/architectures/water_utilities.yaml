@@ -3,6 +3,7 @@ description: 'Municipal and investor-owned water and wastewater utilities: SCADA
 sources:
   - name: CIS & Billing
     icon: erp
+    simplified: 2
     tiles:
       - name: Oracle Utilities C2M
         icon: erp
@@ -59,7 +60,7 @@ sources:
         summary: Historian for pumps, tanks, pressure and flow across the distribution network.
         citations:
           - aveva-pi
-        category: Process/Time-Series Historian
+        category: Process / Time-Series Historian
         what_it_is: Stores pump, tank, pressure and flow tags across the distribution network as the operational time-series system of record.
         who_uses_it: Control-room operators, pump & energy leads and hydraulic modellers.
         data_out:
@@ -74,6 +75,7 @@ sources:
             volume: 10-100k tags/sec
             interval: Continuous (sub-second)
       - name: Ignition SCADA
+        core: true
         icon: iot
         summary: Plant and remote site SCADA for treatment and pumping stations.
         citations:
@@ -103,6 +105,7 @@ sources:
             interval: Continuous telemetry
   - name: AMI & Metering
     icon: iot
+    simplified: 2
     tiles:
       - name: Itron OpenWay
         icon: iot
@@ -175,6 +178,7 @@ sources:
             volume: 5-20 GB network model
             interval: Daily / weekly model syncs
       - name: IBM Maximo
+        core: true
         icon: erp
         summary: Asset registry, work orders and preventive maintenance for treatment plants.
         citations:
@@ -271,6 +275,7 @@ sources:
           - 'KISTERS'
           - 'Aquatic Informatics'
       - name: 'EPANET INP'
+        core: true
         icon: zbraces
         fmt: 'INP'
         summary: 'EPA EPANET input file format for water distribution network models.'
@@ -411,6 +416,7 @@ pipelines:
           - Pump & Plant Reliability
           - Financial Analytics
       - name: Water Quality
+        core: true
         mark: Lakeflow
         summary: Quality teams on sample results, regulatory exceedances and public notification, tying lab and sensor data to limits before a deadline.
         uses:
@@ -499,6 +505,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -534,6 +541,7 @@ consumers:
         citations:
           - aveva-pi
       - name: Field Work Orders
+        core: true
         icon: apps
         summary: Leak repair and meter exchange orders dispatched to crews.
         citations:
@@ -563,6 +571,7 @@ consumers:
         icon: product
         summary: Network and quality products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Regional agencies reading live flow via Delta Sharing.
   - name: Databricks Apps
@@ -655,10 +664,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

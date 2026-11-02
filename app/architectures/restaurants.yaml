@@ -3,6 +3,7 @@ description: 'Restaurant and foodservice operators: POS and kitchen execution, i
 sources:
   - name: POS & Kitchen
     icon: market
+    simplified: 3
     tiles:
       - name: NCR Aloha POS
         icon: market
@@ -53,6 +54,7 @@ sources:
             interval: Continuous (kitchen events)
   - name: Back Office & ERP
     icon: erp
+    simplified: 3
     tiles:
       - name: Restaurant365
         icon: erp
@@ -98,6 +100,7 @@ sources:
             interval: Nightly batch + period close
   - name: Labor & Scheduling
     icon: people
+    simplified: 2
     tiles:
       - name: HotSchedules
         icon: people
@@ -143,6 +146,7 @@ sources:
             interval: Daily sync
   - name: Delivery & Loyalty
     icon: partner
+    simplified: 2
     tiles:
       - name: DoorDash Marketplace
         icon: partner
@@ -175,6 +179,7 @@ sources:
             volume: 1-3 GB/day
             interval: Hourly orders + daily payouts
       - name: Paytronix Loyalty
+        core: true
         icon: custlake
         summary: Guest profiles, offers redeemed and visit frequency.
         citations:
@@ -482,6 +487,7 @@ consumers:
         citations:
           - r365
       - name: Delivery Platform API
+        core: true
         icon: api
         summary: Menu availability and prep times synced to marketplaces from governed store state.
         citations:
@@ -507,6 +513,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Franchisees, auditors and partners reading live tables with no copy.
   - name: Databricks Apps
@@ -599,10 +606,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

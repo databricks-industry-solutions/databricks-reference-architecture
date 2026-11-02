@@ -93,13 +93,13 @@ INDUSTRIES_BATCH_MANUFACTURING = {
                     ]},
                 {"box": "IoT & Historians", "ic": "iot", "tiles": [
                         tile("AVEVA PI System", "iot", "High-frequency sensor and actuator tags from lines, utilities and environmental systems.", "aveva-pi",
-                             cat="Process/Time-Series Historian",
+                             cat="Process / Time-Series Historian",
                              what="Collects high-frequency sensor and actuator tags from lines, utilities and environmental systems for OEE, energy and anomaly analytics.",
                              users="Reliability engineers, Process engineering and Energy management.",
                              data_out=data_out(
                                  stream=flow(["semi-structured"], "10-100k tags/sec", "Continuous historian stream"))),
                         tile("AspenTech IP.21", "stream", "Process historian data for batch analytics, energy intensity and abnormal event detection.", "aspen-ip21",
-                             cat="Process/Time-Series Historian",
+                             cat="Process / Time-Series Historian",
                              what="Stores process historian time-series for batch analytics, energy intensity and abnormal-event detection at process sites.",
                              users="Process engineers, batch analytics and Energy teams.",
                              data_out=data_out(

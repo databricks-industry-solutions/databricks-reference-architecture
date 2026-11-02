@@ -3,6 +3,7 @@ description: 'Game studios and publishers: player lifecycle, in-game economy and
 sources:
   - name: Game Engines & Telemetry
     icon: iot
+    simplified: 4
     tiles:
       - name: Unity Client Telemetry
         icon: stream
@@ -19,6 +20,7 @@ sources:
             volume: 50-500k events/sec at peak
             interval: Continuous client telemetry
       - name: Unreal Engine Telemetry
+        core: true
         icon: stream
         summary: Gameplay, performance and crash telemetry from Unreal Engine titles across platforms.
         category: Game Engine Telemetry
@@ -245,6 +247,7 @@ sources:
             volume: tens of events/sec
             interval: Continuous CDC
       - name: Zendesk Player Support
+        core: true
         icon: chat
         summary: Tickets, chat transcripts and refund disputes tied to player accounts.
         citations:
@@ -306,6 +309,7 @@ sources:
             volume: GBs/day verification results
             interval: Continuous / on-demand
       - name: Easy Anti-Cheat / BattlEye
+        core: true
         icon: gauge
         summary: Kernel and behavioural anti-cheat detections and enforcement actions across PC and console.
         citations:
@@ -350,6 +354,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'glTF'
         icon: zbraces
@@ -384,6 +389,7 @@ cloud_integrations:
             volume: hundreds-thousands of events/sec at peak
             interval: Continuous (attribution postbacks)
       - name: Steam & Console APIs
+        core: true
         icon: partner
         summary: Platform achievement, entitlement and sales reports normalised on ingest.
         category: Platform Store & Entitlement Data
@@ -522,6 +528,7 @@ pipelines:
           - Fraud & Bonus Abuse
           - Anti-Cheat & Toxicity
       - name: Marketing & UA
+        core: true
         mark: AI/BI
         summary: User acquisition on CPI, ROAS and creative performance by channel and geography, reallocating spend before daily budgets exhaust.
         uses:
@@ -660,6 +667,7 @@ consumers:
         icon: gavel
         summary: ESRB, PEGI and IARC content declarations and platform compliance produced from governed tables.
       - name: Child Safety & Privacy
+        core: true
         icon: share
         summary: COPPA and GDPR-K child-safety and privacy evidence filed from governed logs.
   - name: Published Products
@@ -669,10 +677,12 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Studios, affiliates and regulators reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Live Ops Console
         icon: gauge
@@ -761,10 +771,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

@@ -25,15 +25,27 @@ function check(name, cond, detail) { results.push({ name, ok: !!cond, detail });
   await boardReady(page);
   await page.waitForTimeout(400);
 
-  // ---- structure: share button exists and sits immediately after feedback ----
-  check('share button exists', await page.evaluate(() => !!document.getElementById('share-btn')));
-  check('share button is to the right of feedback', await page.evaluate(() => {
-    const fb = document.getElementById('feedback-btn');
-    const sw = document.getElementById('share-wrap');
-    if (!fb || !sw) return false;
-    // share-wrap is the next element sibling after the feedback button
-    return fb.nextElementSibling === sw;
+  // ---- structure: Feedback and Share on the bar, Options last with the page-wide choices, the tour and the dock ----
+  check('Options is the last control in the toolbar', await page.evaluate(() => {
+    const tools = document.querySelector('.htools');
+    return !!tools && tools.lastElementChild === document.getElementById('opt-wrap');
   }));
+  const sections = await page.evaluate(() => [...document.getElementById('opt-menu').children].map(e =>
+    (e.id || [...e.querySelectorAll('button[id]')].map(b => b.id).join('+')) + ':' + ((e.querySelector('.men-hd') || {}).textContent || '')).join());
+  check('the Options menu opens on the platform shape, then the language and colour palette sections, each under its heading, then the tour and the dock',
+    sections === 'shape-menu:Platform shape,lang-menu:Language,pal-menu:Colour palette,tour-btn+side-btn:', sections);
+  check('Feedback and then Share, with its own menu, open the toolbar ahead of the industry picker; no language, palette or shape button is left on it', await page.evaluate(() => {
+    const tools = document.querySelector('.htools'), fb = document.querySelector('.htools > #feedback-btn'), sw = document.querySelector('.htools > #share-wrap');
+    return !!fb && !!sw && tools.firstElementChild === fb && fb.nextElementSibling === sw && sw.nextElementSibling === document.getElementById('ind-wrap') &&
+      !!sw.querySelector(':scope > #share-btn') && !!sw.querySelector(':scope > #share-menu') &&
+      !document.querySelector('#lang-btn, #pal-btn, #shape-btn, #lang-wrap, #pal-wrap, #shape-wrap');
+  }));
+  const icons = await page.evaluate(() => ['share-btn', 'opt-btn'].map(id => {
+    const b = document.getElementById(id), r = b.getBoundingClientRect();
+    return { id, ico: b.classList.contains('ico-only'), text: b.textContent.trim(), svg: !!b.querySelector('svg'), title: !!b.title, w: Math.round(r.width), h: Math.round(r.height) };
+  }));
+  check('Share and Options are icon-only buttons: a glyph, no text, a title that names them, square like the other icon buttons',
+    icons.every(i => i.ico && !i.text && i.svg && i.title && Math.abs(i.w - i.h) <= 2), JSON.stringify(icons));
 
   // ---- default OG tags on index.html (the reference-board card LinkedIn scrapes) ----
   const head = await page.evaluate(() => document.head.innerHTML);
@@ -151,10 +163,11 @@ function check(name, cond, detail) { results.push({ name, ok: !!cond, detail });
   await page.waitForTimeout(300);
   const steps = [
     ['cloud', () => page.click('#cloud-seg button:has-text("AWS")')],
-    ['style', () => pick('#shape-btn', '#shape-menu [data-shape="s"]')],
-    ['palette', () => pick('#pal-btn', '#pal-menu [data-pal="mono"]')],
+    ['style', () => pick('#opt-btn', '#shape-menu [data-shape="s"]')],
+    ['palette', () => pick('#opt-btn', '#pal-menu [data-pal="mono"]')],
     ['theme', () => page.click('#theme-btn')],
     ['display', () => page.click('#display-seg button:has-text("Branded")')],
+    ['view', () => page.click('#view-seg button:has-text("Detailed")')],
     ['stage', () => pick('#stage-btn', '#stage-menu [data-stage="beta"]')],
     ['highlights', () => pick('#hl-btn', '#hl-menu [data-hl="story"]')],
     ['region', () => pick('#region-btn', '#region-menu button[data-region]:not([data-region-all])')],
@@ -164,8 +177,8 @@ function check(name, cond, detail) { results.push({ name, ok: !!cond, detail });
     ['close the region panel', () => page.click('#dclose')],
     ['zoom into Teams', () => page.click('.pockhead [data-zoom="ppl"]')],
     ['open a box', () => page.evaluate(() => atomsNamed('Data Engineers')[0].click())],
-    ['dock the panel', () => page.click('#side-btn')],
-    ['language', () => pick('#lang-btn', '#lang-menu [data-lang="fr"]')],
+    ['dock the panel', () => pick('#opt-btn', '#side-btn')],
+    ['language', () => pick('#opt-btn', '#lang-menu [data-lang="fr"]')],
   ];
   for (const [label, act] of steps) {
     const before = (await bar()).bar;

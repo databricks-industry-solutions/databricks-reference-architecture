@@ -4,7 +4,7 @@ const { chromium } = require('playwright');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { serve, boardReady } = require('./lib_serve');
+const { serve, boardReady, withView } = require('./lib_serve');
 
 const LOGO_DIR = path.join(__dirname, '..', 'app', 'resources', 'logos');
 const CLOUDS = ['aws', 'azure', 'gcp'];
@@ -88,7 +88,7 @@ function strayInk(svg) {
     const page = await ctx.newPage();
     page.on('pageerror', e => errors.push(e.message));
     page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
-    await page.goto(base + q, { waitUntil: 'networkidle' });
+    await page.goto(withView(base + q, 'detailed'), { waitUntil: 'networkidle' });
     await boardReady(page);
     if (dark) await page.evaluate(() => applyTheme(true, false));
     await page.waitForTimeout(300);

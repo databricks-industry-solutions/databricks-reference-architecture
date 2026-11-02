@@ -32,14 +32,14 @@ INDUSTRIES_BATCH_OIL_GAS = {
             "src": [
                 {"box": "Production & SCADA", "ic": "iot", "tiles": [
                         tile("AVEVA PI System", "iot", "Separator pressures, flow rates and compressor tags from upstream and midstream historians.", "aveva-pi",
-                             cat="Process/Time-Series Historian",
+                             cat="Process / Time-Series Historian",
                              what="Stores high-frequency separator, flow and compressor tags from upstream and midstream facilities as the operational time-series system of record.",
                              users="Production engineers, facility operators and reliability engineers.",
                              data_out=data_out(
                                  batch=flow(["structured"], "20-80 GB/day tag history", "Hourly / daily aggregates"),
                                  stream=flow(["semi-structured"], "50-500k tags/sec at peak", "Continuous (sub-second sampling)"))),
                         tile("SLB OFM", "stream", "Well tests, decline curves and reservoir models the subsurface team updates.", "slb-ofm",
-                             cat="Production/Well Surveillance System",
+                             cat="Production / Well Surveillance System",
                              what="Captures well tests, decline curves and reservoir surveillance data the subsurface team uses to model and forecast well performance.",
                              users="Reservoir engineers, production engineers and subsurface geologists.",
                              data_out=data_out(

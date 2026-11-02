@@ -3,6 +3,7 @@ description: 'Discrete and process manufacturers: ERP and MES shop-floor executi
 sources:
   - name: ERP & Planning
     icon: erp
+    simplified: 4
     tiles:
       - name: SAP S/4HANA
         icon: erp
@@ -38,6 +39,7 @@ sources:
             volume: 10-50 GB/day
             interval: Nightly batch
       - name: Kinaxis Maestro
+        core: true
         icon: sheet
         summary: Concurrent S&OP scenarios, constraint-based planning and what-if responses when a supplier or line goes down.
         citations:
@@ -65,6 +67,7 @@ sources:
             interval: Intraday to daily benchmarks
   - name: MES & Shop Floor
     icon: stream
+    simplified: 3
     tiles:
       - name: Siemens Opcenter
         icon: stream
@@ -111,6 +114,7 @@ sources:
             interval: Per-batch + hourly
   - name: Quality & PLM
     icon: gavel
+    simplified: 3
     tiles:
       - name: PTC Windchill
         icon: product
@@ -128,6 +132,7 @@ sources:
             volume: 1-5 GB/day
             interval: On change release + nightly
       - name: MasterControl QMS
+        core: true
         icon: gavel
         summary: Non-conformance, CAPA and audit findings tied to lots and suppliers.
         citations:
@@ -157,13 +162,14 @@ sources:
             interval: Hourly / per-inspection
   - name: IoT & Historians
     icon: iot
+    simplified: 2
     tiles:
       - name: AVEVA PI System
         icon: iot
         summary: High-frequency sensor and actuator tags from lines, utilities and environmental systems.
         citations:
           - aveva-pi
-        category: Process/Time-Series Historian
+        category: Process / Time-Series Historian
         what_it_is: Collects high-frequency sensor and actuator tags from lines, utilities and environmental systems for OEE, energy and anomaly analytics.
         who_uses_it: Reliability engineers, Process engineering and Energy management.
         data_out:
@@ -177,7 +183,7 @@ sources:
         summary: Process historian data for batch analytics, energy intensity and abnormal event detection.
         citations:
           - aspen-ip21
-        category: Process/Time-Series Historian
+        category: Process / Time-Series Historian
         what_it_is: Stores process historian time-series for batch analytics, energy intensity and abnormal-event detection at process sites.
         who_uses_it: Process engineers, batch analytics and Energy teams.
         data_out:
@@ -218,17 +224,18 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
-      - name: 'OPC UA'
-        icon: zbraces
-        fmt: 'OPCUA'
-        summary: 'OPC Unified Architecture, the backbone protocol for Industry 4.0 data exchange.'
-        spec_url: https://opcfoundation.org/about/opc-technologies/opc-ua/
       - name: 'MTConnect'
         icon: zbraces
         fmt: 'MTC'
         summary: 'Open standard for streaming machine-tool and shop-floor equipment data.'
         spec_url: https://www.mtconnect.org/
+      - name: 'OPC UA'
+        icon: zbraces
+        fmt: 'OPCUA'
+        summary: 'OPC Unified Architecture, the backbone protocol for Industry 4.0 data exchange.'
+        spec_url: https://opcfoundation.org/about/opc-technologies/opc-ua/
       - name: 'B2MML'
         icon: zbraces
         fmt: 'B2MML'
@@ -253,6 +260,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: OPC-UA Plant Gateway
         icon: iot
@@ -325,7 +333,7 @@ pipelines:
         mark: AI/BI
         summary: Finite scheduling, changeover sequencing and labour loading against orders commercial already promised, watched on schedule adherence and WIP ageing.
         uses:
-          - - Production Scheduler
+          - - Plant Performance
             - Sequence and changeover plans scored before the shift board posts.
           - - AI/BI
             - Schedule adherence and WIP ageing on governed definitions.
@@ -341,6 +349,7 @@ pipelines:
         ucs:
           - Design Space Simulation & Exploration
       - name: Quality & Compliance
+        core: true
         mark: Model Serving
         summary: Lot release, SPC violations and supplier corrective actions scored on first-pass yield and non-conformance rate before product leaves the site.
         uses:
@@ -466,6 +475,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart
@@ -490,6 +500,7 @@ consumers:
         citations:
           - opcenter
       - name: CMMS Work Orders
+        core: true
         icon: erp
         summary: Predicted failures raised as maintenance work orders the technician crew already schedules.
   - name: Customers & Suppliers
@@ -526,10 +537,12 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Customers, co-mans and auditors reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Plant Performance
         icon: gauge
@@ -618,10 +631,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

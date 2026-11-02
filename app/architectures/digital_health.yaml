@@ -3,6 +3,7 @@ description: 'Telehealth and virtual-care platforms: video and asynchronous visi
 sources:
   - name: Virtual Care Platform
     icon: erp
+    simplified: 2
     tiles:
       - name: Amwell Platform
         icon: erp
@@ -74,6 +75,7 @@ sources:
             interval: Continuous session stream
   - name: Clinical & EHR (FHIR)
     icon: partner
+    simplified: 2
     tiles:
       - name: Epic FHIR APIs
         icon: erp
@@ -138,6 +140,7 @@ sources:
             interval: Continuous (API)
   - name: RPM & Wearables
     icon: iot
+    simplified: 2
     tiles:
       - name: Validic Device Hub
         icon: iot
@@ -197,6 +200,7 @@ sources:
             interval: Continuous (device sync)
   - name: Member Engagement
     icon: custlake
+    simplified: 2
     tiles:
       - name: SF Health Cloud
         icon: crm
@@ -334,6 +338,7 @@ sources:
           - 'Health Gorilla'
           - 'Redox'
       - name: 'HL7 v2'
+        core: true
         icon: zbraces
         fmt: 'HL7'
         summary: 'Widely deployed HL7 v2 messaging for clinical events across health systems.'
@@ -450,6 +455,7 @@ pipelines:
           - Digital Therapeutics
           - Contact Center Sentiment
       - name: Care Management
+        core: true
         mark: Lakehouse//RT
         summary: Care managers running panels of chronic and rising-risk members; RPM nurses triaging device alerts through the day; health coaches driving adherence and behaviour change against the care plan.
         uses:
@@ -578,6 +584,7 @@ consumers:
         icon: apps
         summary: Real-time member profile, adherence and connected-device data served to the app over Lakebase for a live experience.
       - name: Provider Portal
+        core: true
         icon: apps
         summary: Panel, alert and outcome views served to clinicians and care teams over governed APIs.
       - name: FHIR & SMART APIs
@@ -601,6 +608,7 @@ consumers:
         summary: Coaching and care-plan updates written to the care-management workflow on Lakebase in the tool the care team works in.
   - name: Regulatory & Reporting
     icon: gavel
+    simplified: 2
     tiles:
       - name: HIPAA & HITRUST
         icon: gavel
@@ -615,6 +623,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Payers, health-system partners and researchers accessing governed products, reducing bespoke exports with copies and transfer behavior dependent on the sharing mode.
   - name: Databricks Apps
@@ -707,10 +716,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

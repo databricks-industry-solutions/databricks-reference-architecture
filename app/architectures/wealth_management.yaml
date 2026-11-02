@@ -3,6 +3,7 @@ description: 'Advisor-led wealth and private banking: custody and clearing, port
 sources:
   - name: Custody & Clearing
     icon: partner
+    simplified: 4
     tiles:
       - name: Pershing NetX360
         icon: partner
@@ -67,6 +68,7 @@ sources:
             interval: Continuous (API/events)
   - name: Portfolio Management
     icon: chart
+    simplified: 2
     tiles:
       - name: Addepar
         icon: chart
@@ -126,6 +128,7 @@ sources:
             interval: Nightly portfolio extracts
   - name: Advisor CRM
     icon: crm
+    simplified: 4
     tiles:
       - name: Salesforce FSC
         icon: crm
@@ -190,6 +193,7 @@ sources:
             interval: Nightly CDC
   - name: Financial Planning
     icon: sheet
+    simplified: 3
     tiles:
       - name: eMoney Advisor
         icon: sheet
@@ -252,7 +256,22 @@ sources:
             interval: Daily research updates
   - name: Onboarding & Compliance
     icon: gavel
+    simplified: 3
     tiles:
+      - name: Fenergo Onboarding
+        icon: identity
+        summary: Client lifecycle management for KYC, entity data and account opening, the source of verified client and beneficial-owner records.
+        citations:
+          - fenergo
+        category: Client Lifecycle Management (KYC)
+        what_it_is: Client lifecycle management for KYC, entity data and account opening, the source of verified client and beneficial-owner records.
+        who_uses_it: Onboarding, financial crime and compliance.
+        data_out:
+          batch:
+            types:
+              - structured
+            volume: 1-10 GB/day KYC + entity records
+            interval: Nightly batch
       - name: DocuSign eSignature
         icon: docs
         summary: Electronic signature and agreement workflow for account opening, disclosures and advisory agreements across the household.
@@ -273,20 +292,6 @@ sources:
               - semi-structured
             volume: Envelope completion events
             interval: Continuous (webhooks)
-      - name: Fenergo Onboarding
-        icon: identity
-        summary: Client lifecycle management for KYC, entity data and account opening, the source of verified client and beneficial-owner records.
-        citations:
-          - fenergo
-        category: Client Lifecycle Management (KYC)
-        what_it_is: Client lifecycle management for KYC, entity data and account opening, the source of verified client and beneficial-owner records.
-        who_uses_it: Onboarding, financial crime and compliance.
-        data_out:
-          batch:
-            types:
-              - structured
-            volume: 1-10 GB/day KYC + entity records
-            interval: Nightly batch
       - name: LexisNexis KYC
         icon: gavel
         summary: Identity verification, sanctions and PEP screening data used to onboard and periodically re-screen clients and their entities.
@@ -308,6 +313,7 @@ sources:
             volume: Screening API responses
             interval: Continuous (API)
       - name: Global Relay Archive
+        core: true
         icon: chat
         summary: Communications capture and archiving for email, chat and voice, the books-and-records source for supervision and surveillance.
         citations:
@@ -341,6 +347,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'ISO 20022'
         icon: zbraces
@@ -393,6 +400,7 @@ cloud_integrations:
             volume: 10-50 GB/day files
             interval: Multiple settlement cycles daily
       - name: Market & Fund Data
+        core: true
         icon: api
         summary: Pricing, quote and fund-reference APIs from Morningstar and market-data vendors consumed inbound through managed ELT connectors.
         category: Market & Fund Data API
@@ -468,6 +476,7 @@ pipelines:
           - Client Attrition Risk
           - Client Service AI
       - name: Investments
+        core: true
         mark: AI/BI
         summary: The chief investment office on model portfolios and asset allocation; portfolio construction on rebalancing and tax-aware trading; investment research on fund selection and manager due diligence.
         uses:
@@ -565,6 +574,7 @@ pipelines:
 consumers:
   - name: BI & Productivity
     icon: chart
+    from: bi
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -594,6 +604,7 @@ consumers:
         icon: crm
         summary: Next best actions, meeting briefs and household scores written back into Salesforce FSC so the answer reaches the advisor's desktop.
       - name: Rebalancer Writeback
+        core: true
         icon: gauge
         summary: Target weights and tax-aware trade proposals pushed back into Tamarac and Orion so the decision reaches the trading path.
       - name: Alert & Case Queue
@@ -606,6 +617,7 @@ consumers:
         icon: gavel
         summary: Form ADV, Reg BI and books-and-records evidence produced from the same governed tables the firm runs on.
       - name: Client Statements
+        core: true
         icon: share
         summary: Performance, holdings and fee statements from contracted Gold products, with 1099 reporting produced from authorized custodian and tax records under the responsible entity's process.
   - name: Published Products
@@ -615,6 +627,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Custodians, sub-advisors and partners reading governed shared tables without separately maintained publisher extracts.
   - name: Databricks Apps
@@ -707,10 +720,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

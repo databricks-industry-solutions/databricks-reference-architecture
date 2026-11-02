@@ -244,6 +244,25 @@ def outcome_map_checks(inds, om):
     return fails
 
 
+def team_ref_checks(inds, gen, shared, aliases):
+    fails, teams = [], 0
+    boards = dict({"generic": gen} if gen else {}, **inds)
+    known = set(shared) | set(aliases)
+    for iid, o in boards.items():
+        names, tops = set(o.get("names") or []), set(o.get("top") or [])
+        for t in o.get("teams") or []:
+            teams += 1
+            for n in t.get("ucs") or []:
+                if n not in tops:
+                    fails.append(f"{iid}: team '{t['n']}' lists the use case '{n}', which is not on the board")
+            for n in t.get("uses") or []:
+                if n not in names and n not in known:
+                    fails.append(f"{iid}: team '{t['n']}' uses '{n}', which is no box on the board and no platform product")
+    if not teams:
+        fails.append("no Teams box loaded, so no team reference check ran")
+    return fails, teams
+
+
 def story_checks(inds, exempt_map, om):
     fails, missing = [], 0
     for iid, o in inds.items():
@@ -521,6 +540,10 @@ def main():
         aliases, afails = {}, [f"aliases.json, accelerators.json or academy.json unreadable: {e}"]
     fails += afails
     print(f"tile aliases: {len(aliases)}, issues: {len(afails)}")
+    shared = set(LINKS) | set(d.get("prodNames") or []) | set(d.get("cloudNames") or [])
+    trfails, n_teams = team_ref_checks(d.get("inds") or {}, d.get("genBoard"), shared, aliases)
+    fails += trfails
+    print(f"team references: {n_teams} teams, use cases and boxes they name that are not on their board: {len(trfails)}")
     cafails = chip_alias_checks(d.get("chipAlias"), d.get("chips"), LINKS)
     fails += cafails
     print(f"chip aliases: {len(d.get('chipAlias') or {})} over {len(d.get('chips') or [])} chip names, issues: {len(cafails)}")

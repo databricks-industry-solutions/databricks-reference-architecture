@@ -3,6 +3,7 @@ description: 'Property and casualty carriers: underwriting and rating, policy ad
 sources:
   - name: Policy Administration
     icon: erp
+    simplified: 3
     tiles:
       - name: Guidewire PolicyCenter
         icon: erp
@@ -72,6 +73,7 @@ sources:
             interval: Daily / on rate change
   - name: Claims Systems
     icon: opdb
+    simplified: 2
     tiles:
       - name: Guidewire ClaimCenter
         icon: erp
@@ -114,6 +116,7 @@ sources:
             volume: tens of events/sec
             interval: Continuous CDC
       - name: CCC Intelligent Sol.
+        core: true
         icon: product
         summary: Auto physical-damage estimating, repair network and total-loss valuation feeding claim severity and cycle time.
         citations:
@@ -150,6 +153,7 @@ sources:
             interval: Continuous (mobile / API)
   - name: Billing & Distribution
     icon: custlake
+    simplified: 2
     tiles:
       - name: Guidewire Billing
         icon: erp
@@ -230,6 +234,7 @@ sources:
             volume: GBs (reference + loss costs)
             interval: Periodic circular / on release
       - name: LexisNexis Risk
+        core: true
         icon: partner
         summary: Motor vehicle records, prior claims, credit-based insurance scores and identity signals used at quote and renewal.
         citations:
@@ -271,6 +276,7 @@ sources:
             interval: Continuous (API at FNOL)
   - name: Catastrophe Models
     icon: iot
+    simplified: 2
     tiles:
       - name: Moody's RMS
         icon: iot
@@ -388,6 +394,7 @@ cloud_integrations:
             volume: 100s of events/sec during events
             interval: Continuous feed (event-driven)
       - name: Xactimate Estimating
+        core: true
         icon: product
         summary: Property loss and restoration estimates from the industry estimating standard, feeding claim severity and reserves.
         citations:
@@ -449,6 +456,7 @@ pipelines:
           - Fraud Detection (SIU)
           - Subrogation Recovery
       - name: Actuarial & Pricing
+        core: true
         mark: Model Serving
         summary: Pricing actuaries setting rate plans against ISO loss costs and the filed rate; reserving actuaries booking IBNR and case reserves; the telematics team turning driving behaviour into usage-based rate.
         uses:
@@ -564,6 +572,7 @@ consumers:
         icon: api
         summary: Quote status, appetite and book-of-business insight served to agencies and brokers over governed APIs.
       - name: Reinsurer Data Sharing
+        core: true
         icon: share
         summary: Exposure, bordereaux and loss data shared to reinsurers and brokers over Delta Sharing rather than file exchange.
       - name: Salesforce Activation
@@ -580,6 +589,7 @@ consumers:
         citations:
           - guidewire-pc
       - name: ClaimCenter Writeback
+        core: true
         icon: erp
         summary: Severity, fraud and reserve recommendations written into the claims system engineering already works in.
         citations:
@@ -596,6 +606,7 @@ consumers:
         icon: gavel
         summary: Statutory statements and state rate and market-conduct filings produced from the same governed tables the carrier runs on.
       - name: IFRS 17 & Solvency
+        core: true
         icon: sheet
         summary: Reserving, solvency and IFRS 17 reporting filed from contracted Gold products.
   - name: Published Products
@@ -605,6 +616,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Reinsurers, MGAs and audit partners reading governed live tables that reduce routine file duplication.
   - name: Databricks Apps
@@ -683,6 +695,7 @@ consumers:
           - Chief Distribution Officer
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni
@@ -697,10 +710,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

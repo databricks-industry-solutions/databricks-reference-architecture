@@ -134,6 +134,7 @@ PRODUCT_PAGES = {
 }
 PAGE_SUFFIX = " (product page)"
 AVAIL_HEAD = re.compile(r"region availability|requirements and availability|supported regions", re.I)
+AVAIL_LEAD = re.compile(r"\bin a supported region\s*:", re.I)
 
 CHECK = "✓"
 MARK = re.compile(r"\*\*|[*†‡§¶‖⥂]")
@@ -328,20 +329,26 @@ class AvailabilityParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.codes, self._head, self._htext, self._capture, self._code, self._ctext, self._skip = [], None, [], False, False, [], 0
-        self.anchor, self._hid = "", None
+        self.anchor, self._hid, self._blocks, self._lead = "", None, [], None
 
     def handle_starttag(self, tag, attrs):
         if tag in ("script", "style"):
             self._skip += 1
         elif tag in ("h1", "h2", "h3", "h4"):
-            self._head, self._htext, self._capture = tag, [], False
+            self._head, self._htext, self._capture, self._lead = tag, [], False, None
             self._hid = dict(attrs).get("id")
         elif tag == "code":
             self._code, self._ctext = True, []
+        elif tag in ("li", "p"):
+            self._blocks.append(tag)
 
     def handle_endtag(self, tag):
         if tag in ("script", "style") and self._skip:
             self._skip -= 1
+        elif tag in ("li", "p") and self._blocks:
+            self._blocks.pop()
+            if self._lead is not None and len(self._blocks) < self._lead:
+                self._capture, self._lead = False, None
         elif tag == self._head:
             self._capture = bool(AVAIL_HEAD.search("".join(self._htext)))
             if self._capture and not self.anchor and self._hid:
@@ -359,6 +366,11 @@ class AvailabilityParser(HTMLParser):
             self._htext.append(data)
         elif self._code:
             self._ctext.append(data)
+        elif not self._capture and AVAIL_LEAD.search(data):
+            items = [i for i, t in enumerate(self._blocks) if t == "li"]
+            self._capture, self._lead = True, (items[-1] + 1 if items else None)
+            if not self.anchor and self._hid:
+                self.anchor = self._hid
 
 
 def parse_product_page(html, supported):

@@ -169,7 +169,7 @@ INDUSTRIES_BATCH_EDUCATION = {
                     ],
                     ucs=["Early Alert & Retention", "Learning Analytics", "Curriculum Optimisation"]),
                 biz("Admissions & Enrollment", "CustomerLake", "Recruitment yield by channel and territory, melt between deposit and day one, and section fill measured against instructional and housing capacity.",
-                    [["Enrollment Forecast", "Cohort scenarios scored on instructional and housing capacity."], ["CustomerLake", "Prospect journeys joined to application and enrollment outcomes."], ["AI/BI", "Yield and melt dashboards the cabinet reads each cycle."]],
+                    [["Enrollment Forecasting", "Cohort scenarios scored on instructional and housing capacity."], ["CustomerLake", "Prospect journeys joined to application and enrollment outcomes."], ["AI/BI", "Yield and melt dashboards the cabinet reads each cycle."]],
                     sub=[
                         ["Director of Admissions", "the funnel from inquiry to deposit by channel and territory."],
                         ["Enrollment Management", "yield, melt and the class the cabinet promised."],

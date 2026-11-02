@@ -3,6 +3,7 @@ description: 'Life and annuity carriers: policy administration, underwriting, cl
 sources:
   - name: Policy Administration
     icon: erp
+    simplified: 3
     tiles:
       - name: FINEOS Life
         icon: erp
@@ -89,6 +90,7 @@ sources:
             volume: hundreds of results/hour
             interval: Continuous feed as evidence returns
       - name: MIB Underwriting Exchange
+        core: true
         icon: gavel
         summary: Industry application history and code hits at point of underwriting.
         citations:
@@ -104,6 +106,7 @@ sources:
             interval: Continuous (API at application)
   - name: Claims & Customer
     icon: market
+    simplified: 3
     tiles:
       - name: Sedgwick Life Claims
         icon: market
@@ -170,6 +173,7 @@ sources:
             volume: 5-20 GB/valuation run
             interval: Monthly / quarterly valuation runs
       - name: SAP S/4HANA Insurance
+        core: true
         icon: erp
         summary: General ledger, statutory reporting and investment accounting integration.
         citations:
@@ -215,6 +219,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'ACORD L&A XML'
         icon: zbraces
@@ -241,6 +246,18 @@ cloud_integrations:
   - name: 3rd Party
     icon: zplug
     tiles:
+      - name: Mortality Table Updates
+        icon: chart
+        summary: Industry mortality and lapse assumptions published by regulators and reinsurers.
+        category: Actuarial Assumption Reference
+        what_it_is: Industry mortality and lapse assumption tables published by regulators and reinsurers, consumed as reference for pricing and reserving.
+        who_uses_it: Actuarial & Reserving, experience-studies and pricing teams.
+        data_out:
+          batch:
+            types:
+              - structured
+            volume: MBs (tables)
+            interval: Periodic release
       - name: ACORD Life Standards
         icon: api
         summary: Application, policy and claims XML messages normalised on ingest for straight-through processing.
@@ -270,18 +287,6 @@ cloud_integrations:
               - semi-structured
             volume: MBs (specifications)
             interval: Annual / on release
-      - name: Mortality Table Updates
-        icon: chart
-        summary: Industry mortality and lapse assumptions published by regulators and reinsurers.
-        category: Actuarial Assumption Reference
-        what_it_is: Industry mortality and lapse assumption tables published by regulators and reinsurers, consumed as reference for pricing and reserving.
-        who_uses_it: Actuarial & Reserving, experience-studies and pricing teams.
-        data_out:
-          batch:
-            types:
-              - structured
-            volume: MBs (tables)
-            interval: Periodic release
 pipelines:
   - name: Business
     icon: zbrief
@@ -330,6 +335,7 @@ pipelines:
           - New Business Strain
           - Embedded Value
       - name: Underwriting
+        core: true
         mark: Model Serving
         summary: Chief underwriters on straight-through-processing rates, evidence-ordering bottlenecks and mortality leakage before an offer expires.
         uses:
@@ -480,6 +486,7 @@ consumers:
         citations:
           - fineos
       - name: Underwriting Decisions
+        core: true
         icon: people
         summary: Approved risk classes and requirements released to issuance workflows.
         citations:
@@ -496,6 +503,7 @@ consumers:
         icon: share
         summary: Production and persistency scorecards shared with agencies over Delta Sharing.
       - name: Reinsurer Bordereaux
+        core: true
         icon: partner
         summary: Ceded experience and claims detail exchanged under treaty agreements.
       - name: Broker Illustration Systems
@@ -521,6 +529,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Reinsurers, distributors and regulators reading governed live tables that reduce routine file duplication.
   - name: Databricks Apps
@@ -613,10 +622,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

@@ -3,6 +3,7 @@ description: 'Fab and foundry operations: wafer manufacturing execution, yield a
 sources:
   - name: Fab & MES
     icon: erp
+    simplified: 2
     tiles:
       - name: Applied E3 MES
         icon: erp
@@ -53,6 +54,7 @@ sources:
             interval: Continuous equipment telemetry
   - name: Design & IP
     icon: sheet
+    simplified: 2
     tiles:
       - name: Synopsys Fusion Design
         icon: sheet
@@ -74,7 +76,7 @@ sources:
         summary: 'Custom and analog design: schematic, layout and LVS for IP blocks on each die.'
         citations:
           - cadence-virtuoso
-        category: EDA Custom/Analog Design
+        category: EDA Custom / Analog Design
         what_it_is: 'Supports custom and analog design: schematic, layout and LVS for IP blocks on each die.'
         who_uses_it: Analog/mixed-signal designers and IP teams.
         data_out:
@@ -100,6 +102,7 @@ sources:
             interval: Per verification run
   - name: Yield & Test
     icon: iot
+    simplified: 3
     tiles:
       - name: Teradyne UltraFLEX
         icon: iot
@@ -116,6 +119,7 @@ sources:
             volume: GBs/hour parametric dumps
             interval: Continuous during test
       - name: PDF Solutions Exensio
+        core: true
         icon: chart
         summary: 'Yield management: defect classification, spatial signatures and excursion detection.'
         citations:
@@ -146,6 +150,7 @@ sources:
             interval: Continuous inline inspection
   - name: Equipment & Sensors
     icon: stream
+    simplified: 2
     tiles:
       - name: SECS/GEM Tool Interface
         icon: stream
@@ -252,6 +257,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'STDF'
         icon: zbraces
@@ -368,6 +374,7 @@ pipelines:
           - Feedstock, Formulation, & Recipe Control
           - Prescriptive Maintenance
       - name: Yield Engineering
+        core: true
         mark: Model Serving
         summary: Yield engineers on defect pareto, spatial signatures and the designed experiments that recover margin before a lot is dispositioned.
         uses:
@@ -507,6 +514,7 @@ consumers:
         icon: api
         summary: Yield summaries and lot status shared to fabless customers over Delta Sharing.
       - name: OSAT & Assembly Partners
+        core: true
         icon: partner
         summary: Test results and ship authorisation read by assembly partners under governed sharing.
       - name: Equipment OEM Feeds
@@ -523,6 +531,7 @@ consumers:
         citations:
           - applied-e3
       - name: Recipe & R2R Adjust
+        core: true
         icon: erp
         summary: Run-to-run adjustment recommendations pushed to equipment hosts, where the incumbent APC applies them within approved guard bands.
       - name: Maintenance Work Orders
@@ -544,6 +553,7 @@ consumers:
         icon: product
         summary: Yield and traceability products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Fabless customers and OSAT partners reading live tables via Delta Sharing.
   - name: Databricks Apps
@@ -636,10 +646,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

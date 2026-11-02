@@ -3,6 +3,7 @@ description: 'Card acquiring, digital wallets, lending and banking cores: author
 sources:
   - name: Core & Ledger
     icon: erp
+    simplified: 3
     tiles:
       - name: Temenos Transact
         icon: erp
@@ -48,6 +49,7 @@ sources:
             interval: Nightly batch
   - name: Acquiring & Issuing
     icon: market
+    simplified: 2
     tiles:
       - name: Adyen Platform
         icon: market
@@ -88,6 +90,7 @@ sources:
             volume: Payment + payout events
             interval: Continuous (webhooks)
       - name: Marqeta Card Issuing
+        core: true
         icon: api
         summary: Card programmes, spend controls and tokenisation lifecycle.
         citations:
@@ -130,6 +133,7 @@ sources:
             volume: Alert events
             interval: Continuous (near real-time)
       - name: Onfido Identity
+        core: true
         icon: people
         summary: Document verification and biometric checks at onboarding.
         citations:
@@ -165,6 +169,7 @@ sources:
             interval: Continuous (API)
   - name: Merchant & CRM
     icon: custlake
+    simplified: 3
     tiles:
       - name: Salesforce Fintech CRM
         icon: custlake
@@ -238,6 +243,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 4
     tiles:
       - name: 'ISO 20022'
         icon: zbraces
@@ -252,6 +258,7 @@ sources:
           - 'Volante'
           - 'Form3'
       - name: 'ISO 8583'
+        core: true
         icon: zbraces
         fmt: '8583'
         summary: 'Card transaction message standard behind ATM and POS authorisation flows.'
@@ -273,7 +280,22 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
+      - name: Visa / Mastercard BIN
+        icon: partner
+        summary: Issuer and product metadata consumed inbound for routing and fraud.
+        citations:
+          - visa-developer
+        category: Card Network Reference Data
+        what_it_is: Issuer identification and product metadata consumed inbound for routing decisions and fraud enrichment.
+        who_uses_it: Payments product, routing engineering and fraud.
+        data_out:
+          batch:
+            types:
+              - structured
+            volume: BIN + product reference
+            interval: Daily/weekly updates
       - name: SWIFT ISO 20022
         icon: api
         summary: Cross-border payment messages parsed into structured settlement events.
@@ -293,20 +315,6 @@ cloud_integrations:
               - semi-structured
             volume: Payment messages
             interval: Continuous (message queue)
-      - name: Visa / Mastercard BIN
-        icon: partner
-        summary: Issuer and product metadata consumed inbound for routing and fraud.
-        citations:
-          - visa-developer
-        category: Card Network Reference Data
-        what_it_is: Issuer identification and product metadata consumed inbound for routing decisions and fraud enrichment.
-        who_uses_it: Payments product, routing engineering and fraud.
-        data_out:
-          batch:
-            types:
-              - structured
-            volume: BIN + product reference
-            interval: Daily/weekly updates
       - name: Open Banking Feeds
         icon: stream
         summary: Account aggregation and consent-based transaction imports for lending.
@@ -370,6 +378,7 @@ pipelines:
           - Transaction Enrichment
           - Agentic Commerce
       - name: Risk & Fraud
+        core: true
         mark: AI/BI
         summary: Fraud analysts on velocity rules, chargeback rate and AML alert queues, balancing fraud loss against the false-positive decline rate on good volume.
         uses:
@@ -534,6 +543,7 @@ consumers:
           - zendesk
   - name: Partners & Schemes
     icon: partner
+    simplified: 3
     tiles:
       - name: Scheme Reporting API
         icon: api
@@ -541,6 +551,7 @@ consumers:
         citations:
           - visa-developer
       - name: Bank Sponsor Sharing
+        core: true
         icon: share
         summary: Programme performance shared to BIN sponsors over Delta Sharing.
         citations:
@@ -559,6 +570,7 @@ consumers:
         citations:
           - actimize
       - name: PCI & Scheme Compliance
+        core: true
         icon: share
         summary: Control evidence and attestation data from contracted Gold products.
   - name: Published Products
@@ -568,6 +580,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Sponsors, auditors and partners reading live tables with no copy.
   - name: Databricks Apps
@@ -660,10 +673,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

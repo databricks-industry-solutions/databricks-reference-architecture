@@ -3,6 +3,7 @@ description: 'Police, fire, EMS and emergency management: computer-aided dispatc
 sources:
   - name: Dispatch & 911
     icon: stream
+    simplified: 4
     tiles:
       - name: Tyler Enterprise CAD
         icon: stream
@@ -43,6 +44,7 @@ sources:
             volume: hundreds of events/sec at peak
             interval: Continuous (sub-second)
       - name: Carbyne NG911
+        core: true
         icon: dial
         summary: Cloud-native NG911 call handling with caller location and live video, the front door for emergency calls into the CAD estate.
         citations:
@@ -113,6 +115,7 @@ sources:
             volume: 2-8 GB/day
             interval: Nightly batch
       - name: Guardian RFID JMS
+        core: true
         icon: gavel
         summary: 'Jail management: booking, classification, housing and inmate movement tracked as the custody record of the facility.'
         citations:
@@ -194,6 +197,7 @@ sources:
             interval: Continuous (real-time)
   - name: Fire & EMS
     icon: iot
+    simplified: 2
     tiles:
       - name: ImageTrend ePCR
         icon: docs
@@ -226,6 +230,7 @@ sources:
             volume: 1-6 GB/day
             interval: Nightly batch + per-run upload
       - name: First Due Fire
+        core: true
         icon: gauge
         summary: 'Fire prevention, inspections and pre-incident planning: the building, hydrant and inspection record behind risk-based deployment.'
         citations:
@@ -259,6 +264,7 @@ sources:
             volume: GB-scale spatial layers
             interval: Nightly / on-change refresh
       - name: AVL Telemetry
+        core: true
         icon: iot
         summary: Automatic vehicle location and unit telemetry from patrol cars, fire apparatus and ambulances, the ground truth for travel time.
         category: Vehicle Location / Telemetry (AVL)
@@ -322,6 +328,7 @@ sources:
         summary: 'OASIS Emergency Data Exchange Language suite for incident and resource messaging.'
         spec_url: https://www.oasis-open.org/committees/emergency/
       - name: 'NENA i3'
+        core: true
         icon: zbraces
         fmt: 'i3'
         summary: 'NENA standard for Next Generation 9-1-1 IP-based emergency call handling.'
@@ -444,6 +451,7 @@ pipelines:
           - Evidence Search
           - ALPR & BOLO
       - name: Fire & EMS
+        core: true
         mark: Model Serving
         summary: 'Fire operations and EMS medical directors on demand and risk: where the next call will fall, which properties carry the highest fire risk, and whether ambulances are staged where the calls actually are.'
         uses:
@@ -539,6 +547,7 @@ consumers:
         icon: globe
         summary: Public crime maps and transparency numbers served to residents from governed Gold products.
       - name: Regional Sharing
+        core: true
         icon: share
         summary: Mutual-aid and neighbouring agencies reading live incident and BOLO tables over Delta Sharing instead of file exchange.
       - name: Genie for Field
@@ -553,6 +562,7 @@ consumers:
         citations:
           - tyler-cad
       - name: RMS Case Update
+        core: true
         icon: db
         summary: Linked incidents, patterns and clearances written back into the records system investigators work in.
         citations:
@@ -574,6 +584,7 @@ consumers:
         citations:
           - nfirs
       - name: NEMSIS EMS
+        core: true
         icon: docs
         summary: National EMS Information System patient-care reporting filed from governed ePCR data.
         citations:
@@ -585,10 +596,12 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Other agencies, prosecutors and researchers reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: RTCC Cockpit
         icon: gauge
@@ -677,10 +690,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

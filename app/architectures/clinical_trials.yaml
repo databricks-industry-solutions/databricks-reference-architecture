@@ -58,6 +58,7 @@ sources:
             interval: Continuous at randomization
   - name: CTMS & Sites
     icon: sheet
+    simplified: 2
     tiles:
       - name: Veeva CTMS
         icon: sheet
@@ -88,6 +89,7 @@ sources:
             volume: 0.5-2 GB/day
             interval: Nightly sync
       - name: Signant SmartSupplies
+        core: true
         icon: product
         summary: IRT, drug supply and depot inventory.
         citations:
@@ -108,6 +110,7 @@ sources:
             interval: Continuous at dosing
   - name: Safety & PV
     icon: gavel
+    simplified: 2
     tiles:
       - name: Argus Safety
         icon: gavel
@@ -186,6 +189,7 @@ sources:
             volume: 10-100 GB/day (DICOM)
             interval: Per-visit uploads + read cycles
       - name: Clario eCOA
+        core: true
         icon: apps
         summary: Patient-reported outcomes and eDiary entries.
         citations:
@@ -262,6 +266,7 @@ sources:
         summary: 'CDISC Study Data Tabulation Model for organising collected clinical trial data for submission.'
         spec_url: https://www.cdisc.org/standards/foundational/sdtm
       - name: 'CDISC ADaM'
+        core: true
         icon: zbraces
         fmt: 'ADaM'
         summary: 'CDISC Analysis Data Model for analysis-ready datasets supporting statistical results.'
@@ -380,6 +385,7 @@ pipelines:
           - Remote Monitoring
           - Patient Recruitment
       - name: Data Management
+        core: true
         mark: AI/BI
         summary: Database lock readiness, query resolution and SDTM conversion, tracked on open-query aging, data completeness and lock cycle time.
         uses:
@@ -518,6 +524,7 @@ consumers:
         summary: Biostat notebooks on governed SDTM and ADaM.
   - name: Sites & CROs
     icon: partner
+    simplified: 2
     tiles:
       - name: Site Payment Portal
         icon: api
@@ -543,6 +550,7 @@ consumers:
         citations:
           - medidata-rave
       - name: Safety Expedited Reports
+        core: true
         icon: gavel
         summary: E2B submissions generated from confirmed cases.
         citations:
@@ -572,6 +580,7 @@ consumers:
         icon: product
         summary: Trial and safety products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Partners and regulators via governed sharing.
   - name: Databricks Apps
@@ -664,10 +673,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

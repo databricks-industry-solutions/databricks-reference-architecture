@@ -3,6 +3,7 @@ description: 'Consulting, agencies, accounting and audit, and engineering servic
 sources:
   - name: PSA & Delivery
     icon: erp
+    simplified: 3
     tiles:
       - name: Kantata PSA
         icon: erp
@@ -58,6 +59,7 @@ sources:
             interval: Continuous CDC
   - name: CRM & Pipeline
     icon: crm
+    simplified: 3
     tiles:
       - name: Salesforce Sales Cloud
         icon: crm
@@ -109,6 +111,7 @@ sources:
             interval: Hourly sync
   - name: Finance & ERP
     icon: erp
+    simplified: 3
     tiles:
       - name: Workday Financials
         icon: erp
@@ -154,6 +157,7 @@ sources:
             interval: Nightly batch + monthly close
   - name: Time & Billing
     icon: sheet
+    simplified: 3
     tiles:
       - name: Deltek Vantagepoint
         icon: erp
@@ -204,6 +208,7 @@ sources:
             interval: Nightly batch
   - name: Talent & Knowledge
     icon: people
+    simplified: 2
     tiles:
       - name: Workday HCM
         icon: people
@@ -234,6 +239,7 @@ sources:
             volume: 0.5-3 GB/day
             interval: Nightly batch
       - name: iManage Knowledge
+        core: true
         icon: docs
         summary: Documents, deliverables and matter/engagement knowledge, the corpus a GenAI assistant is grounded on.
         citations:
@@ -267,6 +273,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'XBRL GL'
         icon: zbraces
@@ -434,6 +441,7 @@ pipelines:
           - Skills-to-Demand Match
           - Staffing & Bench
       - name: Delivery & PMO
+        core: true
         mark: Lakehouse//RT
         summary: Resource managers and the PMO on staffing the bench against demand, protecting utilization and keeping engagements on scope and on margin.
         uses:
@@ -503,6 +511,7 @@ consumers:
         summary: Analyst notebooks, VS Code and JetBrains against governed engagement and finance data.
   - name: Delivery & Clients
     icon: partner
+    simplified: 2
     tiles:
       - name: Client Delta Sharing
         icon: share
@@ -527,6 +536,7 @@ consumers:
         icon: people
         summary: Best-fit staffing and bench moves pushed to resource managers and consultant calendars.
       - name: Billing & Invoices
+        core: true
         icon: erp
         summary: Approved WIP and revenue schedules written to the finance system for invoicing.
         citations:
@@ -547,6 +557,7 @@ consumers:
         icon: product
         summary: Published, contracted utilization and margin products discoverable in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Clients and alliance partners reading live tables, avoiding separately maintained extracts where the sharing arrangement supports it.
   - name: Databricks Apps
@@ -639,10 +650,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

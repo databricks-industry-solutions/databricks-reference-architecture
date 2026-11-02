@@ -4,7 +4,7 @@ const { serve } = require('./lib_serve');
 
 const PAINT_ALLOWED = new Set(['flowdash', 'flowdashv', 'flowdashl', 'flowdashu', 'zdash']);
 const COMPOSITED = new Set(['transform', 'opacity']);
-const SHAPES = ['z', 's', 't', 'rt', 'h90'];
+const SHAPES = ['z', 's', 't', 'rt'];
 const R = [];
 const ok = (n, c, d) => { R.push({ n, c: !!c }); console.log((c ? 'PASS ' : 'FAIL ') + n + (d ? ' :: ' + d : '')); };
 const sleep = ms => new Promise(r => setTimeout(r, ms));

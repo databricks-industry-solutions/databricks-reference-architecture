@@ -184,7 +184,7 @@ INDUSTRIES_BATCH_TELECOMMUNICATION = {
                     ],
                     ucs=["Network Fault Correlation", "Capacity Forecasting", "QoS & Dropped Calls", "Field SLA Management"]),
                 biz("Commercial & Marketing", "CustomerLake", "Product owners on offer uptake, upsell and retention campaigns, scoring next-best-offer per subscriber before the contract renewal window.",
-                    [["Offer Management", "Propensity-scored upsell before renewal."], ["CustomerLake", "Segments without copying profiles into a separate CDP."]],
+                    [["Next Best Offer", "Propensity-scored upsell before renewal."], ["CustomerLake", "Segments without copying profiles into a separate CDP."]],
                     sub=[
                         ["Segment & Offer Owners", "next-best-offer, upsell and the renewal save rate per segment."],
                         ["Retention Marketing", "churn drivers and the campaigns that hold high-value subscribers."],

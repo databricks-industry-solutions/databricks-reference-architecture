@@ -3,6 +3,7 @@ description: 'Market-data and analytics vendors: AI-enhanced sentiment and event
 sources:
   - name: Alternative & Content Data
     icon: market
+    simplified: 2
     tiles:
       - name: Dow Jones Newswires
         icon: market
@@ -95,6 +96,7 @@ sources:
             volume: several million msgs/sec at peak
             interval: Continuous (sub-millisecond)
       - name: CTA/UTP SIP
+        core: true
         icon: stream
         summary: 'The Securities Information Processors carrying the consolidated tape: best bid and offer and last sale across all US equity venues.'
         citations:
@@ -155,6 +157,7 @@ sources:
             volume: GBs of identifier records
             interval: Daily + on-demand allocation
       - name: GLEIF LEI
+        core: true
         icon: identity
         summary: 'The Global LEI Foundation register: legal-entity identifiers linking issuers, counterparties and subscribers to one governed identity.'
         citations:
@@ -184,6 +187,7 @@ sources:
             interval: Daily refresh + on-demand
   - name: Index & Benchmarks
     icon: chart
+    simplified: 3
     tiles:
       - name: S&P DJI Indices
         icon: chart
@@ -301,6 +305,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'FIX'
         icon: zbraces
@@ -460,6 +465,7 @@ pipelines:
           - ESG & Climate Analytics
           - Entity Resolution & MDM
       - name: Data Quality & Governance
+        core: true
         mark: AI Functions
         summary: Data-quality engineers validating and reconciling incoming feeds; the MDM team resolving instruments, issuers and entities; the governance team proving lineage, provenance and benchmark compliance to subscribers and regulators.
         uses:
@@ -537,6 +543,7 @@ pipelines:
 consumers:
   - name: BI & Productivity
     icon: chart
+    from: bi
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -557,6 +564,7 @@ consumers:
         icon: market
         summary: Curated data and index products listed and monetised through Databricks Marketplace and cloud data exchanges.
       - name: Subscriber APIs
+        core: true
         icon: api
         summary: Entitled query and snapshot APIs serving reference, index and end-of-day products to licensed subscribers.
   - name: Operational Writeback
@@ -569,6 +577,7 @@ consumers:
         icon: gavel
         summary: Cleaning, reconciliation and MDM exceptions pushed to the data-quality case queue engineers already work.
       - name: Index Publication
+        core: true
         icon: product
         summary: Calculated index levels and rebalance files published back to the dissemination and licensing systems that distribute them.
   - name: Regulatory & Reporting
@@ -590,10 +599,12 @@ consumers:
         icon: product
         summary: Published, contracted market-data and index products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Subscribers, vendors and index licensees reading live tables through governed sharing that reduces bespoke exports, with materialization and transfer depending on recipient mode.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Signal Studio
         icon: aisvc
@@ -682,10 +693,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

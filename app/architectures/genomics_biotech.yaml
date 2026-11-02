@@ -3,6 +3,7 @@ description: 'Genomics and biotechnology: sequencing pipelines, variant interpre
 sources:
   - name: Sequencing & Omics
     icon: stream
+    simplified: 2
     tiles:
       - name: Illumina BaseSpace
         icon: db
@@ -71,6 +72,7 @@ sources:
             interval: Per-scan on acquisition
   - name: Lab & Sample Mgmt
     icon: erp
+    simplified: 3
     tiles:
       - name: Benchling R&D Cloud
         icon: notebook
@@ -88,6 +90,7 @@ sources:
             volume: 1-5 GB/day
             interval: Nightly sync + on save
       - name: LabVantage LIMS
+        core: true
         icon: db
         summary: Clinical and research sample accessioning, aliquots and result release.
         citations:
@@ -133,6 +136,7 @@ sources:
             volume: 1-8 GB/day per study
             interval: Nightly extracts
       - name: Veeva Vault CTMS
+        core: true
         icon: partner
         summary: Site activation, enrolment milestones and monitoring visit findings.
         citations:
@@ -241,6 +245,7 @@ sources:
         summary: 'Binary Alignment/Map format for compressed sequence alignments to a reference.'
         spec_url: https://github.com/samtools/hts-specs
       - name: 'VCF'
+        core: true
         icon: zbraces
         fmt: 'VCF'
         summary: 'Variant Call Format for storing genetic variants against a reference genome.'
@@ -370,6 +375,7 @@ pipelines:
           - Polygenic Risk Scoring
           - Biomarker Discovery
       - name: Lab Operations
+        core: true
         mark: Lakeflow
         summary: Lab directors on assay turnaround time, reagent-lot inventory and instrument utilisation before a client escalates a late result.
         uses:
@@ -393,7 +399,7 @@ pipelines:
         mark: AI/BI
         summary: Quality and regulatory affairs on CAP and CLIA audits, QC failure rates and the validation documentation a submission stands or falls on.
         uses:
-          - - Quality Metrics
+          - - Lab Quality & Accreditation
             - QC failure rates and CAPA aging on governed definitions.
           - - AI/BI
             - Audit-ready dashboards regulators can trace.
@@ -527,6 +533,7 @@ consumers:
         icon: gavel
         summary: QC, proficiency and corrective action records produced from governed lab tables.
       - name: FDA Submission Packages
+        core: true
         icon: share
         summary: Validation summaries and analysis reproducibility filed from contracted Gold products.
   - name: Published Products
@@ -536,6 +543,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: CROs, pharma partners and consortia reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
@@ -628,10 +636,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

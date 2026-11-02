@@ -3,6 +3,7 @@ description: 'Health payers: member enrollment, claims adjudication, provider ne
 sources:
   - name: Core Admin & Claims
     icon: erp
+    simplified: 3
     tiles:
       - name: Facets Core Admin
         icon: erp
@@ -58,6 +59,7 @@ sources:
             interval: Daily edit + recovery cycle
   - name: Clinical & UM
     icon: people
+    simplified: 3
     tiles:
       - name: Epic Payer Platform
         icon: custlake
@@ -80,6 +82,7 @@ sources:
             volume: tens of events/sec
             interval: Continuous CDC
       - name: NaviNet Prior Auth
+        core: true
         icon: api
         summary: Authorization requests, determinations and appeal status exchanged with provider portals.
         citations:
@@ -109,6 +112,7 @@ sources:
             interval: Continuous HL7/clinical feed
   - name: Pharmacy & Network
     icon: product
+    simplified: 3
     tiles:
       - name: CVS Caremark PBM
         icon: market
@@ -127,6 +131,7 @@ sources:
             volume: 10-40 GB/day
             interval: Daily pharmacy claims cycle
       - name: Symplr Provider Data
+        core: true
         icon: people
         summary: Credentialing, roster and directory accuracy for network adequacy.
         citations:
@@ -174,6 +179,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'X12N'
         icon: zbraces
@@ -234,6 +240,7 @@ cloud_integrations:
             volume: MBs (specifications)
             interval: Annual / on release
       - name: CMS Risk Model Files
+        core: true
         icon: chart
         summary: HCC coefficients and model software updates for risk adjustment scoring.
         category: Risk Adjustment Model Reference
@@ -293,6 +300,7 @@ pipelines:
           - Medical Loss Ratio
           - Utilization Forecasting
       - name: Care Management
+        core: true
         mark: Model Serving
         summary: Nurses and care coordinators on rising-risk members, open gaps in care and readmission prevention before an avoidable ED visit or admission.
         uses:
@@ -462,6 +470,7 @@ consumers:
         icon: custlake
         summary: Benefit and care gap nudges triggered from governed member segments.
       - name: Broker & Employer Reporting
+        core: true
         icon: partner
         summary: Group renewal and experience metrics exchanged with distribution partners.
   - name: Regulatory & Reporting
@@ -473,6 +482,7 @@ consumers:
         citations:
           - ncqa-hedis
       - name: State Filing Packages
+        core: true
         icon: share
         summary: Rate and form filings assembled from contracted Gold products.
   - name: Published Products
@@ -482,6 +492,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Employers, providers and regulators reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
@@ -574,10 +585,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

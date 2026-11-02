@@ -3,6 +3,7 @@ description: Media buying, campaign delivery, audience targeting, brand safety, 
 sources:
   - name: Ad Platforms & DSP
     icon: market
+    simplified: 4
     tiles:
       - name: Google Campaign Manager
         icon: erp
@@ -25,6 +26,7 @@ sources:
             volume: 1-10k impression events/sec
             interval: Continuous
       - name: The Trade Desk
+        core: true
         icon: market
         summary: Programmatic buying, audience segments and bid stream across open web and CTV.
         citations:
@@ -44,6 +46,7 @@ sources:
             volume: 50k-500k bid events/sec
             interval: Continuous
       - name: Meta Ads Manager
+        core: true
         icon: partner
         summary: Paid social campaigns, creative variants and conversion events from Meta properties.
         citations:
@@ -163,6 +166,7 @@ sources:
             volume: 100s-1000s of profile events/sec
             interval: Continuous
       - name: LiveRamp RampID
+        core: true
         icon: partner
         summary: Identity resolution and onboarding for privacy-safe audience matching.
         citations:
@@ -194,6 +198,7 @@ sources:
             volume: 1-5 GB/day panel + ratings
             interval: Daily
       - name: IAS Brand Safety
+        core: true
         icon: gavel
         summary: Viewability, invalid traffic and brand suitability scoring on every impression.
         citations:
@@ -299,6 +304,7 @@ sources:
         summary: 'IAB real-time bidding protocol for programmatic ad auctions between exchanges, SSPs and DSPs.'
         spec_url: https://iabtechlab.com/standards/openrtb/
       - name: 'VAST'
+        core: true
         icon: zbraces
         fmt: 'VAST'
         summary: 'IAB Digital Video Ad Serving Template for delivering and tracking video ad creatives to players.'
@@ -321,20 +327,6 @@ cloud_integrations:
   - name: 3rd Party
     icon: zplug
     tiles:
-      - name: IAB Tech Lab OpenRTB
-        icon: api
-        summary: Bid request and response logs from programmatic exchanges, parsed into structured auction events.
-        citations:
-          - iab-openrtb
-        category: Programmatic Auction Logs (OpenRTB)
-        what_it_is: Bid request and response logs from programmatic exchanges, parsed into structured auction events.
-        who_uses_it: Programmatic trading and Data science teams.
-        data_out:
-          stream:
-            types:
-              - semi-structured
-            volume: 100k-1M bid events/sec
-            interval: Continuous
       - name: LiveRamp Data Clean Room
         icon: partner
         summary: Privacy-safe overlap and attribution queries against retailer and publisher partners.
@@ -349,6 +341,20 @@ cloud_integrations:
               - structured
             volume: 1-10 GB/day overlap results
             interval: Daily
+      - name: IAB Tech Lab OpenRTB
+        icon: api
+        summary: Bid request and response logs from programmatic exchanges, parsed into structured auction events.
+        citations:
+          - iab-openrtb
+        category: Programmatic Auction Logs (OpenRTB)
+        what_it_is: Bid request and response logs from programmatic exchanges, parsed into structured auction events.
+        who_uses_it: Programmatic trading and Data science teams.
+        data_out:
+          stream:
+            types:
+              - semi-structured
+            volume: 100k-1M bid events/sec
+            interval: Continuous
       - name: Comscore Campaign Ratings
         icon: chart
         summary: Digital campaign delivery and demographic composition for guaranteed buys.
@@ -392,7 +398,7 @@ pipelines:
         mark: AI/BI
         summary: Channel mix, flighting and budget allocation across linear, digital and retail media, judged on reach, effective CPM and incremental lift.
         uses:
-          - - Media Mix Model
+          - - Media Mix Workbench
             - Scenario planning on incremental lift by channel.
           - - AI/BI
             - Reach curves and budget pacing on governed data.
@@ -408,10 +414,11 @@ pipelines:
           - Retail Media Activation
           - Cross-Channel Attribution
       - name: Performance Marketing
+        core: true
         mark: Model Serving
         summary: Bid management, audience targeting and creative testing across programmatic and paid social, held to CPA, ROAS and viewability targets.
         uses:
-          - - Bid Optimizer
+          - - Programmatic Bid Optimization
             - Real-time bid adjustments against CPA and ROAS targets.
           - - Model Serving
             - Conversion propensity scored in the bid path.
@@ -532,6 +539,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -590,6 +598,7 @@ consumers:
         icon: product
         summary: Audience and performance products published in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Agency and brand partners reading live tables via Delta Sharing.
   - name: Databricks Apps
@@ -668,6 +677,7 @@ consumers:
           - App Developers
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni
@@ -682,10 +692,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

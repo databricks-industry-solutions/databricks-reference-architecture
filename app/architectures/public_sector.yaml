@@ -3,6 +3,7 @@ description: 'Civilian government across federal, state and local agencies: bene
 sources:
   - name: Benefits & Eligibility
     icon: erp
+    simplified: 3
     tiles:
       - name: Merative Cúram SPM
         icon: erp
@@ -24,6 +25,7 @@ sources:
             volume: tens of case events/sec
             interval: Continuous CDC
       - name: Gainwell MMIS
+        core: true
         icon: db
         summary: 'Medicaid Management Information System: claims, provider and member data for state health and human-services programs.'
         citations:
@@ -104,6 +106,7 @@ sources:
             interval: Nightly batch
   - name: Permitting & Licensing
     icon: gavel
+    simplified: 2
     tiles:
       - name: Accela Civic Platform
         icon: gavel
@@ -215,6 +218,7 @@ sources:
             interval: Continuous (API / webhook)
   - name: GIS, HR & Grants
     icon: globe
+    simplified: 2
     tiles:
       - name: Esri ArcGIS
         icon: globe
@@ -286,6 +290,7 @@ sources:
         summary: 'Statistical Data and Metadata eXchange standard for official statistics.'
         spec_url: https://sdmx.org/
       - name: 'DCAT'
+        core: true
         icon: zbraces
         fmt: 'DCAT'
         summary: 'W3C Data Catalog Vocabulary for describing open government datasets.'
@@ -336,6 +341,7 @@ cloud_integrations:
             volume: API calls on demand
             interval: Continuous (API)
       - name: Census Bureau APIs
+        core: true
         icon: api
         summary: Demographic, economic and geographic reference data from the U.S. Census Bureau, joined for benchmarking and equity analysis.
         citations:
@@ -453,6 +459,7 @@ pipelines:
           - Grants Management
           - Improper Payments
       - name: Constituent Services
+        core: true
         mark: Lakehouse//RT
         summary: 'The teams residents actually meet: 311 and contact centres, permitting and licensing counters, and the digital services meant to make all of it self-serve.'
         uses:
@@ -510,6 +517,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -529,6 +537,7 @@ consumers:
         citations:
           - socrata
       - name: 311 & Service Apps
+        core: true
         icon: apps
         summary: Self-service request and status apps built on Databricks Apps over Lakebase.
       - name: Genie for Residents
@@ -552,6 +561,7 @@ consumers:
         summary: Policy-authorized payment holds and reviewed case statuses synced to disbursement and Do Not Pay controls.
   - name: Regulatory & Reporting
     icon: gavel
+    simplified: 2
     tiles:
       - name: Federal Reporting
         icon: gavel
@@ -566,6 +576,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Other agencies and researchers reading live tables, avoiding separately maintained extracts where the arrangement supports it.
   - name: Databricks Apps
@@ -658,10 +669,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

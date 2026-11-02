@@ -67,6 +67,7 @@ sources:
             interval: Continuous
   - name: Building & Power
     icon: iot
+    simplified: 2
     tiles:
       - name: JCI Metasys
         icon: iot
@@ -111,6 +112,7 @@ sources:
             volume: 100s-1000s of points/sec
             interval: Continuous
       - name: Schneider PowerLogic
+        core: true
         icon: gauge
         summary: 'Schneider PowerLogic power monitoring: switchgear, UPS and branch-circuit metering across the power chain, the electrical ground truth behind PUE and billing.'
         citations:
@@ -176,6 +178,7 @@ sources:
             interval: Continuous
   - name: Interconnect & Net
     icon: network
+    simplified: 2
     tiles:
       - name: Equinix Fabric
         icon: network
@@ -261,6 +264,7 @@ sources:
             volume: tens of events/sec
             interval: Continuous
       - name: Genetec Security
+        core: true
         icon: zshield
         summary: 'Genetec Security Center: unified access control and video surveillance across the perimeter, halls and cages, the source of who entered where and when.'
         citations:
@@ -294,6 +298,7 @@ sources:
             volume: tens of access events/sec
             interval: Continuous
       - name: Tenant Billing
+        core: true
         icon: market
         summary: The colocation billing and contract system carrying committed power and space, metered usage rules and SLA terms, reconciled against the meters that actually recorded draw.
         category: Colocation Billing & Contracts
@@ -324,6 +329,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'Redfish'
         icon: zbraces
@@ -439,6 +445,7 @@ pipelines:
           - Uptime & Availability
           - Field Ops Assistant
       - name: Capacity & IX
+        core: true
         mark: AI/BI
         summary: Capacity planners tracking power, cooling and space headroom hall by hall before a sales commitment strands a cabinet, and interconnection product managers monetising cross-connects and fabric ports across the meet-me room.
         uses:
@@ -598,6 +605,7 @@ consumers:
         icon: db
         summary: Reconciled capacity, connectivity and asset state written back into DCIM so the inventory operations plans against stays true.
       - name: Setpoint Advisories
+        core: true
         icon: iot
         summary: Cooling-setpoint recommendations delivered as advisories to controls engineers, who apply them in the BMS rather than a model driving plant directly.
   - name: Regulatory & ESG
@@ -619,6 +627,7 @@ consumers:
         icon: product
         summary: Published, contracted facility and tenant products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Tenant Data Sharing
+        core: true
         icon: share
         summary: Live power, uptime and interconnection data shared to each tenant over Delta Sharing, reducing bespoke exports subject to the recipient's access mode.
       - name: Sharing Recipients
@@ -714,10 +723,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

@@ -38,6 +38,7 @@ sources:
             volume: 10-50 GB/day
             interval: Nightly batch
       - name: Kinaxis Maestro
+        core: true
         icon: sheet
         summary: Concurrent S&OP scenarios, constraint-based planning and what-if responses when a chip or component allocation slips.
         citations:
@@ -84,6 +85,7 @@ sources:
             volume: 100s of images/sec + vectors
             interval: Continuous inline capture
       - name: In-Circuit & Functional Test
+        core: true
         icon: iot
         summary: ICT and functional test results, bin codes and parametric measurements per board and unit.
         citations:
@@ -99,6 +101,7 @@ sources:
             interval: Continuous during test
   - name: Design & Code
     icon: dev
+    simplified: 2
     tiles:
       - name: Cadence Design Platform
         icon: sheet
@@ -163,6 +166,7 @@ sources:
             volume: 1-3 GB/day
             interval: Hourly / event-driven
       - name: ServiceMax
+        core: true
         icon: orch
         summary: 'Field service and warranty: installed base, service contracts, RMA and warranty claims for the shipped device fleet.'
         citations:
@@ -248,6 +252,7 @@ sources:
         summary: 'Open PCB manufacturing data exchange (design-to-fabrication) standard.'
         spec_url: https://www.ipc.org/ipc-2581
       - name: 'IPC-CFX'
+        core: true
         icon: zbraces
         fmt: 'CFX'
         summary: 'IPC Connected Factory Exchange (IPC-2591) machine-to-machine standard for SMT lines.'
@@ -295,6 +300,7 @@ cloud_integrations:
             volume: 100s of MB/day
             interval: Continuous + daily updates
       - name: EDI ASN / DESADV
+        core: true
         icon: api
         summary: Supplier advance ship notices and delivery confirmations parsed into structured receipt events.
         citations:
@@ -416,6 +422,7 @@ pipelines:
           - Warranty Cost Optimization
           - Product Feature Usage Analytics
       - name: Supply Chain
+        core: true
         mark: AI/BI
         summary: Demand and materials planners on component lead times, allocation and inventory, trading inventory cost against line-down and stock-out risk.
         uses:
@@ -539,6 +546,7 @@ consumers:
         icon: api
         summary: Device health, entitlements and firmware status served to customers from governed fleet data rather than emailed spreadsheets.
       - name: Contract Mfg Sharing
+        core: true
         icon: share
         summary: EMS and ODM partners reading live quality and demand tables over Delta Sharing.
         citations:
@@ -562,10 +570,12 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Customers, EMS partners and auditors reading live tables through governed sharing that reduces bespoke export copies, with recipient materialization depending on the sharing and execution mode.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Product Analytics
         icon: gauge
@@ -640,6 +650,7 @@ consumers:
           - Firmware Engineering
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni
@@ -654,10 +665,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

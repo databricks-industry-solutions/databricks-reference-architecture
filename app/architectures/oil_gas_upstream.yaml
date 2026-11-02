@@ -9,7 +9,7 @@ sources:
         summary: Wellhead pressures, separator flow rates and ESP and compressor tags from field historians.
         citations:
           - aveva-pi
-        category: Process/Time-Series Historian
+        category: Process / Time-Series Historian
         what_it_is: Stores high-frequency wellhead, separator, artificial-lift and compressor tags from producing fields as the operational time-series system of record.
         who_uses_it: Production engineers, facility operators and reliability engineers.
         data_out:
@@ -24,11 +24,12 @@ sources:
             volume: 50-500k tags/sec at peak
             interval: Continuous (sub-second sampling)
       - name: SLB OFM
+        core: true
         icon: stream
         summary: Well tests, decline curves and surveillance data the production and reservoir teams maintain.
         citations:
           - slb-ofm
-        category: Production/Well Surveillance System
+        category: Production / Well Surveillance System
         what_it_is: Captures well tests, decline curves and well surveillance data used to model and forecast well and field performance.
         who_uses_it: Reservoir engineers, production engineers and subsurface geologists.
         data_out:
@@ -102,6 +103,7 @@ sources:
             volume: 10-50 GB/day
             interval: Nightly batch + hourly deltas
       - name: IBM Maximo
+        core: true
         icon: gauge
         summary: Asset registers, work orders and maintenance history for wells, facilities and rotating equipment.
         citations:
@@ -147,6 +149,7 @@ sources:
             volume: 1-5 GB/day deals + positions
             interval: Intraday + end-of-day marks
       - name: SAP IS-Oil
+        core: true
         icon: erp
         summary: Joint-venture allocations, production accounting and royalty and severance postings.
         citations:
@@ -254,6 +257,7 @@ sources:
         summary: 'Energistics standard for reservoir and earth-model data exchange.'
         spec_url: https://www.energistics.org/resqml-data-standards
       - name: 'SEG-Y'
+        core: true
         icon: zbraces
         fmt: 'SEGY'
         summary: 'SEG standard format for storing seismic reflection trace data.'
@@ -265,6 +269,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: OPC-UA Well Gateway
         icon: iot
@@ -354,6 +359,7 @@ pipelines:
           - Production Monitoring
           - Predictive Maintenance & Asset Health
       - name: Subsurface & Reservoir
+        core: true
         mark: AI/BI
         summary: Geoscience and reservoir teams on seismic interpretation, well tests and depletion, reconciling models to actual production before booking.
         uses:
@@ -498,6 +504,7 @@ consumers:
         citations:
           - emerson-zedi
       - name: Maximo Work Orders
+        core: true
         icon: erp
         summary: Maintenance work orders raised from predicted equipment risk.
         citations:
@@ -532,6 +539,7 @@ consumers:
         citations:
           - epa-ghgrp
       - name: Production Tax Royalty
+        core: true
         icon: share
         summary: Royalty and severance filings from contracted Gold products.
         citations:
@@ -543,6 +551,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: JV partners, regulators and marketers reading live tables with no copy.
   - name: Databricks Apps
@@ -635,10 +644,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

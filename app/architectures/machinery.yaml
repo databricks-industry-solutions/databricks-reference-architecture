@@ -3,6 +3,7 @@ description: 'An industrial machinery OEM designing, building, selling and servi
 sources:
   - name: ERP & Planning
     icon: erp
+    simplified: 2
     tiles:
       - name: SAP S/4HANA
         icon: erp
@@ -53,6 +54,7 @@ sources:
             interval: Planning cycles + on-demand what-if
   - name: MES & Shop Floor
     icon: stream
+    simplified: 2
     tiles:
       - name: Siemens Opcenter
         icon: stream
@@ -97,6 +99,7 @@ sources:
             interval: Continuous inline capture
   - name: PLM & Engineering
     icon: dev
+    simplified: 2
     tiles:
       - name: PTC Windchill
         icon: product
@@ -146,6 +149,7 @@ sources:
             volume: 1-3 GB/day
             interval: Hourly / event-driven
       - name: ServiceMax
+        core: true
         icon: orch
         summary: 'Field service management: installed base, service contracts, work orders and parts for the deployed machine fleet.'
         citations:
@@ -186,7 +190,7 @@ sources:
         summary: High-frequency sensor and actuator tags from machining cells, utilities and test rigs.
         citations:
           - aveva-pi
-        category: Process/Time-Series Historian
+        category: Process / Time-Series Historian
         what_it_is: Collects high-frequency sensor and actuator tags from machining cells, utilities and end-of-line test rigs for OEE, energy and anomaly analytics.
         who_uses_it: Reliability engineers, Process engineering and Energy management.
         data_out:
@@ -196,6 +200,7 @@ sources:
             volume: 10-100k tags/sec
             interval: Continuous historian stream
       - name: Connected Machine Telemetry
+        core: true
         icon: iot
         summary: 'Fleet telemetry from deployed machines: hours, loads, alarms and sensor streams from every unit in the field.'
         category: Connected-Asset / IIoT Telemetry
@@ -233,6 +238,7 @@ sources:
         summary: 'Open standard for read-only data from CNC machines and shop-floor equipment.'
         spec_url: https://www.mtconnect.org/
       - name: 'OPC UA'
+        core: true
         icon: zbraces
         fmt: 'OPCUA'
         summary: 'OPC Unified Architecture for secure, model-based industrial data exchange.'
@@ -318,7 +324,7 @@ pipelines:
         mark: AI/BI
         summary: Finite scheduling, machining sequencing and labour loading against configured orders sales already promised, watched on schedule adherence and WIP ageing.
         uses:
-          - - Production Scheduler
+          - - Plant Performance
             - Sequence and changeover plans scored before the shift board posts.
           - - AI/BI
             - Schedule adherence and WIP ageing on governed definitions.
@@ -356,6 +362,7 @@ pipelines:
           - Warranty Cost Optimization
           - Predictive Maintenance & Asset Health
       - name: Aftermarket & Service
+        core: true
         mark: Lakeflow
         summary: Installed-base uptime, service dispatch and parts consumption tracked on fleet availability and service margin so a field failure becomes planned work not a breakdown.
         uses:
@@ -509,6 +516,7 @@ consumers:
         citations:
           - opcenter
       - name: Field Service Orders
+        core: true
         icon: orch
         summary: Predicted failures raised as service work orders the field crew already schedules.
         citations:
@@ -525,6 +533,7 @@ consumers:
         citations:
           - edi-asn
       - name: Dealer Network
+        core: true
         icon: globe
         summary: Dealers and distributors reading parts demand and warranty limits live instead of nightly flat files.
   - name: Regulatory & Reporting
@@ -543,10 +552,12 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Customers, dealers and auditors reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Plant Performance
         icon: gauge
@@ -621,6 +632,7 @@ consumers:
           - Financial Controller
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni
@@ -635,10 +647,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

@@ -52,7 +52,7 @@ INDUSTRIES_BATCH_PAPER_PACKAGING = {
                              data_out=data_out(
                                  stream=flow(["semi-structured"], "5-50k tags/sec", "Continuous control telemetry"))),
                         tile("AVEVA PI Historian", "iot", "AVEVA PI System process historian: the high-frequency tag store that underpins OEE, sheet-break analysis and predictive maintenance.", "avevapi",
-                             cat="Process/Time-Series Historian",
+                             cat="Process / Time-Series Historian",
                              what="High-frequency process historian tag store underpinning OEE, sheet-break analysis and predictive maintenance.",
                              users="Reliability engineering, process engineering and Data science.",
                              data_out=data_out(

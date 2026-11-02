@@ -9,7 +9,7 @@ sources:
         summary: Line pressures, flow rates and compressor-station tags from the pipeline historian.
         citations:
           - aveva-pi
-        category: Process/Time-Series Historian
+        category: Process / Time-Series Historian
         what_it_is: Stores high-frequency line pressure, flow and compressor and pump-station tags across the pipeline network as the operational time-series system of record.
         who_uses_it: Pipeline controllers, reliability engineers and integrity teams.
         data_out:
@@ -24,6 +24,7 @@ sources:
             volume: 50-500k tags/sec at peak
             interval: Continuous (sub-second sampling)
       - name: Emerson Ovation
+        core: true
         icon: gauge
         summary: Control-room setpoints, station sequences and alarms from the pipeline control system.
         citations:
@@ -130,6 +131,7 @@ sources:
             volume: 10s-100s of GB per run
             interval: Per-inspection (periodic runs)
       - name: Esri ArcGIS
+        core: true
         icon: globe
         summary: Pipeline centrelines, class locations, HCAs and right-of-way layers on a spatial system of record.
         citations:
@@ -162,6 +164,7 @@ sources:
             volume: 10-50 GB/day
             interval: Nightly batch + hourly deltas
       - name: IBM Maximo
+        core: true
         icon: gauge
         summary: Asset registers, work orders and maintenance history for stations, valves and rotating equipment.
         citations:
@@ -259,6 +262,7 @@ sources:
         summary: 'Pipeline Open Data Standard model for pipeline integrity and asset data.'
         spec_url: https://pods.org/
       - name: 'NAESB Nominations'
+        core: true
         icon: zbraces
         fmt: 'NAESB'
         summary: 'NAESB standards for natural-gas nominations, scheduling and capacity.'
@@ -270,6 +274,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: OPC-UA Pipeline Gateway
         icon: iot
@@ -360,6 +365,7 @@ pipelines:
           - Distribution & Logistics Optimization
           - Predictive Maintenance & Asset Health
       - name: Integrity & Reliability
+        core: true
         mark: AI/BI
         summary: Integrity and reliability engineers on metal loss, corrosion rate and station health, prioritising digs and work before a threat becomes a leak.
         uses:
@@ -506,6 +512,7 @@ consumers:
         citations:
           - emerson-ovation
       - name: Maximo Work Orders
+        core: true
         icon: erp
         summary: Maintenance and dig work orders raised from predicted integrity and equipment risk.
         citations:
@@ -524,6 +531,7 @@ consumers:
         citations:
           - quorum-pgas
       - name: Interconnect Feed
+        core: true
         icon: globe
         summary: Delivery and receipt positions exchanged with connecting pipelines without spreadsheet reconciliation.
         citations:
@@ -542,6 +550,7 @@ consumers:
         citations:
           - epa-ghgrp
       - name: Integrity Filing
+        core: true
         icon: share
         summary: Integrity assessment and repair records produced from governed inspection lineage.
         citations:
@@ -553,10 +562,12 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Shippers, regulators and connecting pipelines reading live tables with no copy.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Control Room
         icon: gauge
@@ -645,10 +656,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

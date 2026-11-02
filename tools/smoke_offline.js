@@ -25,7 +25,7 @@ function check(n, c, d) { results.push(!!c); console.log((c ? 'PASS ' : 'FAIL ')
   await boardReady(p1);
   await p1.waitForTimeout(400);
   await p1.evaluate(async () => { await applyIndustry('healthcare', true); });
-  await p1.click('#lang-btn'); await p1.waitForTimeout(120);
+  await p1.click('#opt-btn'); await p1.waitForTimeout(120);
   await p1.click('#lang-menu button[data-lang="ar"]'); await p1.waitForTimeout(700);
   const doc = await p1.evaluate(() => exportHtmlDoc());
   const hasRes = /id="frozen-resources"/.test(doc);

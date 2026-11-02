@@ -3,6 +3,7 @@ description: 'Crypto exchanges, custodians and digital-asset firms: on-chain ind
 sources:
   - name: On-Chain & Nodes
     icon: network
+    simplified: 2
     tiles:
       - name: Alchemy Node RPC
         icon: network
@@ -83,6 +84,7 @@ sources:
             volume: Order + trade events at peak
             interval: Continuous (real-time)
       - name: Kaiko Market Data
+        core: true
         icon: market
         summary: 'Institutional crypto market data: trades, order books and reference rates across centralised and decentralised venues, the benchmark feed for liquidity and pricing analytics.'
         citations:
@@ -270,6 +272,7 @@ sources:
             volume: Screening API responses
             interval: Continuous (API)
       - name: Notabene Travel Rule
+        core: true
         icon: gavel
         summary: 'FATF Travel Rule messaging: originator and beneficiary information exchanged with counterparty VASPs on qualifying transfers, the compliance layer over on-chain settlement.'
         citations:
@@ -299,6 +302,7 @@ sources:
             volume: Postings + balances
             interval: Continuous CDC (near real-time)
       - name: Circle / USDC
+        core: true
         icon: product
         summary: Stablecoin issuance, minting and redemption flows, the fiat-backed settlement rail whose reserves and movements feed treasury and liquidity.
         citations:
@@ -332,6 +336,7 @@ sources:
             volume: Settlement instructions + confirmations
             interval: Continuous (events)
       - name: Fedwire / SWIFT
+        core: true
         icon: erp
         summary: Fiat banking rails for deposits, withdrawals and settlement with partner banks, reconciled against crypto movement for the full cash and coin position.
         citations:
@@ -365,6 +370,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'IVMS 101'
         icon: zbraces
@@ -471,6 +477,7 @@ pipelines:
           - Market Analytics
           - DeFi Analytics
       - name: Compliance & AML
+        core: true
         mark: Agent Bricks
         summary: The MLRO and financial-crime team screening wallets and transactions, sanctions and PEP analysts clearing alerts, and the Travel Rule team exchanging originator and beneficiary data with counterparty VASPs.
         uses:
@@ -569,6 +576,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -603,6 +611,7 @@ consumers:
         citations:
           - fireblocks
       - name: Ledger Postings
+        core: true
         icon: db
         summary: Reconciled settlement and fee postings written to the core ledger in the system finance already closes the books in.
   - name: Regulatory & Reporting
@@ -721,10 +730,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

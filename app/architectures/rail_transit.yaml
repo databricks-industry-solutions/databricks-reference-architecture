@@ -3,6 +3,7 @@ description: 'For freight railroads and passenger transit operators: rolling-sto
 sources:
   - name: Asset & Maintenance
     icon: erp
+    simplified: 2
     tiles:
       - name: IBM Maximo
         icon: erp
@@ -37,7 +38,7 @@ sources:
         summary: 'Linear and infrastructure asset management: track, structures and signaling assets, their condition and their inspection and renewal history.'
         citations:
           - assetwise
-        category: Linear/Infrastructure Asset Management
+        category: Linear Asset Management
         what_it_is: Manages linear and infrastructure assets, track, structures and signaling, with their condition and inspection and renewal history for renewal planning.
         who_uses_it: Fleet & Assets, Infrastructure & track and Maintenance planning teams.
         data_out:
@@ -64,6 +65,7 @@ sources:
             volume: hundreds-thousands of events/sec
             interval: Continuous enforcement events
       - name: Siemens Trainguard
+        core: true
         icon: network
         summary: CBTC and automatic train control for mass transit, the moving-block signaling basis for headway, throughput and energy-optimised driving.
         citations:
@@ -93,6 +95,7 @@ sources:
             interval: Continuous signaling events
   - name: Dispatch & Network Ops
     icon: stream
+    simplified: 2
     tiles:
       - name: RailConnect TMS
         icon: stream
@@ -128,6 +131,7 @@ sources:
             volume: hundreds of events/sec
             interval: Continuous control-centre events
       - name: AVL / GPS Telemetry
+        core: true
         icon: iot
         summary: Automatic vehicle location and GPS pings from locomotives and transit vehicles, the ground truth for position, speed and run adherence.
         category: Vehicle Location (AVL/GPS)
@@ -231,6 +235,7 @@ sources:
             volume: hundreds of trip updates/sec
             interval: Continuous (seconds)
       - name: Wayside Detectors
+        core: true
         icon: iot
         summary: Hot bearing, wheel-impact and dragging-equipment detectors along the track, catching a failing axle before it becomes a derailment.
         citations:
@@ -278,6 +283,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'GTFS Schedule'
         icon: zbraces
@@ -401,6 +407,7 @@ pipelines:
           - Incident & Field Service Assistant
           - Demand Forecasting
       - name: Fleet & Assets
+        core: true
         mark: Model Serving
         summary: Rolling-stock and infrastructure engineers on predicted component removals, track condition and the Maximo work orders raised against the fleet and network they already run.
         uses:
@@ -489,7 +496,7 @@ pipelines:
         summary: Delay-probability, remaining-useful-life, demand and energy-optimisation models, and whether they still hold six months after deployment.
         uses:
           - - Feature Store
-            - Features defined once and read identically in training and serving.
+            - Features defined once from tables, streams or request-time data, and read identically in training and serving.
           - - MLflow
             - Every run tracked for audit and reproduction.
           - - Model Serving
@@ -541,6 +548,7 @@ consumers:
         summary: Notebooks, VS Code and JetBrains against governed data and Genie Code.
   - name: Riders & Partners
     icon: partner
+    simplified: 2
     tiles:
       - name: GTFS-RT Open Feeds
         icon: share
@@ -562,6 +570,7 @@ consumers:
         citations:
           - maximo
       - name: Dispatch Writeback
+        core: true
         icon: db
         summary: Controller-approved recovery and movement plans written back into the incumbent dispatch and TMS estate, which retains movement authority, so the answer reaches the controller's screen.
       - name: Crew & Field Mobile
@@ -585,6 +594,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Lessors, maintenance partners and infrastructure owners reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
@@ -678,10 +688,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

@@ -3,6 +3,7 @@ description: 'Enterprise security operations: threat detection and correlation, 
 sources:
   - name: SIEM & Log Analytics
     icon: observ
+    simplified: 2
     tiles:
       - name: Splunk Enterprise
         icon: observ
@@ -157,6 +158,7 @@ sources:
             volume: 100s-1000s of events/sec
             interval: Continuous
       - name: CyberArk PAM
+        core: true
         icon: key
         summary: Privileged session recordings, vault checkouts and secret access, the source of truth for privileged-account misuse detection.
         citations:
@@ -208,6 +210,7 @@ sources:
             volume: 1-5 GB/day
             interval: Daily
       - name: Mandiant Threat Intel
+        core: true
         icon: globe
         summary: Adversary profiles, indicators and campaign intelligence used to prioritise detections against the threats actually targeting the sector.
         citations:
@@ -260,6 +263,7 @@ sources:
             volume: 10-100k events/sec at peak
             interval: Continuous
       - name: Zscaler ZIA/ZPA
+        core: true
         icon: cloud
         summary: Secure web gateway and zero-trust access logs for every user-to-app session, the source for egress and exfiltration analysis.
         citations:
@@ -293,6 +297,7 @@ sources:
             volume: 10-100k events/sec at peak
             interval: Continuous
       - name: Wiz CNAPP
+        core: true
         icon: cloud
         summary: Cloud security posture, misconfiguration and runtime findings across cloud accounts, containers and workloads.
         citations:
@@ -337,6 +342,7 @@ sources:
         summary: 'Open Cybersecurity Schema Framework, a vendor-agnostic taxonomy for security telemetry.'
         spec_url: https://schema.ocsf.io/
       - name: 'STIX'
+        core: true
         icon: zbraces
         fmt: 'STIX'
         summary: 'Structured Threat Information eXpression for representing cyber threat intelligence.'
@@ -354,20 +360,6 @@ cloud_integrations:
   - name: 3rd Party
     icon: zplug
     tiles:
-      - name: OCSF Event Streams
-        icon: stream
-        summary: Security telemetry that arrives already normalised to the Open Cybersecurity Schema Framework, landed as governed tables, so detections are written once against a vendor-neutral schema.
-        citations:
-          - ocsf
-        category: Normalized Security Schema (OCSF)
-        what_it_is: Security telemetry normalised to the Open Cybersecurity Schema Framework on arrival and landed as governed tables.
-        who_uses_it: Security data engineers and detection engineers.
-        data_out:
-          stream:
-            types:
-              - semi-structured
-            volume: 100k-1M events/sec at peak
-            interval: Continuous
       - name: Kafka Security Topics
         icon: eventbus
         summary: High-volume endpoint, network and identity events carried on existing Kafka topics, consumed continuously into the lakehouse for near-real-time detection.
@@ -381,6 +373,20 @@ cloud_integrations:
             types:
               - semi-structured
             volume: 50k-1M events/sec at peak
+            interval: Continuous
+      - name: OCSF Event Streams
+        icon: stream
+        summary: Security telemetry that arrives already normalised to the Open Cybersecurity Schema Framework, landed as governed tables, so detections are written once against a vendor-neutral schema.
+        citations:
+          - ocsf
+        category: Normalized Security Schema (OCSF)
+        what_it_is: Security telemetry normalised to the Open Cybersecurity Schema Framework on arrival and landed as governed tables.
+        who_uses_it: Security data engineers and detection engineers.
+        data_out:
+          stream:
+            types:
+              - semi-structured
+            volume: 100k-1M events/sec at peak
             interval: Continuous
       - name: Cortex XSOAR
         icon: orch
@@ -490,6 +496,7 @@ pipelines:
           - Insider Risk & UEBA
           - Vulnerability Triage
       - name: Detection Engineering
+        core: true
         mark: Model Serving
         summary: Detection engineers who write, test and ship detection content as code, and content developers who tune rules against false positives and keep coverage mapped to the ATT&CK matrix.
         uses:
@@ -545,6 +552,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -569,12 +577,14 @@ consumers:
         citations:
           - crowdstrike
       - name: ITSM Ticketing
+        core: true
         icon: opdb
         summary: Incidents and remediation tasks raised in ServiceNow Security Operations, tracked to closure against the same governed record.
         citations:
           - servicenow
   - name: Detection Delivery
     icon: cicd
+    simplified: 2
     tiles:
       - name: Detection CI/CD
         icon: cicd
@@ -597,6 +607,7 @@ consumers:
         icon: docs
         summary: Immutable query and access logs proving who saw what and when, supporting query-audit evidence for applicable controls without extra instrumentation.
       - name: Regulatory Filings
+        core: true
         icon: gavel
         summary: Breach-notification and regulator reporting produced from contracted Gold products rather than reassembled by hand under deadline.
   - name: Sharing & Products
@@ -606,6 +617,7 @@ consumers:
         icon: product
         summary: Published, contracted security products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Threat Intel Sharing
+        core: true
         icon: share
         summary: Curated indicators and detections shared with ISACs and partners over Delta Sharing rather than emailed spreadsheets.
       - name: Sharing Recipients
@@ -701,10 +713,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

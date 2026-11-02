@@ -19,11 +19,12 @@ sources:
             volume: 10-100k signals/sec
             interval: Continuous (sub-second)
       - name: AspenTech IP.21
+        core: true
         icon: stream
         summary: Process historian time-series for unit analytics, energy intensity and abnormal event detection.
         citations:
           - aspen-ip21
-        category: Process/Time-Series Historian
+        category: Process / Time-Series Historian
         what_it_is: Stores process historian time-series for unit analytics, yield accounting, energy intensity and abnormal-event detection across the refinery.
         who_uses_it: Process engineers, yield accounting and Energy teams.
         data_out:
@@ -65,6 +66,7 @@ sources:
             volume: 1-5 GB/day plans + cases
             interval: Planning cycles + on-demand what-if
       - name: LabWare LIMS
+        core: true
         icon: gavel
         summary: Feed, intermediate and product assays, blend certifications and off-spec results.
         citations:
@@ -96,6 +98,7 @@ sources:
             volume: 10-50 GB/day
             interval: Nightly batch + hourly deltas
       - name: IBM Maximo
+        core: true
         icon: gauge
         summary: Asset registers, work orders and maintenance history for units, rotating equipment and heat exchangers.
         citations:
@@ -141,6 +144,7 @@ sources:
             volume: 1-5 GB/day deals + positions
             interval: Intraday + end-of-day marks
       - name: Platts Price Assess
+        core: true
         icon: chart
         summary: Benchmark curves and crack-spread indices the desk marks crude and products to.
         citations:
@@ -217,6 +221,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'PIDX XML'
         icon: zbraces
@@ -242,6 +247,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: OPC-UA Plant Gateway
         icon: iot
@@ -333,6 +339,7 @@ pipelines:
           - Feedstock, Formulation, & Recipe Control
           - Operations Resource Efficiency
       - name: Quality & Reliability
+        core: true
         mark: AI/BI
         summary: Laboratory and reliability engineers on off-spec events, giveaway and unit health, tracing a quality miss to its cause before more product is affected.
         uses:
@@ -481,6 +488,7 @@ consumers:
         citations:
           - honeywell-exp
       - name: Maximo Work Orders
+        core: true
         icon: erp
         summary: Maintenance work orders raised from predicted equipment and exchanger risk.
         citations:
@@ -499,6 +507,7 @@ consumers:
         citations:
           - labware
       - name: Terminal Operator Feed
+        core: true
         icon: globe
         summary: Product movements and inventory exchanged with terminals without spreadsheet reconciliation.
         citations:
@@ -517,6 +526,7 @@ consumers:
         citations:
           - epa-ghgrp
       - name: Fuels & Product Filing
+        core: true
         icon: share
         summary: Fuels and product-quality filings produced from contracted Gold products.
         citations:
@@ -528,10 +538,12 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Buyers, terminals and regulators reading live tables with no copy.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Operations Console
         icon: gauge
@@ -551,6 +563,7 @@ consumers:
         summary: Flare, leak and permit exceedances plus renewable-feedstock share and co-processing allocation before inspections and board review.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Unit Yield & Energy
         icon: aibi
@@ -620,10 +633,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

@@ -8,7 +8,7 @@ function check(name, cond, detail) { results.push({ name, ok: !!cond, detail });
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 const MENUS = [['#ind-btn', 'ind-wrap'], ['#region-btn', 'region-wrap'], ['#stage-btn', 'stage-wrap'], ['#hl-btn', 'hl-wrap'],
-  ['#pal-btn', 'pal-wrap'], ['#shape-btn', 'shape-wrap'], ['#dl-btn', 'dl-wrap'], ['#lang-btn', 'lang-wrap'], ['#share-btn', 'share-wrap']];
+  ['#dl-btn', 'dl-wrap'], ['#share-btn', 'share-wrap'], ['#opt-btn', 'opt-wrap']];
 const openMenus = page => page.evaluate(() => [...document.querySelectorAll('.pal-wrap.open, .dl-wrap.open')].map(w => w.id));
 
 (async () => {
@@ -48,6 +48,89 @@ const openMenus = page => page.evaluate(() => [...document.querySelectorAll('.pa
     await page.click('#hl-btn');
     await page.mouse.click(8, 990);
     check('a click outside closes the open menu', (await openMenus(page)).length === 0);
+    await ctx.close();
+  }
+
+  {
+    const { ctx, page } = await open('?industry=banking');
+    await page.click('#opt-btn');
+    await page.click('#side-btn');
+    const docked = await page.evaluate(() => ({ docked: document.body.classList.contains('docked'), open: document.getElementById('opt-wrap').classList.contains('open') }));
+    await page.click('#opt-btn');
+    const ticked = await page.evaluate(() => document.getElementById('side-btn').classList.contains('on'));
+    await page.click('#opt-btn');
+    const picks = {};
+    for (const [k, btn, read] of [['palette', '#pal-menu [data-pal="mono"]', () => document.body.classList.contains('pal-mono')],
+      ['shape', '#shape-menu [data-shape="t"]', () => document.body.classList.contains('shape-t')],
+      ['language', '#lang-menu [data-lang="de"]', () => I18N.lang === 'de']]) {
+      await page.click('#opt-btn');
+      await page.click(btn);
+      await page.waitForFunction(read, null, { timeout: 15000 }).catch(() => {});
+      picks[k] = { applied: await page.evaluate(read), open: await page.evaluate(() => document.getElementById('opt-wrap').classList.contains('open')) };
+    }
+    await page.click('#share-btn');
+    await page.click('#share-menu button[data-share="copy"]');
+    await sleep(300);
+    const tipNow = () => page.evaluate(() => {
+      const t = document.getElementById('share-flash'), b = document.getElementById('share-btn').getBoundingClientRect(), r = t.getBoundingClientRect();
+      return { text: t.textContent, shown: r.width > 0 && r.height > 0, below: r.top >= b.bottom, live: t.getAttribute('aria-live'), btn: document.getElementById('share-btn').textContent.trim() };
+    });
+    const tip = await tipNow();
+    const flash = { lbl: tip.shown && tip.below && tip.live === 'polite' && !tip.btn ? tip.text : JSON.stringify(tip),
+      open: await page.evaluate(() => document.getElementById('share-wrap').classList.contains('open')) };
+    await sleep(1500);
+    const gone = await tipNow();
+    check('the Link copied note shows under the Share icon without changing the button, and clears itself', !gone.text && !gone.shown, JSON.stringify(gone));
+    await page.click('#opt-btn');
+    await page.click('#tour-btn');
+    await page.waitForSelector('.tour-pop');
+    const tour = await page.evaluate(() => !document.getElementById('opt-wrap').classList.contains('open'));
+    check('each Options row acts and closes the menu: the dock docks the panel and shows its tick, a palette, a shape and a language apply, the tour starts; Copy link shows Link copied under the Share icon',
+      docked.docked && !docked.open && ticked && Object.values(picks).every(p => p.applied && !p.open) && flash.lbl === 'Link copied' && !flash.open && tour,
+      JSON.stringify({ docked, ticked, picks, flash, tour }));
+    await ctx.close();
+  }
+
+  for (const vp of [{ width: 1600, height: 1000 }, { width: 1280, height: 800 }]) {
+    const { ctx, page } = await open('?industry=banking', { viewport: vp });
+    await page.click('#opt-btn');
+    const m = await page.evaluate(() => {
+      const el = document.getElementById('opt-menu'), r = el.getBoundingClientRect();
+      const rows = sel => new Set([...document.querySelectorAll(sel)].map(b => Math.round(b.getBoundingClientRect().top))).size;
+      const lang = document.querySelectorAll('#lang-menu button').length;
+      return { scroll: el.scrollHeight - el.clientHeight, bottom: Math.round(r.bottom), vh: innerHeight, lang, langRows: rows('#lang-menu button'),
+        shapeRows: rows('#shape-menu button'), palRows: rows('#pal-menu button'), groups: document.querySelectorAll('#pal-menu .men-sub').length };
+    });
+    check(`at ${vp.width}x${vp.height} the Options menu fits the window without scrolling: languages in two columns, each palette group on one row, the four shapes on one row`,
+      m.scroll <= 0 && m.bottom <= m.vh && m.langRows === Math.ceil(m.lang / 2) && m.palRows === m.groups && m.shapeRows === 1, JSON.stringify(m));
+    await ctx.close();
+  }
+
+  {
+    const { ctx, page } = await open('?industry=banking&theme=light');
+    const ico = () => page.evaluate(() => { const s = document.querySelector('#theme-ico > svg'); return s ? s.innerHTML : ''; });
+    const light = await ico();
+    await page.click('#theme-btn');
+    const dark = await ico();
+    const isDark = await page.evaluate(() => document.body.classList.contains('theme-dark'));
+    check('the theme button draws a moon in light and a sun in dark', !!light && !!dark && light !== dark && isDark && /<path/.test(light) && /<circle/.test(dark), JSON.stringify({ light: light.slice(0, 30), dark: dark.slice(0, 30), isDark }));
+    await ctx.close();
+  }
+
+  {
+    const { ctx, page } = await open('?cloud=azure');
+    const size = () => page.evaluate(() => ({ fit: document.body.dataset.fit, h: document.querySelector('.board').offsetHeight }));
+    const fresh = await size();
+    const seen = [];
+    for (let i = 0; i < 2; i++) for (const v of ['Detailed', 'Simplified']) {
+      await page.click(`#view-seg button:has-text("${v}")`);
+      await sleep(500);
+      const s = await size(), t = await page.evaluate(() => { fitBoard(); return { fit: document.body.dataset.fit, h: document.querySelector('.board').offsetHeight }; });
+      seen.push(v[0] + ':' + s.fit + '/' + s.h + (s.fit === t.fit && s.h === t.h ? '' : ' (refit ' + t.fit + '/' + t.h + ')'));
+    }
+    const back = await size();
+    check('switching to Detailed and back to Simplified re-fits the board each time, back to the scale and height of a fresh load',
+      seen.every(s => !/refit/.test(s)) && back.fit === fresh.fit && back.h === fresh.h, 'fresh ' + fresh.fit + '/' + fresh.h + ' | ' + seen.join(' | '));
     await ctx.close();
   }
 
@@ -119,7 +202,7 @@ const openMenus = page => page.evaluate(() => [...document.querySelectorAll('.pa
     for (let i = 0; i < 10 && (await title()) !== 'Highlights on every box'; i++) { await page.click('.tour-btn.accent'); await sleep(300); }
     await sleep(900);
     const hl = await page.evaluate(() => {
-      const h = document.querySelector('.tour-hole').getBoundingClientRect(), boxes = [...document.querySelectorAll('#plat-top .atom, #plat-waist .atom, #platform .atom')];
+      const h = document.querySelector('.tour-hole').getBoundingClientRect(), boxes = [...document.querySelectorAll('#plat-top .atom, #platform .atom')];
       const dots = el => el.querySelectorAll(':scope > .badge-dot[data-hl]').length;
       const box = boxes.find(el => { const b = el.getBoundingClientRect(); return b.width && Math.abs(b.left - h.left - 6) < 2 && Math.abs(b.top - h.top - 6) < 2; });
       return { id: box ? box.dataset.id : '', dots: box ? dots(box) : 0, most: Math.max(...boxes.map(dots)), x: h.left + h.width / 2, y: h.top + h.height / 2,

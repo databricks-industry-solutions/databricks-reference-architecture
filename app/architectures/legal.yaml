@@ -3,6 +3,7 @@ description: 'Law firms and corporate legal departments: matter management, e-di
 sources:
   - name: Document & DMS
     icon: db
+    simplified: 3
     tiles:
       - name: iManage Work
         icon: db
@@ -56,6 +57,7 @@ sources:
             interval: Nightly batch
   - name: Practice & Billing
     icon: erp
+    simplified: 2
     tiles:
       - name: Elite 3E
         icon: erp
@@ -86,6 +88,7 @@ sources:
             volume: 2-10 GB/day
             interval: Nightly batch + billing cycles
       - name: Intapp
+        core: true
         icon: apps
         summary: Client and matter intake, conflicts clearance, time capture and risk management across the firm.
         citations:
@@ -102,6 +105,7 @@ sources:
             interval: Hourly / nightly sync
   - name: E-Discovery
     icon: gavel
+    simplified: 2
     tiles:
       - name: RelativityOne
         icon: gavel
@@ -149,6 +153,7 @@ sources:
             interval: Continuous (API polling)
   - name: Contracts & Research
     icon: sheet
+    simplified: 3
     tiles:
       - name: Ironclad CLM
         icon: product
@@ -166,6 +171,7 @@ sources:
             volume: 1-6 GB/day contracts + metadata
             interval: Nightly batch + hourly deltas
       - name: Thomson Reuters Westlaw
+        core: true
         icon: globe
         summary: 'Legal research corpus: case law, statutes and citator research with usage telemetry.'
         citations:
@@ -214,6 +220,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 3
     tiles:
       - name: 'LEDES'
         icon: zbraces
@@ -244,6 +251,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: EDRM XML Load Files
         icon: api
@@ -337,6 +345,7 @@ pipelines:
           - Legal Research Analytics
           - Time Entry Compliance
       - name: Litigation Support
+        core: true
         mark: Lakehouse//RT
         summary: E-discovery managers on custodian completeness, processing queues and reviewer throughput against the court deadline that will not move.
         uses:
@@ -467,6 +476,7 @@ consumers:
         citations:
           - imanage
       - name: Billing Pre-bill Release
+        core: true
         icon: market
         summary: Approved time and disbursement entries released from WIP to client invoices.
         citations:
@@ -486,12 +496,14 @@ consumers:
         icon: partner
         summary: Matter status and spend dashboards exchanged with in-house clients.
       - name: Court E-filing
+        core: true
         icon: api
         summary: Production sets and certificates of service filed through authorized e-filing gateways, with PACER used only as docket-retrieval context.
         citations:
           - pacer
   - name: Regulatory & Reporting
     icon: gavel
+    simplified: 2
     tiles:
       - name: LEDES & Accrual Reporting
         icon: gavel
@@ -508,6 +520,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Corporate clients and co-counsel reading governed live tables that reduce routine file exports.
   - name: Databricks Apps
@@ -600,10 +613,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

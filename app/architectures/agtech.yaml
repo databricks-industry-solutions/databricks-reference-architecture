@@ -3,6 +3,7 @@ description: 'An agriculture technology provider: precision-ag analytics and var
 sources:
   - name: Farm Mgmt Platforms
     icon: appbuilder
+    simplified: 3
     tiles:
       - name: Climate FieldView
         icon: appbuilder
@@ -20,6 +21,7 @@ sources:
             volume: tens of millions of acre-layers
             interval: Daily field sync
       - name: JD Operations Center
+        core: true
         icon: apps
         summary: 'John Deere''s farm-management hub: fields, jobs, guidance lines and agronomic layers, the offboard home for the data machines generate in the field.'
         citations:
@@ -65,6 +67,7 @@ sources:
             interval: Daily field sync
   - name: Equipment Telematics
     icon: iot
+    simplified: 3
     tiles:
       - name: JDLink Telematics
         icon: iot
@@ -128,6 +131,7 @@ sources:
             interval: Per field pass
   - name: Imagery & Remote Sensing
     icon: globe
+    simplified: 2
     tiles:
       - name: Planet Imagery
         icon: globe
@@ -190,6 +194,7 @@ sources:
             interval: Daily to weekly
   - name: Weather & Field Sensors
     icon: iot
+    simplified: 3
     tiles:
       - name: DTN Weather
         icon: stream
@@ -206,6 +211,7 @@ sources:
             volume: field-level obs and forecasts
             interval: Continuous (hourly refresh)
       - name: CropX Soil Probes
+        core: true
         icon: iot
         summary: In-ground soil moisture, temperature and salinity sensors feeding irrigation and nutrient decisions at the root zone.
         citations:
@@ -281,6 +287,7 @@ sources:
             volume: millions of sample and assay results
             interval: Daily lab batch
       - name: SAP S/4HANA
+        core: true
         icon: erp
         summary: 'The commercial system of record for the ag vendor: orders, inventory, dealer settlements and the input supply chain behind the products in the field.'
         citations:
@@ -335,6 +342,7 @@ sources:
         summary: 'AgGateway toolkit that normalises field operation data across mixed equipment fleets.'
         spec_url: https://adaptframework.org/
       - name: 'ISOXML'
+        core: true
         icon: zbraces
         fmt: 'ISOX'
         summary: 'ISO 11783-10 task data format for prescriptions and as-applied telemetry from machinery.'
@@ -359,21 +367,6 @@ cloud_integrations:
   - name: 3rd Party
     icon: zplug
     tiles:
-      - name: AgGateway ADAPT
-        icon: connect
-        summary: The industry data-interoperability framework and plugins that normalise as-applied, prescription and setup files across mixed equipment brands.
-        citations:
-          - adapt
-        category: Ag Data Interoperability Framework
-        what_it_is: Industry framework and plugins normalising as-applied, prescription and setup files across mixed equipment brands.
-        who_uses_it: Geospatial Eng, Telematics Engineering and Precision Ag Product teams.
-        data_out:
-          batch:
-            types:
-              - structured
-              - semi-structured
-            volume: millions of normalised task files
-            interval: Per field pass
       - name: Leaf Ag API
         icon: api
         summary: A unified API over FieldView, Operations Center, CNH and other providers, pulling machine and field data through one governed connector.
@@ -389,6 +382,21 @@ cloud_integrations:
               - semi-structured
             volume: millions of field and machine records/day
             interval: Scheduled API pulls
+      - name: AgGateway ADAPT
+        icon: connect
+        summary: The industry data-interoperability framework and plugins that normalise as-applied, prescription and setup files across mixed equipment brands.
+        citations:
+          - adapt
+        category: Ag Data Interoperability Framework
+        what_it_is: Industry framework and plugins normalising as-applied, prescription and setup files across mixed equipment brands.
+        who_uses_it: Geospatial Eng, Telematics Engineering and Precision Ag Product teams.
+        data_out:
+          batch:
+            types:
+              - structured
+              - semi-structured
+            volume: millions of normalised task files
+            interval: Per field pass
       - name: Machine Event Streams
         icon: eventbus
         summary: Existing Kafka and MQTT topics carrying live machine, sensor and gateway events, landed generically as structured streaming tables.
@@ -488,6 +496,7 @@ pipelines:
           - Sustainability & Circular Economy
           - Product & Process Traceability
       - name: Commercial
+        core: true
         mark: AI/BI
         summary: 'The go-to-market side: the dealer and channel network selling and servicing equipment and inputs, grower-success teams on retention and expansion, and input supply and pricing balancing demand against the season.'
         uses:
@@ -576,6 +585,7 @@ consumers:
         citations:
           - fieldview
       - name: Dealer Portals
+        core: true
         icon: globe
         summary: Equipment and input dealer portals reading machine health, parts demand and grower activity from certified products.
       - name: Genie for Agronomists
@@ -608,6 +618,7 @@ consumers:
         citations:
           - verra
       - name: EUDR Traceability
+        core: true
         icon: share
         summary: Deforestation-free due-diligence and geolocation evidence produced for the EU Deforestation Regulation from governed provenance data.
         citations:
@@ -619,6 +630,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Growers, food and CPG partners and regulators reading live tables, reducing duplicate extracts under scoped agreements.
   - name: Databricks Apps
@@ -642,6 +654,7 @@ consumers:
         summary: Where the sustainability team baselines acres, scores practice change against imagery and models, and assembles the audit trail behind every carbon credit.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Field & Yield
         icon: aibi
@@ -711,10 +724,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

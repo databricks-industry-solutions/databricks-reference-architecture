@@ -9,7 +9,7 @@ sources:
         summary: 'The operational historian of record: high-frequency SCADA and PPC time-series from every turbine, inverter and plant controller, the source of availability and performance signals.'
         citations:
           - pi
-        category: Process/Time-Series Historian
+        category: Process / Time-Series Historian
         what_it_is: Stores high-frequency SCADA and plant-controller time-series from every turbine, inverter and site controller as the operational system of record for availability and performance.
         who_uses_it: Performance engineers, reliability engineers and production analysts.
         data_out:
@@ -24,6 +24,7 @@ sources:
             volume: 50-500k tags/sec at peak
             interval: Continuous (sub-second sampling)
       - name: GE Vernova SCADA
+        core: true
         icon: iot
         summary: 'Wind turbine SCADA and controls from the OEM: nacelle, drivetrain and pitch telemetry, alarms and availability states against each unit.'
         citations:
@@ -38,6 +39,7 @@ sources:
             volume: 10-100k signals/sec
             interval: Continuous (sub-second)
       - name: Power Factors APM
+        core: true
         icon: gauge
         summary: 'Renewable asset performance management: production, availability and loss accounting across mixed-OEM solar, wind and storage fleets.'
         citations:
@@ -72,6 +74,7 @@ sources:
             interval: Continuous inverter telemetry
   - name: Trading & Markets
     icon: market
+    simplified: 3
     tiles:
       - name: ERCOT / CAISO
         icon: market
@@ -94,6 +97,7 @@ sources:
             volume: 100s-1000s of signals/sec
             interval: Continuous (5-minute dispatch)
       - name: ION Commodities ETRM
+        core: true
         icon: erp
         summary: 'Energy trading and risk management for power and PPA positions: deal capture, position, mark-to-market and settlement across the trading book.'
         citations:
@@ -137,6 +141,7 @@ sources:
             interval: Daily settlement + intraday
   - name: O&M & Field Service
     icon: erp
+    simplified: 2
     tiles:
       - name: IBM Maximo EAM
         icon: erp
@@ -202,7 +207,7 @@ sources:
   - name: Grid & Metering
     icon: network
     tiles:
-      - name: Revenue Meters/MDM
+      - name: Revenue Meters / MDM
         icon: db
         summary: Certified revenue-grade meter reads and the meter data management estate, the billed basis for generation, export and settlement.
         category: Revenue Metering / MDM
@@ -301,6 +306,7 @@ sources:
         summary: 'SunSpec Modbus device models for solar inverters and DER interoperability.'
         spec_url: https://sunspec.org/sunspec-modbus-specifications/
       - name: 'IEC 61400-25'
+        core: true
         icon: zbraces
         fmt: '61400'
         summary: 'IEC standard for wind power plant monitoring and control communications.'
@@ -431,6 +437,7 @@ pipelines:
           - Commodity & Energy Trading
           - Demand Forecasting
       - name: O&M & Field
+        core: true
         mark: Lakeflow
         summary: O&M managers on truck-roll cost and mean-time-to-repair; field technicians on the work order in front of them; spares and logistics on the parts that keep the fleet turning.
         uses:
@@ -524,6 +531,7 @@ consumers:
         icon: api
         summary: Bids, schedules and imbalance positions served back to the ISO and market platforms through governed offer APIs.
       - name: PPA Offtaker Sharing
+        core: true
         icon: share
         summary: Metered generation, availability and settlement shared live to offtakers and corporate PPA buyers over Delta Sharing rather than monthly files.
       - name: OEM Warranty Sharing
@@ -538,6 +546,7 @@ consumers:
         citations:
           - maximo
       - name: PPC Setpoints
+        core: true
         icon: opdb
         summary: Curtailment and dispatch setpoint recommendations written back to the power plant controller, which applies them within permissible grid and protection limits.
       - name: Field Mobile
@@ -563,6 +572,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Offtakers, OEMs, lenders and grid partners reading live tables, avoiding separately maintained extracts where the recipient and transfer arrangement allows.
   - name: Databricks Apps
@@ -655,10 +665,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.
@@ -697,7 +709,7 @@ agent_usecases:
           - ION Commodities ETRM
           - ICE Power Markets
           - ERCOT / CAISO
-          - Revenue Meters/MDM
+          - Revenue Meters / MDM
         teams:
           - Energy Trading
           - PPA Origination
@@ -898,7 +910,7 @@ agent_usecases:
         how_built: Interconnection and grid-code obligations, revenue-meter and curtailment reads and REC and carbon positions are conformed to Gold and published through AI/BI on Unity Catalog definitions for external filing.
         components:
           - ISO Interconnection
-          - Revenue Meters/MDM
+          - Revenue Meters / MDM
           - REC Registries
           - AI/BI
           - Unity Catalog

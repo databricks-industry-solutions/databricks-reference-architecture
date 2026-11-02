@@ -197,7 +197,7 @@ INDUSTRIES_BATCH_MEDICAL_DEVICES = {
                      data_out=data_out(
                          batch=flow(["structured"], "MBs-GBs (registration + vigilance)", "On registration + periodic sync"))),
                 tile("Device Events", "stream", "MQTT and Kafka topics carrying connected-device telemetry, alarms and MES events, landed as structured events.",
-                     cat="Device Event Stream (MQTT/Kafka)",
+                     cat="Device Event Stream (MQTT / Kafka)",
                      what="MQTT and Kafka topics carrying connected-device telemetry, alarms and MES events, landed as structured events for real-time monitoring.",
                      users="Telemetry Eng, Field service and Line quality.",
                      data_out=data_out(

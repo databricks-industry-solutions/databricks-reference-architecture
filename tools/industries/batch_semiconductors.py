@@ -59,7 +59,7 @@ INDUSTRIES_BATCH_SEMICONDUCTORS = {
                          data_out=data_out(
                              batch=flow(["structured", "unstructured"], "GBs-TBs per block", "Per design run"))),
                     tile("Cadence Virtuoso", "code", "Custom and analog design: schematic, layout and LVS for IP blocks on each die.", "cadence-virtuoso",
-                         cat="EDA Custom/Analog Design",
+                         cat="EDA Custom / Analog Design",
                          what="Supports custom and analog design: schematic, layout and LVS for IP blocks on each die.",
                          users="Analog/mixed-signal designers and IP teams.",
                          data_out=data_out(

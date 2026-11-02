@@ -216,6 +216,22 @@ check("Real-World Evidence is an outcome-map use case on Pharmaceuticals", "Real
 check("the replaced Assay & Screening Analytics use case is gone from the map and the exemptions",
       "Assay & Screening Analytics" not in real_om.get("pharmaceuticals", []) and "Assay & Screening Analytics" not in lg.STORY_EXEMPT.get("pharmaceuticals", {}))
 
+TB = {"names": ["Fraud Cockpit", "Fraud Detection", "Risk Analysts"], "top": ["Fraud Detection"],
+      "teams": [{"n": "Risk Analysts", "ucs": ["Fraud Detection"], "uses": ["Fraud Cockpit", "Genie", "Kinesis Alias"]}]}
+TSHARED, TALIAS = {"Genie"}, {"Kinesis Alias": "Amazon Kinesis"}
+check("team references that name boxes on the board, platform products or aliases pass",
+      lg.team_ref_checks({"bank": TB}, None, TSHARED, TALIAS) == ([], 1), lg.team_ref_checks({"bank": TB}, None, TSHARED, TALIAS))
+for label, team in (("a use case not on the board", {"n": "Risk Analysts", "ucs": ["Assay Analytics"], "uses": []}),
+                    ("a box not on the board", {"n": "Risk Analysts", "ucs": [], "uses": ["Media Mix Model"]})):
+    bad = dict(TB, teams=[team])
+    check(f"a team naming {label} is refused", len(lg.team_ref_checks({"bank": bad}, None, TSHARED, TALIAS)[0]) == 1,
+          lg.team_ref_checks({"bank": bad}, None, TSHARED, TALIAS))
+check("a team on the generic board is checked too",
+      len(lg.team_ref_checks({}, dict(TB, teams=[{"n": "Data Engineers", "ucs": [], "uses": ["Gone Product"]}]), TSHARED, TALIAS)[0]) == 1)
+check("no Teams box at all is refused", lg.team_ref_checks({"bank": dict(TB, teams=[])}, None, TSHARED, TALIAS)[0] != [])
+check("a use case named only by a box elsewhere on the board is refused",
+      len(lg.team_ref_checks({"bank": dict(TB, teams=[{"n": "Risk Analysts", "ucs": ["Fraud Cockpit"], "uses": []}])}, None, TSHARED, TALIAS)[0]) == 1)
+
 for d in made:
     shutil.rmtree(d, ignore_errors=True)
 failed = [r for r in results if not r[1]]

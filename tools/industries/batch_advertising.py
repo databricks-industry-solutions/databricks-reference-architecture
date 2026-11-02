@@ -304,7 +304,7 @@ INDUSTRIES_BATCH_ADVERTISING = {
                         ucs=["Cross-Channel Attribution", "Brand Lift Measurement", "Agency Reconciliation"]),
                     biz("Media Planning", "AI/BI",
                         "Channel mix, flighting and budget allocation across linear, digital and retail media, judged on reach, effective CPM and incremental lift.",
-                        [["Media Mix Model", "Scenario planning on incremental lift by channel."],
+                        [["Media Mix Workbench", "Scenario planning on incremental lift by channel."],
                          ["AI/BI", "Reach curves and budget pacing on governed data."]],
                         sub=[
                             ["Media Planning Director", "the channel mix and flighting that hit reach and lift at the lowest effective CPM."],
@@ -314,7 +314,7 @@ INDUSTRIES_BATCH_ADVERTISING = {
                         ucs=["Frequency Management", "Retail Media Activation", "Cross-Channel Attribution"]),
                     biz("Performance Marketing", "Model Serving",
                         "Bid management, audience targeting and creative testing across programmatic and paid social, held to CPA, ROAS and viewability targets.",
-                        [["Bid Optimizer", "Real-time bid adjustments against CPA and ROAS targets."],
+                        [["Programmatic Bid Optimization", "Real-time bid adjustments against CPA and ROAS targets."],
                          ["Model Serving", "Conversion propensity scored in the bid path."]],
                         sub=[
                             ["Programmatic Trader", "bid modifiers, pacing and viewability against CPA and ROAS targets."],

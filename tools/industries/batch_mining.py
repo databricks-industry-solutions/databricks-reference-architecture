@@ -53,7 +53,7 @@ INDUSTRIES_BATCH_MINING = {
                     ]},
                 {"box": "Plant & Processing", "ic": "stream", "tiles": [
                         tile("AVEVA PI System", "iot", "Mill throughput, reagent flows and recovery tags from concentrator historians.", "aveva-pi",
-                             cat="Process/Time-Series Historian",
+                             cat="Process / Time-Series Historian",
                              what="Stores mill throughput, reagent flows and recovery tags from concentrator plants as the processing time-series system of record.",
                              users="Plant metallurgists, concentrator operators and reliability engineers.",
                              data_out=data_out(

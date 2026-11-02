@@ -3,6 +3,7 @@ description: 'For a digital-first retailer: catalog, discovery, orders, fulfillm
 sources:
   - name: Commerce Platform
     icon: apps
+    simplified: 3
     tiles:
       - name: Shopify Plus
         icon: apps
@@ -53,6 +54,7 @@ sources:
             interval: Hourly / nightly sync
   - name: OMS & Payments
     icon: erp
+    simplified: 3
     tiles:
       - name: Manhattan Active Omni
         icon: erp
@@ -69,6 +71,7 @@ sources:
             volume: hundreds-thousands of order events/sec
             interval: Continuous orchestration events
       - name: Stripe Payments
+        core: true
         icon: market
         summary: Payment intents, disputes and payout reconciliation.
         citations:
@@ -108,6 +111,7 @@ sources:
             interval: Continuous (API)
   - name: Fulfillment & WMS
     icon: stream
+    simplified: 2
     tiles:
       - name: ShipBob WMS
         icon: stream
@@ -189,6 +193,7 @@ sources:
             volume: hundreds of events/sec
             interval: Continuous campaign events
       - name: Google Analytics 4
+        core: true
         icon: observ
         summary: Session, funnel and attribution events.
         citations:
@@ -204,6 +209,7 @@ sources:
             interval: Continuous event stream
   - name: Marketplaces
     icon: market
+    simplified: 2
     tiles:
       - name: Amazon Seller Central
         icon: market
@@ -253,6 +259,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'UBL'
         icon: zbraces
@@ -373,6 +380,7 @@ pipelines:
           - Customer 360 & LTV
           - Identity Resolution & CDP
       - name: Merchandising
+        core: true
         mark: AI/BI
         summary: Assortment, pricing, bundles and on-site search relevance, tracked on attach rate, gross margin and competitive price gap.
         uses:
@@ -553,6 +561,7 @@ consumers:
         icon: gavel
         summary: Jurisdiction filings from governed transaction data.
       - name: PCI Scope Reports
+        core: true
         icon: share
         summary: Cardholder-data-environment scoping and assessment-evidence support, with attestation remaining the assessor's responsibility.
   - name: Published Products
@@ -562,10 +571,12 @@ consumers:
         icon: product
         summary: Customer and order products in Unity Catalog Domains.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Brand partners via Delta Sharing.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Attribution Hub
         icon: chart
@@ -654,10 +665,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

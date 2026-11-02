@@ -9,7 +9,7 @@ sources:
         summary: High-frequency turbine, boiler and balance-of-plant time-series across the fleet, the operational system of record for output and condition.
         citations:
           - pi
-        category: Process/Time-Series Historian
+        category: Process / Time-Series Historian
         what_it_is: Stores high-frequency turbine, boiler and balance-of-plant tags across every unit as the operational time-series system of record for output, availability and condition.
         who_uses_it: Performance engineers, reliability engineers and control-room operators.
         data_out:
@@ -24,6 +24,7 @@ sources:
             volume: 50-500k tags/sec at peak
             interval: Continuous (sub-second sampling)
       - name: Emerson Ovation DCS
+        core: true
         icon: gauge
         summary: Distributed control system for gas, steam and nuclear balance-of-plant, publishing setpoints, states and alarms the floor operates on.
         citations:
@@ -127,6 +128,7 @@ sources:
             volume: 0.5-2 GB/day
             interval: Nomination cycles + daily reconciliation
       - name: Weather & Generation Forecast
+        core: true
         icon: globe
         summary: Irradiance, wind and temperature forecasts and load signals, the exogenous driver behind renewable output and net-load forecasting.
         category: Weather & Forecast Provider
@@ -162,6 +164,7 @@ sources:
             volume: 100s-1000s of signals/sec
             interval: Continuous (5-minute dispatch)
       - name: ION Commodities ETRM
+        core: true
         icon: erp
         summary: 'Energy trading and risk management for power, gas and PPA positions: deal capture, position, mark-to-market and settlement across the book.'
         citations:
@@ -191,6 +194,7 @@ sources:
             interval: Daily settlement + intraday
   - name: Asset & Outage Mgmt
     icon: erp
+    simplified: 2
     tiles:
       - name: IBM Maximo EAM
         icon: erp
@@ -221,6 +225,7 @@ sources:
             volume: 1-5 GB/day
             interval: Nightly batch
       - name: Oracle Primavera P6
+        core: true
         icon: sheet
         summary: 'Outage and project scheduling: the critical-path plan a major overhaul or refuelling outage is scoped, sequenced and tracked against.'
         citations:
@@ -253,6 +258,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'IEC 61850'
         icon: zbraces
@@ -276,6 +282,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: ISO Dispatch Signals
         icon: stream
@@ -364,6 +371,7 @@ pipelines:
           - Predictive Maintenance & Asset Health
           - Demand Forecasting
       - name: Trading & Commercial
+        core: true
         mark: Model Serving
         summary: Power traders scheduling and hedging fleet generation into the ISO; originators structuring PPAs and offtake; schedulers arbitraging storage and ancillary markets.
         uses:
@@ -515,6 +523,7 @@ consumers:
         citations:
           - ovation
       - name: Maximo Work Orders
+        core: true
         icon: erp
         summary: Predicted failures and corrective actions raised as work orders against the unit, in the system maintenance already runs.
         citations:
@@ -545,6 +554,7 @@ consumers:
         icon: gavel
         summary: CEMS and Scope 1 emissions filings produced from the same governed tables the fleet runs on.
       - name: Reliability & Nuclear Filings
+        core: true
         icon: share
         summary: Reliability and nuclear regulatory filings produced from contracted Gold products rather than reassembled by hand under deadline.
   - name: Published Products
@@ -554,6 +564,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Regulators, grid operators, lenders and partners reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
@@ -646,10 +657,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.

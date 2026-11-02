@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import importlib.util, os, sys
+import importlib.util, os, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -77,6 +77,24 @@ URLS = {"c": {"banking:cite"}, "s": {"LINKS[Rival].site"}, "d": {"LINKS[Unity Ca
 check("the highlights scope keeps Databricks links in any field and drops third-party citations and competitor sites",
       sorted(lg.highlight_urls(URLS)) == ["d", "https://databricks-industry-solutions.github.io/lakehouse-industry-data-models/",
                                          "https://www.databricks.com/blog/jumpstart", "m", "v"], sorted(lg.highlight_urls(URLS)))
+
+import refresh_content as rc
+with tempfile.TemporaryDirectory() as tmp:
+    stamp, now = os.path.join(tmp, "stamp"), 1_800_000_000
+    check("no recorded refresh has no age, so the refresh runs", rc.hours_since(stamp, now) is None and not rc.fresh(None, 72))
+    rc.record(stamp, now)
+    check("a recorded refresh reads back its age in hours", rc.hours_since(stamp, now + 3 * 3600) == 3, rc.hours_since(stamp, now + 3 * 3600))
+    check("the record carries a readable UTC time", open(stamp).read().split()[1] == "2027-01-15T08:00:00Z", open(stamp).read())
+    check("a refresh 10 hours old is fresh within 72 hours", rc.fresh(rc.hours_since(stamp, now + 10 * 3600), 72))
+    check("a refresh exactly 72 hours old is no longer fresh", not rc.fresh(rc.hours_since(stamp, now + 72 * 3600), 72))
+    check("a refresh 80 hours old runs again", not rc.fresh(rc.hours_since(stamp, now + 80 * 3600), 72))
+    check("a record from the future does not skip the refresh", not rc.fresh(rc.hours_since(stamp, now - 3600), 72))
+    open(stamp, "w").write("yesterday\n")
+    check("an unreadable record has no age, so the refresh runs", rc.hours_since(stamp, now) is None)
+    open(stamp, "w").write("")
+    check("an empty record has no age, so the refresh runs", rc.hours_since(stamp, now) is None)
+check("the record lives beside the tools and git ignores it",
+      rc.STAMP == os.path.join(HERE, ".content_refresh") and "tools/.content_refresh" in open(os.path.join(HERE, "..", ".gitignore")).read().split())
 
 failed = [r for r in results if not r[1]]
 for name, ok, detail in results:

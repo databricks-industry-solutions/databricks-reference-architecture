@@ -38,6 +38,7 @@ sources:
             volume: hundreds of events/sec
             interval: Continuous batch events
       - name: SAP S/4HANA PP
+        core: true
         icon: erp
         summary: Production orders, BOM explosions, confirmations and co-product yields.
         citations:
@@ -75,6 +76,7 @@ sources:
             volume: GBs/day docs + records
             interval: Hourly / nightly sync
       - name: SafetyChain Plant Mgmt
+        core: true
         icon: gauge
         summary: HACCP checks, temperature logs and sanitation records from production shifts.
         citations:
@@ -90,6 +92,7 @@ sources:
             volume: 1-5 GB/day
             interval: Per-shift + hourly
       - name: LabWare LIMS
+        core: true
         icon: db
         summary: Microbiology, allergen and nutritional assay results tied to lot and line.
         category: Laboratory Information System (LIMS)
@@ -124,6 +127,7 @@ sources:
             volume: hundreds of events/sec
             interval: Continuous shipment events
       - name: Manhattan WMS
+        core: true
         icon: product
         summary: Warehouse inventory, pick/pack and shipment confirmation against customer orders.
         citations:
@@ -168,7 +172,7 @@ sources:
               - structured
             volume: 2-10 GB/week
             interval: Weekly / monthly syndicated feed
-      - name: Circana/IRI Panel
+      - name: Circana / IRI Panel
         icon: chart
         summary: Household panel and causal analytics for category and brand performance.
         citations:
@@ -183,6 +187,7 @@ sources:
             volume: 1-5 GB/week
             interval: Weekly feed
       - name: Trade Promotion Mgmt
+        core: true
         icon: partner
         summary: Promotional calendars, scan data and accrual settlements with retail partners.
         category: Trade Promotion Management (TPM)
@@ -213,6 +218,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'EPCIS'
         icon: zbraces
@@ -249,20 +255,6 @@ cloud_integrations:
   - name: 3rd Party
     icon: zplug
     tiles:
-      - name: GS1 EPCIS Events
-        icon: api
-        summary: Serial shipping container and lot traceability events normalised on ingest for recall readiness.
-        citations:
-          - gs1-epcis
-        category: Traceability Event Standard
-        what_it_is: Normalises serial shipping container and lot traceability events on ingest so recall lists can be built forward and backward.
-        who_uses_it: Quality & Food Safety, Regulatory and Logistics teams.
-        data_out:
-          stream:
-            types:
-              - semi-structured
-            volume: hundreds of events/sec
-            interval: Continuous trace events
       - name: FDA FSMA 204 Trace
         icon: gavel
         summary: FSMA Rule 204 key data element requirements used to validate traceability against operational trace records.
@@ -278,6 +270,20 @@ cloud_integrations:
               - semi-structured
             volume: GBs/day KDEs
             interval: Daily + event-driven
+      - name: GS1 EPCIS Events
+        icon: api
+        summary: Serial shipping container and lot traceability events normalised on ingest for recall readiness.
+        citations:
+          - gs1-epcis
+        category: Traceability Event Standard
+        what_it_is: Normalises serial shipping container and lot traceability events on ingest so recall lists can be built forward and backward.
+        who_uses_it: Quality & Food Safety, Regulatory and Logistics teams.
+        data_out:
+          stream:
+            types:
+              - semi-structured
+            volume: hundreds of events/sec
+            interval: Continuous trace events
       - name: Weather & Commodity
         icon: globe
         summary: Crop condition and commodity price feeds for agricultural input planning.
@@ -334,6 +340,7 @@ pipelines:
           - Feedstock, Formulation, & Recipe Control
           - Quality Event Root Cause Analysis
       - name: Quality & Food Safety
+        core: true
         mark: AI/BI
         summary: Quality managers on hold rate, open deviations, CAPA aging and sanitation compliance across sites when a supplier alert lands.
         uses:
@@ -463,6 +470,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart
@@ -521,6 +529,7 @@ consumers:
         icon: product
         summary: Published, contracted products discoverable in Unity Catalog Domains and shared over OpenSharing.
       - name: Sharing Recipients
+        core: true
         icon: share
         summary: Retailers, co-packers and auditors reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
@@ -544,6 +553,7 @@ consumers:
         summary: Scan data and accruals reconciled to incremental volume and margin by retailer event.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Plant OEE & Yield
         icon: aibi
@@ -613,10 +623,12 @@ consumers:
           - Agent Bricks
           - Unity Gateway
       - name: Claude Code
+        core: true
         icon: code
         short: 3rd-party harness
         summary: Anthropic's coding harness working against the platform through MCP, with spend, routing and policy governed by Unity Gateway.
       - name: OpenAI Codex
+        core: true
         icon: code
         short: 3rd-party harness
         summary: OpenAI's coding harness connected over MCP, governed at runtime by Unity Gateway rather than trusted by configuration.
@@ -688,7 +700,7 @@ agent_usecases:
         summary: Ask about demand, promotion ROI and shopper segments across the commercial book.
         feeds:
           - NielsenIQ POS
-          - Circana/IRI Panel
+          - Circana / IRI Panel
           - Trade Promotion Mgmt
           - Weather & Commodity
         teams:
@@ -818,7 +830,7 @@ agent_usecases:
         how_built: POS, panel, D2C and loyalty data are resolved into governed consumer entities in CustomerLake under Unity Catalog and scored with Model Serving for segmentation and lifetime value in AI/BI.
         components:
           - NielsenIQ POS
-          - Circana/IRI Panel
+          - Circana / IRI Panel
           - CustomerLake
           - Unity Catalog
           - AI/BI

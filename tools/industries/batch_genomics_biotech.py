@@ -174,7 +174,7 @@ INDUSTRIES_BATCH_GENOMICS_BIOTECH = {
                     ],
                     ucs=["Lab Turnaround Optimisation", "Sample Chain of Custody"]),
                 biz("Regulatory & Quality", "AI/BI", "Quality and regulatory affairs on CAP and CLIA audits, QC failure rates and the validation documentation a submission stands or falls on.",
-                    [["Quality Metrics", "QC failure rates and CAPA aging on governed definitions."], ["AI/BI", "Audit-ready dashboards regulators can trace."], ["Unity Catalog", "Lineage from raw FASTQ to signed report."]],
+                    [["Lab Quality & Accreditation", "QC failure rates and CAPA aging on governed definitions."], ["AI/BI", "Audit-ready dashboards regulators can trace."], ["Unity Catalog", "Lineage from raw FASTQ to signed report."]],
                     sub=[
                         ["Quality Managers", "QC failure rates, CAPA aging and proficiency testing outcomes."],
                         ["Regulatory Affairs", "the validation and reproducibility evidence a submission stands on."],
