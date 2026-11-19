@@ -390,7 +390,6 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
-    simplified: 2
     tiles:
       - name: Kafka Trade Events
         icon: eventbus

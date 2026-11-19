@@ -156,7 +156,7 @@ sources:
             interval: Continuous (near real-time)
   - name: Carrier & Freight
     icon: partner
-    simplified: 2
+    simplified: 3
     tiles:
       - name: project44 Visibility
         icon: api
@@ -291,7 +291,6 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
-    simplified: 2
     tiles:
       - name: EDI X12 214/210
         icon: stream
@@ -435,7 +434,6 @@ pipelines:
           - Demand Forecasting
   - name: Technical
     icon: code
-    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow

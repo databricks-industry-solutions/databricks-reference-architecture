@@ -543,6 +543,7 @@ consumers:
         summary: Customers, co-mans and auditors reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Plant Performance
         icon: gauge

@@ -414,7 +414,6 @@ pipelines:
           - Tonnage & Commodity Forecasting
   - name: Technical
     icon: code
-    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow
@@ -575,6 +574,7 @@ consumers:
         summary: Service pricing, margin, receivables ageing and disposal-payment timing by customer segment before renewal.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Route Performance
         icon: aibi

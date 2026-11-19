@@ -363,7 +363,6 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
-    simplified: 2
     tiles:
       - name: Bureau & Vendor APIs
         icon: api
@@ -521,7 +520,6 @@ pipelines:
           - Portfolio Credit Risk
   - name: Technical
     icon: code
-    simplified: 3
     tiles:
       - name: Loan Data Eng
         mark: Lakeflow

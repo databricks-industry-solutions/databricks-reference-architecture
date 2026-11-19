@@ -389,7 +389,6 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
-    simplified: 3
     tiles:
       - name: Executive Team
         mark: Genie One

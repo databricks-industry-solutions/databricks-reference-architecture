@@ -3,7 +3,7 @@ description: 'For port and terminal operators, container-terminal-led with bulk-
 sources:
   - name: Terminal Operating
     icon: erp
-    simplified: 2
+    simplified: 3
     tiles:
       - name: Navis N4 TOS
         icon: erp
@@ -428,7 +428,6 @@ pipelines:
           - Inventory Optimization
   - name: Technical
     icon: code
-    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow

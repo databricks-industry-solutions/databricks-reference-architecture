@@ -411,7 +411,6 @@ pipelines:
           - Beneficiary Targeting
   - name: Technical
     icon: code
-    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow

@@ -209,6 +209,7 @@ sources:
             interval: Continuous work orders + daily batch
   - name: Lab & Quality
     icon: gavel
+    simplified: 2
     tiles:
       - name: Hach WIMS
         icon: gavel
@@ -288,7 +289,6 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
-    simplified: 2
     tiles:
       - name: EPA SDWIS Feed
         icon: gavel
@@ -438,7 +438,6 @@ pipelines:
           - Sustainability
   - name: Technical
     icon: code
-    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow
