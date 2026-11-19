@@ -3,7 +3,7 @@ description: 'For freight carriers and 3PLs: transportation and fleet management
 sources:
   - name: TMS & Planning
     icon: erp
-    simplified: 2
+    simplified: 3
     tiles:
       - name: Oracle OTM
         icon: erp
@@ -291,6 +291,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: EDI X12 214/210
         icon: stream
@@ -434,6 +435,7 @@ pipelines:
           - Demand Forecasting
   - name: Technical
     icon: code
+    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow
@@ -501,6 +503,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -568,6 +571,7 @@ consumers:
         summary: Shippers reading live ETA via Delta Sharing.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Control Tower
         icon: globe

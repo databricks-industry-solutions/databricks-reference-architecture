@@ -61,6 +61,7 @@ sources:
             interval: Hourly listing + transfer feeds
   - name: Venue Operations
     icon: stream
+    simplified: 2
     tiles:
       - name: VenueNext
         icon: apps
@@ -457,6 +458,7 @@ consumers:
         summary: Analytics notebooks against governed ticketing and tracking data.
   - name: Fan & Partner
     icon: partner
+    simplified: 3
     tiles:
       - name: Mobile App Offers
         icon: api

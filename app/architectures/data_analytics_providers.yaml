@@ -66,6 +66,7 @@ sources:
             interval: Daily + on-demand
   - name: Market Data Feeds
     icon: stream
+    simplified: 2
     tiles:
       - name: TotalView-ITCH
         icon: stream
@@ -334,6 +335,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: Multicast Feed Bus
         icon: stream
@@ -379,6 +381,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 3
     tiles:
       - name: Vendor Exec
         mark: Genie One
@@ -544,6 +547,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -679,6 +683,7 @@ consumers:
           - Governance
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni

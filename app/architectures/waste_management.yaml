@@ -3,6 +3,7 @@ description: 'For waste and recycling operators: collection route planning, flee
 sources:
   - name: Billing & CRM
     icon: erp
+    simplified: 2
     tiles:
       - name: AMCS Platform
         icon: erp
@@ -413,6 +414,7 @@ pipelines:
           - Tonnage & Commodity Forecasting
   - name: Technical
     icon: code
+    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow
@@ -495,6 +497,7 @@ consumers:
         summary: Route optimisation notebooks against governed telematics data.
   - name: Customer & Municipal
     icon: partner
+    simplified: 3
     tiles:
       - name: Customer Service Portal
         icon: api

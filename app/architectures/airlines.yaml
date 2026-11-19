@@ -389,6 +389,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 3
     tiles:
       - name: Executive Team
         mark: Genie One
@@ -650,6 +651,7 @@ consumers:
         summary: Component health and predicted removals by tail, so engineering plans the change at a base overnight instead of discovering it at a gate.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: On-Time Performance
         icon: aibi

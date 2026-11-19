@@ -111,6 +111,7 @@ sources:
             interval: Continuous (real-time)
   - name: Fraud & Compliance
     icon: gavel
+    simplified: 3
     tiles:
       - name: NICE Actimize
         icon: gauge
@@ -513,6 +514,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart
@@ -543,7 +545,6 @@ consumers:
           - zendesk
   - name: Partners & Schemes
     icon: partner
-    simplified: 3
     tiles:
       - name: Scheme Reporting API
         icon: api

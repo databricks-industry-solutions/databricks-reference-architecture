@@ -42,9 +42,9 @@ function check(name, cond, detail) { results.push({ name, ok: !!cond, detail });
 
     const words = /\b(GA|Public Preview|Private Preview|Beta|Coming soon)\b/;
     const board = await page.evaluate(() => ({ chips: document.querySelectorAll('.fc-stage, .d-stage').length,
-      tags: [...document.querySelectorAll('.foot-chip, .atom')].filter(a => a.querySelector('.fc-stage')).length }));
+      tags: [...document.querySelectorAll('.atom')].filter(a => a.querySelector('.fc-stage')).length }));
     check(cloud + ': no box on the board carries a stage label', board.chips === 0 && board.tags === 0, JSON.stringify(board));
-    for (const name of ['Genie App Builder', 'LTAP', 'Lakebase', 'Genie Ontology']) {
+    for (const name of ['Agent Bricks', 'LTAP', 'Lakebase', 'Genie Ontology']) {
       const r = await page.evaluate((name) => {
         const id = Object.keys(byId).find(k => byId[k].tile && byId[k].tile.n === name && byId[k].el.isConnected);
         if (!id) return null;
@@ -117,7 +117,7 @@ function check(name, cond, detail) { results.push({ name, ok: !!cond, detail });
       ARCH.cloud.provider = 'gcp';
       build();
       out.fallbackLtapGcp = atomOf('LTAP').el.dataset.stage;
-      out.fallbackBuilderGcp = atomOf('Genie App Builder').el.dataset.stage;
+      out.fallbackLakebaseGcp = atomOf('Lakebase').el.dataset.stage;
       ARCH.cloud.provider = 'aws';
       STAGEDATA = saved;
       build();
@@ -126,7 +126,7 @@ function check(name, cond, detail) { results.push({ name, ok: !!cond, detail });
     });
     check('a docs stage overrides the stage typed on the board', r.docsWins === 'beta', r.docsWins);
     check('without docs data the typed stage still applies', r.fallbackGenieOne === 'ga' && r.fallbackLakewatch === 'privpre', r.fallbackGenieOne + ' / ' + r.fallbackLakewatch);
-    check('the typed per-cloud fallback matches the docs for LTAP and Genie App Builder on GCP', r.fallbackLtapGcp === 'soon' && r.fallbackBuilderGcp === 'soon', r.fallbackLtapGcp + ' / ' + r.fallbackBuilderGcp);
+    check('the typed per-cloud fallback matches the docs for LTAP and Lakebase on GCP', r.fallbackLtapGcp === 'soon' && r.fallbackLakebaseGcp === 'beta', r.fallbackLtapGcp + ' / ' + r.fallbackLakebaseGcp);
     check('restoring the docs data restores the docs stage', r.restored === 'ga', r.restored);
 
     const credit = await page.evaluate(() => ({ corner: document.getElementById('credit').textContent, docked: document.getElementById('d-credit').textContent, cover: creditText() }));

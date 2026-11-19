@@ -108,6 +108,7 @@ sources:
             interval: Continuous movement events
   - name: Commerce & POS
     icon: market
+    simplified: 2
     tiles:
       - name: Shopify Plus
         icon: partner
@@ -164,7 +165,6 @@ sources:
             interval: Continuous (near real-time)
   - name: Manufacturing
     icon: zplug
-    simplified: 2
     tiles:
       - name: Lectra Fashion
         icon: zplug
@@ -506,6 +506,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Looker
         icon: chart

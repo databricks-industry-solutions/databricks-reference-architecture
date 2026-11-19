@@ -129,6 +129,7 @@ sources:
             interval: Continuous (near real-time)
   - name: Customer & Billing
     icon: erp
+    simplified: 2
     tiles:
       - name: SAP IS-U
         icon: erp
@@ -184,7 +185,6 @@ sources:
             interval: Continuous (payments + notifications)
   - name: GIS & Outage Mgmt
     icon: globe
-    simplified: 3
     tiles:
       - name: Esri ArcGIS Utility
         icon: globe
@@ -366,6 +366,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 4
     tiles:
       - name: CEO & COO
         mark: Genie One
@@ -540,6 +541,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart

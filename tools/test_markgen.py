@@ -93,10 +93,10 @@ for member, want in [("Architecture-Service-Icons_07312026/Arch_Storage/48/Arch_
                      ("Microsoft Entra architecture icons - Oct 2023/Microsoft Entra color icons SVG/Microsoft Entra ID color icon.svg", "microsoft-entra-id")]:
     check("artwork key for %s" % want, mg.art_key(member) == want, mg.art_key(member))
 
-state = (mg.SERVICES, mg.CLOUD_LOGOS, mg.MARKS, mg.fetch_pkg)
+state = (mg.SERVICES, mg.CLOUD_LOGOS, mg.MARKS, mg.AGENT_LOGOS, mg.fetch_pkg)
 try:
     mg.SERVICES = {"aws": {"A": ("aws", "x/Arch_Foo_48.svg"), "B": ("aws", "x/Arch_Foo_48.svg"), "C": ("azure", "y/00001-icon-service-Bar.svg")}}
-    mg.CLOUD_LOGOS, mg.MARKS = {}, {}
+    mg.CLOUD_LOGOS, mg.MARKS, mg.AGENT_LOGOS = {}, {}, {}
     mg.fetch_pkg = lambda pkg, member, refresh=False: '<svg viewBox="0 0 10 10"><path d="M0 0h10v10z" fill="#123"/></svg>'
     providers, bundles = mg.build_logos()
     b = bundles["aws"]
@@ -104,8 +104,11 @@ try:
     check("every artwork records the package it came from", b["src"] == {"foo": mg.PACKAGES["aws"][1], "bar": mg.PACKAGES["azure"][1]}, b["src"])
     check("bundles serialise deterministically", mg.bundle_text(b) == mg.bundle_text({"src": b["src"], "art": b["art"], "tiles": b["tiles"]}))
     check("a service tile that no board carries is reported", mg.orphaned_keys('x n:"A" n:"B" y') == ["C"], mg.orphaned_keys('x n:"A" n:"B" y'))
+    mg.AGENT_LOGOS = {"Acme": ("file", "acme"), "Zeta": ("file", "zeta")}
+    got = mg.orphaned_keys('x n:"A" n:"B" n:"C" logos:["Acme","Other"] y')
+    check("an agent logo is matched by a logos list and one no list names is reported", got == ["Zeta"], got)
 finally:
-    mg.SERVICES, mg.CLOUD_LOGOS, mg.MARKS, mg.fetch_pkg = state
+    mg.SERVICES, mg.CLOUD_LOGOS, mg.MARKS, mg.AGENT_LOGOS, mg.fetch_pkg = state
 
 with tempfile.TemporaryDirectory() as tmp:
     saved_cache, saved_key, saved_env = mg.CACHE, mg.BF_KEY_FILE, os.environ.pop("BRANDFOLDER_API_KEY", None)

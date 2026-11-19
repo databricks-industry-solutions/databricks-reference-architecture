@@ -120,6 +120,7 @@ sources:
             interval: Nightly batch
   - name: Clinical & Trials
     icon: people
+    simplified: 3
     tiles:
       - name: Medidata Rave EDC
         icon: gavel
@@ -309,6 +310,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 3
     tiles:
       - name: CSO & CFO
         mark: Genie One
@@ -486,6 +488,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart
@@ -622,6 +625,7 @@ consumers:
           - Quality Managers
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni

@@ -3,6 +3,7 @@ description: 'Banks and broker-dealers: pricing and spread optimization, invento
 sources:
   - name: Order & Execution
     icon: market
+    simplified: 3
     tiles:
       - name: ION Fidessa
         icon: market
@@ -78,6 +79,7 @@ sources:
             interval: Continuous (sub-second)
   - name: Market & Reference Data
     icon: market
+    simplified: 2
     tiles:
       - name: Bloomberg B-PIPE
         icon: market
@@ -380,6 +382,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: Market Data Bus
         icon: stream
@@ -423,6 +426,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 4
     tiles:
       - name: Markets Leadership
         mark: Genie One
@@ -588,6 +592,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -600,6 +605,7 @@ consumers:
         summary: Notebooks, VS Code and JetBrains against governed data and Genie Code.
   - name: Distribution & Partners
     icon: partner
+    simplified: 2
     tiles:
       - name: Client Data Sharing
         icon: share

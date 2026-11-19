@@ -340,6 +340,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 3
     tiles:
       - name: 'HL7 v2'
         icon: zbraces
@@ -376,6 +377,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: LOINC & SNOMED
         icon: ontology
@@ -421,6 +423,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 4
     tiles:
       - name: Lab Leadership
         mark: Genie One
@@ -654,6 +657,7 @@ consumers:
         summary: Test ordering by provider, panel and guideline, flagging redundant and low-value tests so the medical director can steer the menu and reduce send-out cost.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Turnaround & Backlog
         icon: aibi

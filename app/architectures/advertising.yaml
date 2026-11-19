@@ -81,6 +81,7 @@ sources:
             interval: Daily
   - name: SSP & Inventory
     icon: stream
+    simplified: 2
     tiles:
       - name: Google Ad Manager
         icon: stream
@@ -326,6 +327,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: LiveRamp Data Clean Room
         icon: partner
@@ -372,6 +374,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 4
     tiles:
       - name: CMO & CFO Office
         mark: Genie One
@@ -552,6 +555,7 @@ consumers:
         summary: Analyst notebooks and IDEs against governed audience and delivery data.
   - name: Activation & Partners
     icon: partner
+    simplified: 2
     tiles:
       - name: DSP Bid Stream API
         icon: api
@@ -584,6 +588,7 @@ consumers:
           - ias
   - name: Regulatory & Reporting
     icon: gavel
+    simplified: 2
     tiles:
       - name: Ad Transparency Reports
         icon: gavel
@@ -677,7 +682,6 @@ consumers:
           - App Developers
   - name: Agent Harnesses
     icon: agents
-    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni

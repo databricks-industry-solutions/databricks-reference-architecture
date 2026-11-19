@@ -74,6 +74,7 @@ sources:
             interval: Cycle-fill batches
   - name: Claims & Adjudication
     icon: market
+    simplified: 2
     tiles:
       - name: SS&C RxClaim
         icon: market
@@ -204,6 +205,7 @@ sources:
             interval: Periodic formulary refresh
   - name: Specialty, PA & 340B
     icon: partner
+    simplified: 2
     tiles:
       - name: CoverMyMeds
         icon: partner
@@ -265,7 +267,7 @@ sources:
             interval: Daily split-billing cycle
   - name: Wholesale & Dispensing
     icon: compute
-    simplified: 4
+    simplified: 2
     tiles:
       - name: Cencora Supply
         icon: storage
@@ -371,6 +373,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: Surescripts Network
         icon: api
@@ -415,6 +418,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 4
     tiles:
       - name: PBM Leadership
         mark: Genie One
@@ -560,6 +564,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -572,6 +577,7 @@ consumers:
         summary: Notebooks and IDEs against governed claims, drug and member data.
   - name: Payers & Partners
     icon: partner
+    simplified: 3
     tiles:
       - name: Plan Sponsor Portal
         icon: globe
@@ -640,7 +646,6 @@ consumers:
         summary: Claims, prescriber and pharmacy behaviour scored for fraud, waste and abuse so special investigations work the highest-value cases first.
   - name: AI/BI Dashboards
     icon: aibi
-    simplified: 2
     tiles:
       - name: Rebate & Net Cost
         icon: aibi

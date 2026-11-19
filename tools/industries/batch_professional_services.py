@@ -392,7 +392,6 @@ INDUSTRIES_BATCH_PROFESSIONAL_SERVICES = {
                     comps=["Staffing & Bench Board", "Model Serving", "Workday HCM", "AI Search", "Lakehouse//RT"],
                     stories=[
                         ["DXC Technology boosts productivity with GenAI", "https://www.databricks.com/customers/dxc-technology"],
-                        ["NorthStar Anesthesia built a scheduling app in weeks", "https://www.databricks.com/blog/how-northstar-anesthesia-built-scheduling-app-workforce-3000-clinicians-weeks"],
                     ]),
                 uc("Pipeline & Win-Rate", "Growth", "market",
                     "Pipeline health and win probability scored across the opportunity book so partners chase the deals the firm can actually win.",
