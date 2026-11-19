@@ -367,7 +367,6 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
-    simplified: 2
     tiles:
       - name: Leaf Ag API
         icon: api

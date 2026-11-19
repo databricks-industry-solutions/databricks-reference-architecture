@@ -432,7 +432,6 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
-    simplified: 4
     tiles:
       - name: Wealth Leadership
         mark: Genie One

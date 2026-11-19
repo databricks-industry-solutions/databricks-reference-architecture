@@ -185,6 +185,7 @@ sources:
             interval: Continuous time-series
   - name: ERP, Service & CRM
     icon: erp
+    simplified: 4
     tiles:
       - name: SAP S/4HANA
         icon: erp
@@ -326,7 +327,6 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
-    simplified: 4
     tiles:
       - name: 'ISO/IEEE 11073'
         icon: zbraces

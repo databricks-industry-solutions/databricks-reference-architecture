@@ -335,7 +335,6 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
-    simplified: 2
     tiles:
       - name: Multicast Feed Bus
         icon: stream
@@ -381,7 +380,6 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
-    simplified: 3
     tiles:
       - name: Vendor Exec
         mark: Genie One

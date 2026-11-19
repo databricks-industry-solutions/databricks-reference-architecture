@@ -1667,23 +1667,26 @@
   .gb-orn { position:absolute; bottom:2px; left:50%; transform:translateX(-50%); display:inline-flex; align-items:center; gap:3px;
     font-size:calc(11.5px * var(--pk, 1)); font-weight:650; white-space:nowrap; }
   .gb-orn .gb-ic { width:13px; height:13px; }
-  .gb-fork::before, .gb-fork::after { content:""; position:absolute; height:14px; opacity:0; pointer-events:none;
+  .gb-fork::before, .gb-fork::after { content:""; position:absolute; height:14px; pointer-events:none;
     background:var(--flowdot) 100% center / var(--flowdot-sz) var(--flowdot-sz) no-repeat;
-    animation:gbdotl 3s linear infinite; will-change:background-position; transform:translateZ(0); }
+    animation:flowdashl 3s linear infinite; will-change:background-position; transform:translateZ(0); }
   .gb-fork::before { left:-5px; right:50%; top:-7.75px; }
-  .gb-fork::after { left:50%; right:-5px; top:-7.75px; background-position:0% center; animation-name:gbdotr; }
-  .gb-ra { position:absolute; left:0; top:0; width:9px; height:9px; display:flex; color:var(--go); opacity:0; pointer-events:none;
-    offset-path:padding-box; offset-rotate:auto 180deg; animation:gbloop 9s linear infinite; }
-  .gb-ra svg { width:100%; height:100%; }
-  .gb-bead { position:absolute; left:0; top:0; width:6px; height:6px; opacity:0; offset-rotate:0deg;
+  .gb-fork::after { left:50%; right:-5px; top:-7.75px; background-position:0% center; animation-name:flowdash; }
+  .gb-ra { position:absolute; color:var(--go); opacity:0; pointer-events:none; animation:9s linear infinite; }
+  .gb-ra svg { position:absolute; width:9px; height:9px; }
+  .gb-ra0 { left:0; right:0; bottom:-5.25px; height:9px; animation-name:gbra0; } .gb-ra0 svg { left:-4.5px; top:0; }
+  .gb-ra1 { top:0; bottom:0; right:-5.25px; width:9px; animation-name:gbra1; } .gb-ra1 svg { left:0; top:calc(100% - 4.5px); transform:rotate(-90deg); }
+  .gb-ra2 { left:0; right:0; top:-5.25px; height:9px; animation-name:gbra2; } .gb-ra2 svg { left:calc(100% - 4.5px); top:0; transform:rotate(180deg); }
+  .gb-ra3 { top:0; bottom:0; left:-5.25px; width:9px; animation-name:gbra3; } .gb-ra3 svg { left:0; top:-4.5px; transform:rotate(90deg); }
+  .gb-bead { position:absolute; left:-3px; top:-3px; width:6px; height:6px; opacity:0;
     background:var(--flowdot); animation:gbbead var(--gb-loop) linear infinite; }
   .gb-hop { animation:gbswell var(--gb-loop) ease-out var(--gd) infinite; }
   .gb-hop::after { content:""; position:absolute; inset:-1px; border-radius:50%; opacity:0; pointer-events:none;
     box-shadow:0 0 0 2px var(--brand-soft), 0 0 7px 2px var(--brand-bd); animation:gbglow var(--gb-loop) ease-out var(--gd) infinite; }
-  @keyframes gbdotl { from { background-position:100% center; opacity:1; } to { background-position:0% center; opacity:1; } }
-  @keyframes gbdotr { from { background-position:0% center; opacity:1; } to { background-position:100% center; opacity:1; } }
-  @keyframes gbbead { from { offset-distance:0%; opacity:1; } to { offset-distance:100%; opacity:1; } }
-  @keyframes gbloop { from { offset-distance:100%; opacity:1; } to { offset-distance:0%; opacity:1; } }
+  @keyframes gbra0 { 0% { transform:none; opacity:1; } 25% { transform:translateX(100%); opacity:1; } 25.01%, 100% { transform:translateX(100%); opacity:0; } }
+  @keyframes gbra1 { 0%, 24.99% { transform:none; opacity:0; } 25% { transform:none; opacity:1; } 50% { transform:translateY(-100%); opacity:1; } 50.01%, 100% { transform:translateY(-100%); opacity:0; } }
+  @keyframes gbra2 { 0%, 49.99% { transform:none; opacity:0; } 50% { transform:none; opacity:1; } 75% { transform:translateX(-100%); opacity:1; } 75.01%, 100% { transform:translateX(-100%); opacity:0; } }
+  @keyframes gbra3 { 0%, 74.99% { transform:none; opacity:0; } 75% { transform:none; opacity:1; } 100% { transform:translateY(100%); opacity:1; } }
   @keyframes gbswell { 0%, 9%, 100% { transform:none; } 4% { transform:scale(1.3); } }
   @keyframes gbglow { 0%, 9%, 100% { opacity:0; } 4% { opacity:1; } }
   @media (prefers-reduced-motion:reduce) { .gb-fork::before, .gb-fork::after, .gb-ra, .gb-bead, .gb-hop, .gb-hop::after { animation:none !important; } }
@@ -3510,7 +3513,7 @@ const ARCH = {
       rows:[ { kind:"mixed", items:[
         { kind:"panel", flex:"1.9 1 0", stack:true, bare:true,
           head:{ n:"Genie", ic:"genie", fold:["Genie ZeroOps","Genie App Builder","Lakeflow Designer"],
-            long:"The Genie family turns Databricks into a data-smart coworker: conversational and agentic experiences for business users, builders and engineers, all grounded in Genie Ontology. Genie ZeroOps monitors pipelines in the background, investigates failures and proposes fixes. Genie App Builder builds apps that inherit Unity Catalog governance. Lakeflow Designer prepares data on a no-code canvas that compiles to Spark Declarative Pipelines.",
+            long:"The Genie family turns Databricks into a data-smart coworker: conversational and agentic experiences for business users, builders and engineers, all grounded in Genie Ontology. Genie ZeroOps monitors pipelines in the background, investigates failures and proposes fixes. Genie App Builder builds apps that inherit Unity Catalog governance. Lakeflow Designer prepares data on a no-code canvas that compiles to Spark Declarative Pipelines. Genie Migrate, built on Genie Code, assesses an existing data warehouse or ETL estate and converts its SQL and ETL code into Databricks SQL queries or notebooks, shown side by side with the original for your team to review.",
             caps:["Genie One","Genie Agents","Genie Code","Genie ZeroOps","Genie App Builder","Lakeflow Designer"], rel:["Genie Ontology","Unity Catalog"] },
           cols:[
             { n:"Genie One", tag:"ONE", ic:"genie", st:"GA",
@@ -3550,7 +3553,7 @@ const ARCH = {
             long:"Genie extracts definitions, concepts and relationships from your existing assets, such as tables, queries, dashboards, pipelines and connected apps, and organizes them as a dynamic graph of reusable ontology snippets you can review and edit.",
             caps:["Ontology snippets","Connected sources","Organizational directories"], rel:["Genie Ontology","OntoRank"] },
           modeled:{ n:"Modeled knowledge", s:"Explicitly defined business semantics", ic:"ucat",
-            long:"Unity Catalog Semantics lets your teams curate and certify key metrics, domains and business concepts, so agents work from authoritative definitions. When modeled and learned knowledge conflict, the modeled definition wins.",
+            long:"Unity Catalog Semantics lets your teams curate and certify key metrics, domains and business concepts, so agents work from authoritative definitions. When modeled and learned knowledge conflict, the modeled definition wins. Pages give each business term, entity or acronym one governed definition, organized by domain, and Genie One cites the Page when it answers.",
             caps:["Metric Views","Domains","Pages","Certified assets"], rel:["Unity Catalog","Genie Ontology"] },
           rank:{ n:"OntoRank", ic:"ontorank", words:["Authority","Relevance","Permissions"],
             long:"Ranks ontology snippets by relevance and authority, and delivers context that respects each user's permissions, so every Genie and agent answer draws on the most trusted definition the user is allowed to see.",
@@ -3649,7 +3652,7 @@ const ARCH = {
       { box:"Structured", ic:"sheet", simple:4, tiles:[
         { n:"Business Applications", ic:"erp", long:"Systems of record for finance, supply chain, HR and customers. Ingested with Lakeflow Connect or federated in place.", what:"Packaged systems of record (ERP, WMS, HRIS, CRM) that hold master data and the day-to-day transactions the business runs on, ingested with Lakeflow Connect or read in place with federation.", users:"Finance, supply chain, HR and sales-operations teams, and the data engineers who model their extracts.", dataOut:{ batch:{ types:["structured"], vol:"GBs/day of transactions + master data", interval:"Nightly extract + intraday deltas" }, stream:{ types:["semi-structured"], vol:"change events on key entities", interval:"Continuous CDC where available" } } },
         { n:"Operational Databases", core:true, ic:"db", long:"OLTP databases captured with CDC through Lakeflow Connect.", what:"The OLTP databases behind live applications, captured row-by-row so the lakehouse mirrors production without loading the source system.", users:"Application and platform-engineering teams, and analysts who need current operational data.", dataOut:{ stream:{ types:["structured"], vol:"100s-1000s of row changes/sec", interval:"Continuous CDC (near real-time)" } } },
-        { n:"Data Warehouses", core:true, ic:"db", long:"Existing warehouses migrated with Lakebridge or federated through Lakehouse Federation.", what:"Incumbent enterprise warehouses holding historical marts and conformed dimensions, migrated with Lakebridge or read in place through Lakehouse Federation.", users:"BI, finance and analytics teams during and after migration.", dataOut:{ batch:{ types:["structured"], vol:"TB-scale historical marts", interval:"Bulk migration, then queried on demand" } } },
+        { n:"Data Warehouses", core:true, ic:"db", long:"Existing warehouses migrated with Lakebridge or Genie Migrate, or federated through Lakehouse Federation.", what:"Incumbent enterprise warehouses holding historical marts and conformed dimensions, migrated with Lakebridge or Genie Migrate, or read in place through Lakehouse Federation.", users:"BI, finance and analytics teams during and after migration.", dataOut:{ batch:{ types:["structured"], vol:"TB-scale historical marts", interval:"Bulk migration, then queried on demand" } } },
         { n:"Mainframe & Legacy", ic:"mainframe", long:"Mainframe and legacy extracts, batch-landed then normalised in Lakeflow pipelines.", what:"Mainframe and legacy systems (core banking, claims, billing) whose fixed-width and EBCDIC extracts are batch-landed and normalised in Lakeflow pipelines.", users:"Core operations, back-office and modernization teams.", dataOut:{ batch:{ types:["structured", "semi-structured"], vol:"GBs/day fixed-width + VSAM extracts", interval:"Nightly batch windows" } } },
       ]},
       { box:"Semi-structured", ic:"zbraces", simple:2, tiles:[
@@ -3695,9 +3698,9 @@ const ARCH = {
        Databricks product. The Databricks ingest tools sit inside the arm above. */
     ing: { id:"ing", name:"External Ingestion", groups:[
       { box:"Cloud ETL", ic:"etl", from:"ingest", tiles:[] },
-      { box:"3rd Party", ic:"zplug", simple:3, tiles:[
+      { box:"3rd Party", ic:"zplug", simple:2, tiles:[
         { n:"Managed ELT", ic:"etl", long:"Third-party managed connectors (Fivetran, Airbyte and similar) landing SaaS and database sources into the lakehouse, used where a source is not yet covered by Lakeflow Connect.", what:"Third-party managed connectors (Fivetran, Airbyte and similar) that land SaaS and database sources into the lakehouse where a source is not yet covered by Lakeflow Connect.", users:"Data engineers and analytics teams onboarding long-tail SaaS and database sources.", dataOut:{ batch:{ types:["structured","semi-structured"], vol:"GBs/day of connector syncs", interval:"Scheduled syncs (15 min to daily)" } } },
-        { n:"Custom ETL Tool", ic:"etl", long:"Incumbent ETL estates (Informatica, Talend, DataStage and similar) that keep writing to the lakehouse during a migration, typically assessed and converted with Lakebridge.", what:"Incumbent ETL estates (Informatica, Talend, DataStage and similar) that keep writing to the lakehouse during a migration, typically assessed and converted with Lakebridge.", users:"Migration and platform teams retiring legacy ETL.", dataOut:{ batch:{ types:["structured"], vol:"existing pipeline outputs", interval:"Existing job schedules during migration" } } },
+        { n:"Custom ETL Tool", ic:"etl", long:"Incumbent ETL estates (Informatica, Talend, DataStage and similar) that keep writing to the lakehouse during a migration, typically assessed and converted with Lakebridge or Genie Migrate.", what:"Incumbent ETL estates (Informatica, Talend, DataStage and similar) that keep writing to the lakehouse during a migration, typically assessed and converted with Lakebridge or Genie Migrate.", users:"Migration and platform teams retiring legacy ETL.", dataOut:{ batch:{ types:["structured"], vol:"existing pipeline outputs", interval:"Existing job schedules during migration" } } },
         { n:"Streaming Brokers", ic:"stream", conn:"kafka", long:"Kafka, Confluent, MSK and equivalent brokers already in place, consumed by Lakeflow streaming pipelines or replaced by Zerobus for new producers.", what:"Kafka, Confluent, MSK and equivalent brokers already in place, consumed by Lakeflow streaming pipelines or replaced by Zerobus for new producers.", users:"Streaming and platform engineers.", dataOut:{ stream:{ types:["semi-structured"], vol:"event streams", interval:"Continuous" } } },
       ]},
     ]},
@@ -4910,11 +4913,12 @@ const ONTO_GRAPH = (()=>{
   const at = {}; hops.reduce((d, [a], i)=> (at[a] = d / total, d + len[i]), 0);
   const glow = n=> n in at ? `;--gd:${((at[n] - 1.04) * LOOP).toFixed(2)}s` : "";
   const node = (n, cls, glyph)=> `<span class="gb-n ${cls}${n in at ? " gb-hop" : ""}" style="left:${pct(P[n][0], X0, W)};top:${pct(P[n][1], 0, H)}${glow(n)}">${glyph || ""}</span>`;
-  const path = ROUTE.split("").concat(ROUTE[0]).map((n, i)=> (i ? "L" : "M") + ((P[n][0] - X0) * k).toFixed(1) + " " + (P[n][1] * k).toFixed(1)).join("");
+  const stop = n=> `translate(${((P[n][0] - X0) * k).toFixed(1)}px, ${(P[n][1] * k).toFixed(1)}px)`;
+  document.head.insertAdjacentHTML("beforeend", `<style>@keyframes gbbead { ${ROUTE.split("").map(n=> `${(at[n] * 100).toFixed(2)}% { transform:${stop(n)}; opacity:1; }`).join(" ")} 100% { transform:${stop(ROUTE[0])}; opacity:1; } }</style>`);
   return `<span class="gb-graph" aria-hidden="true" style="height:${PX}px;width:${(W * k).toFixed(2)}px;--gb-loop:${LOOP}s">` + E.map(edge).join("") +
     "abcdef".split("").map(n=> node(n, "gb-np")).join("") + node("L", "gb-nc") + node("R", "gb-nc") +
     node("H", "gb-nc gb-ng", PERSON) + node("C", "gb-nc gb-ng", CLOUD) +
-    `<span class="gb-bead" style="offset-path:path('${path}')"></span></span>`;
+    `<span class="gb-bead"></span></span>`;
 })();
 const LEFT_HEAD = n=> `<svg class="gb-lh gb-lh${n}" viewBox="0 0 8 8" aria-hidden="true"><path d="M0 4L8 0v8z" fill="currentColor"/></svg>`;
 function ontoBox(foot, section){
@@ -4934,7 +4938,7 @@ function ontoBox(foot, section){
   atom("gb-ottl gb-prod", foot, `${titleIcon(foot, "gb-ic")}<span class="gb-on">${esc(T(foot.n))}</span>${tag(foot.tag)}`);
   const know = (cls, k)=> atom(cls, k, `<span class="gb-kn">${esc(T(k.n))}</span><span class="gb-ks">${esc(T(k.s))}</span>`);
   know("gb-k", P.learned);
-  atom("gb-rank", P.rank, ONTO_GRAPH + LEFT_HEAD(1) + LEFT_HEAD(2) + `<span class="gb-ra" aria-hidden="true"><svg viewBox="0 0 8 8"><path d="M8 4L0 0v8z" fill="currentColor"/></svg></span>` +
+  atom("gb-rank", P.rank, ONTO_GRAPH + LEFT_HEAD(1) + LEFT_HEAD(2) + [0, 1, 2, 3].map(i=> `<span class="gb-ra gb-ra${i}" aria-hidden="true"><svg viewBox="0 0 8 8"><path d="M8 4L0 0v8z" fill="currentColor"/></svg></span>`).join("") +
     P.rank.words.map((w, i)=> `<span class="gb-w gb-w${i}">${esc(T(w))}</span>`).join("") +
     `<span class="gb-orn">${svg(P.rank.ic, "gb-ic")}<span>${esc(T(P.rank.n))}</span></span>`);
   know("gb-k gb-kr", P.modeled);
@@ -5251,7 +5255,7 @@ function renderTop(target){
 
 /* ---------- full build ---------- */
 const CUSTOM_LS = "dbxarch.dais2026.custom";
-const SCHEMA = 55;  /* bump whenever the shape OR the baked-in content of a persisted branch changes */
+const SCHEMA = 56;  /* bump whenever the shape OR the baked-in content of a persisted branch changes */
 /* Keys inside a provider dataset that hold tile arrays. Every surface that shows
    provider-specific content reads from this list, so adding a surface later means
    adding one key here rather than hunting for loops. */
@@ -12865,7 +12869,7 @@ function paintBrandLogo(){
    query so no CDN edge can answer it): when its build differs from this build,
    reload once onto a cache-busting URL so the browser must pull the new HTML.
    BUILD here and app/version.json MUST be bumped together on every deploy. */
-const BUILD = "0.6.7";
+const BUILD = "0.6.8";
 async function staleReload(){
   try {
     const r = await fetch(APP_BASE + "version.json?_=" + Date.now(), { cache:"no-store" });

@@ -373,7 +373,6 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
-    simplified: 2
     tiles:
       - name: Surescripts Network
         icon: api
@@ -418,7 +417,6 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
-    simplified: 4
     tiles:
       - name: PBM Leadership
         mark: Genie One
@@ -646,6 +644,7 @@ consumers:
         summary: Claims, prescriber and pharmacy behaviour scored for fraud, waste and abuse so special investigations work the highest-value cases first.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Rebate & Net Cost
         icon: aibi

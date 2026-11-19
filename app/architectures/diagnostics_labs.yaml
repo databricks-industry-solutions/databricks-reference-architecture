@@ -377,7 +377,6 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
-    simplified: 2
     tiles:
       - name: LOINC & SNOMED
         icon: ontology
@@ -423,7 +422,6 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
-    simplified: 4
     tiles:
       - name: Lab Leadership
         mark: Genie One

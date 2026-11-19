@@ -329,7 +329,6 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
-    simplified: 2
     tiles:
       - name: Weather & Irradiance
         icon: globe
@@ -375,7 +374,6 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
-    simplified: 3
     tiles:
       - name: Executive Office
         mark: Genie One

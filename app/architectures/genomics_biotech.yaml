@@ -310,7 +310,6 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
-    simplified: 3
     tiles:
       - name: CSO & CFO
         mark: Genie One

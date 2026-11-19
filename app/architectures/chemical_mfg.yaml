@@ -410,7 +410,6 @@ pipelines:
           - Supply & Materials Planning
   - name: Technical
     icon: code
-    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow

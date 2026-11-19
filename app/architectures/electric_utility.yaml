@@ -366,7 +366,6 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
-    simplified: 4
     tiles:
       - name: CEO & COO
         mark: Genie One

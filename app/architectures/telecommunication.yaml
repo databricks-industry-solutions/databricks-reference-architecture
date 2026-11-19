@@ -339,7 +339,6 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
-    simplified: 2
     tiles:
       - name: GSMA TAP Roaming
         icon: stream
@@ -386,7 +385,6 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
-    simplified: 3
     tiles:
       - name: CEO & CTO Office
         mark: Genie One

@@ -600,6 +600,7 @@ consumers:
         summary: Where policy analysts link service records to downstream outcomes and size cohorts on certified data, without a fresh data request for every question.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Payment Integrity
         icon: aibi

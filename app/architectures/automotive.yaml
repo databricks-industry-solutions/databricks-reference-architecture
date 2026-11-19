@@ -357,7 +357,6 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
-    simplified: 4
     tiles:
       - name: CEO & Mfg COO
         mark: Genie One
@@ -663,6 +662,7 @@ consumers:
           - Parts & Supply
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni

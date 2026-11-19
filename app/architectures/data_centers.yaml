@@ -355,7 +355,6 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
-    simplified: 2
     tiles:
       - name: SNMP & Telemetry
         icon: stream
@@ -402,7 +401,6 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
-    simplified: 4
     tiles:
       - name: Executive Team
         mark: Genie One

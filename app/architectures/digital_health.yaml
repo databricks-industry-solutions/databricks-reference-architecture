@@ -412,7 +412,6 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
-    simplified: 4
     tiles:
       - name: Clinical Ops
         mark: Genie One
@@ -650,6 +649,7 @@ consumers:
         summary: Clinical and financial outcomes by cohort and programme, so product, clinical and payer teams see what actually moves adherence, gaps and cost of care.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Virtual Care Operations
         icon: aibi
