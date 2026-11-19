@@ -59,6 +59,7 @@ sources:
             interval: Continuous CDC
   - name: Cards & Payments
     icon: market
+    simplified: 2
     tiles:
       - name: Visa DPS / Auth
         icon: market
@@ -512,6 +513,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -603,6 +605,7 @@ consumers:
         summary: Rate and liquidity scenarios with hedge recommendations.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Capital & Liquidity
         icon: aibi

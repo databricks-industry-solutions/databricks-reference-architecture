@@ -3,6 +3,7 @@ description: 'Content production, rights and distribution: linear and streaming 
 sources:
   - name: Playout & MAM
     icon: stream
+    simplified: 2
     tiles:
       - name: Dalet Galaxy
         icon: stream
@@ -108,7 +109,6 @@ sources:
             interval: Continuous CDC
   - name: Ad Sales & Traffic
     icon: market
-    simplified: 3
     tiles:
       - name: WideOrbit WO Traffic
         icon: market
@@ -476,6 +476,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart

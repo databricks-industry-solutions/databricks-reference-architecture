@@ -95,7 +95,9 @@ def mentions(text, name):
 
 
 def board_names(root=ROOT):
-    names = set(re.findall(r'\bn:"([^"]+)"', open(os.path.join(root, "app", "index.html"), encoding="utf-8").read()))
+    html = open(os.path.join(root, "app", "index.html"), encoding="utf-8").read()
+    names = set(re.findall(r'\bn:"([^"]+)"', html))
+    names |= {n for row in re.findall(r'\bfold:\[([^\]]*)\]', html) for n in re.findall(r'"([^"]+)"', row)}
     for f in glob.glob(os.path.join(root, "app", "architectures", "*.yaml")):
         for v in re.findall(r"^\s*(?:-\s+)?name:\s*(.+?)\s*$", open(f, encoding="utf-8").read(), re.M):
             names.add(v.strip("\"'"))

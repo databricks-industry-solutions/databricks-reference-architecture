@@ -258,6 +258,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 4
     tiles:
       - name: 'ADAPT'
         icon: zbraces
@@ -552,6 +553,7 @@ consumers:
         summary: Scale tickets and moisture discounts flowing to settlement.
   - name: Regulatory & Reporting
     icon: gavel
+    simplified: 2
     tiles:
       - name: USDA Reporting
         icon: gavel
@@ -648,6 +650,7 @@ consumers:
           - Carbon Program Lead
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni

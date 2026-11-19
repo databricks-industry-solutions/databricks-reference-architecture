@@ -3,6 +3,7 @@ description: 'For waste and recycling operators: collection route planning, flee
 sources:
   - name: Billing & CRM
     icon: erp
+    simplified: 2
     tiles:
       - name: AMCS Platform
         icon: erp
@@ -495,6 +496,7 @@ consumers:
         summary: Route optimisation notebooks against governed telematics data.
   - name: Customer & Municipal
     icon: partner
+    simplified: 3
     tiles:
       - name: Customer Service Portal
         icon: api
@@ -572,6 +574,7 @@ consumers:
         summary: Service pricing, margin, receivables ageing and disposal-payment timing by customer segment before renewal.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Route Performance
         icon: aibi

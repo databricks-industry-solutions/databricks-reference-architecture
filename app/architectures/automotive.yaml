@@ -83,6 +83,7 @@ sources:
             interval: Nightly + hourly deltas
   - name: Manufacturing MES
     icon: iot
+    simplified: 2
     tiles:
       - name: Siemens Opcenter
         icon: iot
@@ -179,6 +180,7 @@ sources:
             interval: Continuous lead events
   - name: Connected Vehicle
     icon: stream
+    simplified: 2
     tiles:
       - name: OEM Telematics Gateway
         icon: iot
@@ -224,6 +226,7 @@ sources:
             interval: Continuous sensor telemetry
   - name: Aftersales & Parts
     icon: zplug
+    simplified: 2
     tiles:
       - name: SAP Aftermarket
         icon: erp
@@ -518,6 +521,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -658,6 +662,7 @@ consumers:
           - Parts & Supply
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni

@@ -54,7 +54,7 @@ function vendorPatterns(catalog) {
       (view === "detailed" ? tiles : simpleTiles).push(...await page.evaluate(({ board, cloud }) => Object.values(byId).filter(r => r.tile && typeof r.tile.n === "string").map(r => {
         const t = r.tile, cf = connectorFor(t), df = dataConnectorFor(t);
         const tg = r.el.closest(".pocket.ppl .rgroup, .rail.ppl .rgroup"), tgl = tg && tg.querySelector(".rg-label");
-        return { board, cloud, n: t.n, canon: canonName(t.n), head: r.arr == null, title: r.el.classList.contains("plat-head"),
+        return { board, cloud, n: t.n, canon: canonName(t.n), keys: tileKeys(t), head: r.arr == null, title: r.el.classList.contains("plat-head"),
           team: !!tg, tech: !!tgl && tgl.textContent.trim() === T("Technical"), persona: isPersonaTile(t),
           track: isPersonaTile(t) ? personaTrackKey(t, ACADEMY.byPersona) : null,
           src: !!t.cat, kinds: hlKinds(t), dots: [...r.el.querySelectorAll(":scope > .badge-dot[data-hl]")].map(d => d.dataset.hl),
@@ -86,7 +86,7 @@ function vendorPatterns(catalog) {
         for (const [id, r] of Object.entries(byId)) {
           const t = r.tile;
           if (!t || typeof t.n !== "string") continue;
-          const inPlat = !!r.el.closest(".band"), label = r.arr == null && !r.el.matches(".phead, .foot-chip");
+          const inPlat = !!r.el.closest(".band"), label = r.arr == null && !r.el.matches(".phead, .gb-prod");
           const key = JSON.stringify([canonName(t.n), r.arr == null, r.el.classList.contains("plat-head"), inPlat, label, r.el.classList.contains("mstage"), !!r.el.closest(".cloud"),
             isPersonaTile(t) ? [t.ucs || [], t.uses || []] : 0, (t.stories || []).map(s => s.u || s.url), !!t.problem, !!t.cat, !!t.conn, t.spark_connector || ""]);
           if (seen.has(key)) continue;
@@ -161,7 +161,7 @@ function vendorPatterns(catalog) {
     demo: Object.keys(res.links).filter(k => (res.links[k].demos || []).length),
     course: res.course, cert: res.cert, accel: res.accels };
   const surfaced = {};
-  for (const r of tiles) for (const kind of Object.keys(resourced)) if (hasDot(r, kind)) (surfaced[kind] = surfaced[kind] || new Set()).add(r.canon);
+  for (const r of tiles) for (const kind of Object.keys(resourced)) if (hasDot(r, kind)) r.keys.forEach(k => (surfaced[kind] = surfaced[kind] || new Set()).add(k));
   for (const [kind, keys] of Object.entries(resourced)) for (const k of keys) {
     if ((surfaced[kind] && surfaced[kind].has(k)) || ORPHAN_EXEMPT[k]) continue;
     fail("orph:" + kind + ":" + k, `${kind} resources keyed to '${k}' light no dot on any board or cloud`);

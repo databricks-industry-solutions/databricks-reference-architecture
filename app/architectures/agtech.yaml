@@ -256,6 +256,7 @@ sources:
             interval: Continuous (station)
   - name: R&D, Agronomy & ERP
     icon: erp
+    simplified: 2
     tiles:
       - name: Cropwise Agronomy
         icon: sheet
@@ -566,6 +567,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -635,6 +637,7 @@ consumers:
         summary: Growers, food and CPG partners and regulators reading live tables, reducing duplicate extracts under scoped agreements.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Field Insights Hub
         icon: gauge

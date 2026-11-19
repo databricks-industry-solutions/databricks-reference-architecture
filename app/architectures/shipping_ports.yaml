@@ -3,7 +3,7 @@ description: 'For port and terminal operators, container-terminal-led with bulk-
 sources:
   - name: Terminal Operating
     icon: erp
-    simplified: 2
+    simplified: 3
     tiles:
       - name: Navis N4 TOS
         icon: erp
@@ -251,6 +251,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'EDIFACT Maritime'
         icon: zbraces
@@ -495,6 +496,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart

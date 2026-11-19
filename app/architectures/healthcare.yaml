@@ -127,6 +127,7 @@ sources:
             interval: Daily batch
   - name: Imaging & Devices
     icon: iot
+    simplified: 3
     tiles:
       - name: Philips IntelliSpace
         icon: stream
@@ -509,6 +510,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart
@@ -537,6 +539,7 @@ consumers:
         summary: Preventive care tasks pushed to ambulatory care teams from panel registries.
   - name: Payer & Community
     icon: partner
+    simplified: 3
     tiles:
       - name: Payer Risk Contracts
         icon: share
@@ -592,7 +595,6 @@ consumers:
         summary: Clinician-reviewed early warning from vitals, labs and nursing assessments to support timely bedside assessment.
   - name: AI/BI Dashboards
     icon: aibi
-    simplified: 2
     tiles:
       - name: Volume, LOS & Margin
         icon: aibi

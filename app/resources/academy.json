@@ -24,8 +24,6 @@
    "3707"
   ],
   "Data Analysts": [
-   "3553",
-   "5082",
    "1513",
    "3707",
    "3928"
@@ -59,14 +57,13 @@
    "3707"
   ],
   "Risk & Compliance": [
-   "1515",
-   "1514",
-   "1235",
    "3406",
-   "1231",
-   "1232",
    "1745",
-   "1744"
+   "1744",
+   "4653",
+   "1509",
+   "1230",
+   "3767"
   ]
  },
  "byProduct": {
@@ -151,7 +148,6 @@
    "1211"
   ],
   "Open Infrastructure": [
-   "1233",
    "2967"
   ],
   "SQL Warehouses": [
@@ -188,53 +184,17 @@
    "slug": "introduction-to-python-for-data-science-and-data-engineering",
    "t": "Introduction to Python for Data Science and Data Engineering"
   },
-  "1231": {
+  "1230": {
    "langs": {
-    "en": "https://customer-academy.databricks.com/learn/course/1231/databricks-identity-administration"
-   },
-   "level": "Introductory",
-   "rank": 0,
-   "roles": [
-    "Platform Administrator"
-   ],
-   "slug": "databricks-identity-administration",
-   "t": "Databricks Identity Administration"
-  },
-  "1232": {
-   "langs": {
-    "en": "https://customer-academy.databricks.com/learn/course/1232/databricks-workspace-administration-and-security"
-   },
-   "level": "Introductory",
-   "rank": 0,
-   "roles": [
-    "Platform Administrator"
-   ],
-   "slug": "databricks-workspace-administration-and-security",
-   "t": "Databricks Workspace Administration and Security"
-  },
-  "1233": {
-   "langs": {
-    "en": "https://customer-academy.databricks.com/learn/course/1233/databricks-compute-resource-administration"
+    "en": "https://customer-academy.databricks.com/learn/course/1230/databricks-platform-administration"
    },
    "level": "Associate",
    "rank": 2,
    "roles": [
     "Platform Administrator"
    ],
-   "slug": "databricks-compute-resource-administration",
-   "t": "Databricks Compute Resource Administration"
-  },
-  "1235": {
-   "langs": {
-    "en": "https://customer-academy.databricks.com/learn/course/1235/cicd-administration-in-databricks"
-   },
-   "level": "Introductory",
-   "rank": 0,
-   "roles": [
-    "Platform Administrator"
-   ],
-   "slug": "cicd-administration-in-databricks",
-   "t": "CI/CD Administration in Databricks"
+   "slug": "databricks-platform-administration",
+   "t": "Databricks Platform Administration"
   },
   "1365": {
    "langs": {
@@ -250,6 +210,23 @@
    ],
    "slug": "deploy-workloads-with-lakeflow-jobs",
    "t": "Deploy Workloads with Lakeflow Jobs"
+  },
+  "1509": {
+   "langs": {
+    "en": "https://customer-academy.databricks.com/learn/course/1509/get-started-with-databricks-platform-administration",
+    "es": "https://customer-academy.databricks.com/learn/course/7102/get-started-with-databricks-platform-administration-spanish",
+    "fr": "https://customer-academy.databricks.com/learn/course/7101/get-started-with-databricks-platform-administration-french",
+    "ja": "https://customer-academy.databricks.com/learn/course/4603/get-started-with-databricks-platform-administration-japanese",
+    "ko": "https://customer-academy.databricks.com/learn/course/4595/get-started-with-databricks-platform-administration-korean",
+    "pt-br": "https://customer-academy.databricks.com/learn/course/4629/get-started-with-databricks-platform-administration-portuguese-br"
+   },
+   "level": "Onboarding",
+   "rank": 1,
+   "roles": [
+    "Platform Administrator"
+   ],
+   "slug": "get-started-with-databricks-platform-administration",
+   "t": "Get Started with Databricks Platform Administration"
   },
   "1511": {
    "langs": {
@@ -301,30 +278,6 @@
    ],
    "slug": "get-started-with-sql-analytics-and-bi-on-databricks",
    "t": "Get Started with SQL Analytics and BI on Databricks"
-  },
-  "1514": {
-   "langs": {
-    "en": "https://customer-academy.databricks.com/learn/course/1514/aws-databricks-platform-administration-fundamentals"
-   },
-   "level": "Introductory",
-   "rank": 0,
-   "roles": [
-    "Platform Administrator"
-   ],
-   "slug": "aws-databricks-platform-administration-fundamentals",
-   "t": "AWS Databricks Platform Administration Fundamentals"
-  },
-  "1515": {
-   "langs": {
-    "en": "https://customer-academy.databricks.com/learn/course/1515/aws-databricks-networking-and-security-fundamentals"
-   },
-   "level": "Introductory",
-   "rank": 0,
-   "roles": [
-    "Platform Administrator"
-   ],
-   "slug": "aws-databricks-networking-and-security-fundamentals",
-   "t": "AWS Databricks Networking and Security Fundamentals"
   },
   "1744": {
    "langs": {
@@ -598,23 +551,6 @@
    "slug": "get-started-with-databricks-for-generative-ai",
    "t": "Get Started with Databricks for Generative AI"
   },
-  "3553": {
-   "langs": {
-    "en": "https://customer-academy.databricks.com/learn/course/3553/get-started-with-databricks-for-data-warehousing",
-    "es": "https://customer-academy.databricks.com/learn/course/6451/get-started-with-databricks-for-data-warehousing-spanish",
-    "fr": "https://customer-academy.databricks.com/learn/course/6445/get-started-with-databricks-for-data-warehousing-french",
-    "ja": "https://customer-academy.databricks.com/learn/course/6441/get-started-with-databricks-for-data-warehousing-japanese",
-    "ko": "https://customer-academy.databricks.com/learn/course/6443/get-started-with-databricks-for-data-warehousing-korean",
-    "pt-br": "https://customer-academy.databricks.com/learn/course/6447/get-started-with-databricks-for-data-warehousing-portuguese-br"
-   },
-   "level": "Onboarding",
-   "rank": 1,
-   "roles": [
-    "Data Warehousing Practitioner"
-   ],
-   "slug": "get-started-with-databricks-for-data-warehousing",
-   "t": "Get Started with Databricks for Data Warehousing"
-  },
   "3603": {
    "langs": {
     "en": "https://customer-academy.databricks.com/learn/course/3603/get-started-with-databricks-for-data-warehousing",
@@ -626,9 +562,7 @@
    },
    "level": "Onboarding",
    "rank": 1,
-   "roles": [
-    "Data Warehousing Practitioner"
-   ],
+   "roles": [],
    "slug": "get-started-with-databricks-for-data-warehousing",
    "t": "Get Started with Databricks for Data Warehousing"
   },
@@ -781,6 +715,23 @@
    "slug": "get-started-with-ai-agents-on-databricks",
    "t": "Get Started with AI Agents on Databricks"
   },
+  "4653": {
+   "langs": {
+    "en": "https://customer-academy.databricks.com/learn/course/4653/get-started-with-data-governance-on-databricks",
+    "es": "https://customer-academy.databricks.com/learn/course/7169/get-started-with-data-governance-on-databricks-spanish",
+    "fr": "https://customer-academy.databricks.com/learn/course/7168/get-started-with-data-governance-on-databricks-french",
+    "ja": "https://customer-academy.databricks.com/learn/course/4835/get-started-with-data-governance-on-databricks-japanese",
+    "ko": "https://customer-academy.databricks.com/learn/course/4848/get-started-with-data-governance-on-databricks-korean",
+    "pt-br": "https://customer-academy.databricks.com/learn/course/7167/get-started-with-data-governance-on-databricks-portuguese-br"
+   },
+   "level": "Onboarding",
+   "rank": 1,
+   "roles": [
+    "Platform Administrator"
+   ],
+   "slug": "get-started-with-data-governance-on-databricks",
+   "t": "Get Started with Data Governance on Databricks"
+  },
   "4677": {
    "langs": {
     "en": "https://customer-academy.databricks.com/learn/course/4677/get-started-with-data-governance-on-databricks",
@@ -809,9 +760,7 @@
    },
    "level": "Onboarding",
    "rank": 1,
-   "roles": [
-    "Data Warehousing Practitioner"
-   ],
+   "roles": [],
    "slug": "get-started-with-lakebase",
    "t": "Get Started with Lakebase"
   },
@@ -897,7 +846,7 @@
    "t": "Get Started with Databricks Apps"
   }
  },
- "generated": "2026-10-30",
+ "generated": "2026-11-19",
  "levels": [
   "Introductory",
   "Onboarding",

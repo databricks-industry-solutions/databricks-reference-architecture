@@ -1,13 +1,6 @@
 {
- "generated": "2026-10-30",
- "missing": {
-  "Databricks Sandbox": [
-   "gcp"
-  ],
-  "Genie App Builder": [
-   "gcp"
-  ]
- },
+ "generated": "2026-11-19",
+ "missing": {},
  "products": {
   "AI Search": {
    "aws": "GA",
@@ -20,11 +13,6 @@
    "gcp": "GA"
   },
   "Agent Bricks": {
-   "aws": "GA",
-   "azure": "GA",
-   "gcp": "GA"
-  },
-  "Agent Runtime and Memory": {
    "aws": "GA",
    "azure": "GA",
    "gcp": "GA"
@@ -49,22 +37,7 @@
    "azure": "GA",
    "gcp": "GA"
   },
-  "Databricks Sandbox": {
-   "aws": "Beta",
-   "azure": "Beta",
-   "gcp": "Coming soon"
-  },
   "Delta Lake": {
-   "aws": "GA",
-   "azure": "GA",
-   "gcp": "GA"
-  },
-  "Document Intelligence": {
-   "aws": "GA",
-   "azure": "GA",
-   "gcp": "GA"
-  },
-  "Foundation Model APIs": {
    "aws": "GA",
    "azure": "GA",
    "gcp": "GA"
@@ -73,11 +46,6 @@
    "aws": "GA",
    "azure": "GA",
    "gcp": "GA"
-  },
-  "Genie App Builder": {
-   "aws": "Beta",
-   "azure": "Beta",
-   "gcp": "Coming soon"
   },
   "Genie Code": {
    "aws": "GA",
@@ -90,9 +58,9 @@
    "gcp": "GA"
   },
   "Genie Ontology": {
-   "aws": "Public Preview",
-   "azure": "Public Preview",
-   "gcp": "Public Preview"
+   "aws": "GA",
+   "azure": "GA",
+   "gcp": "GA"
   },
   "LTAP": {
    "aws": "Private Preview",
@@ -102,7 +70,7 @@
   "Lakebase": {
    "aws": "GA",
    "azure": "GA",
-   "gcp": "Beta"
+   "gcp": "GA"
   },
   "Lakeflow": {
    "aws": "GA",
@@ -110,11 +78,6 @@
    "gcp": "GA"
   },
   "Lakeflow Connect": {
-   "aws": "GA",
-   "azure": "GA",
-   "gcp": "GA"
-  },
-  "Lakeflow Designer": {
    "aws": "GA",
    "azure": "GA",
    "gcp": "GA"
@@ -173,7 +136,6 @@
  "source": "https://docs.databricks.com/aws/en/release-notes/release-types",
  "undocumented": [
   "CustomerLake",
-  "Genie ZeroOps",
   "Lakewatch",
   "Unity Catalog OSS"
  ]

@@ -162,7 +162,7 @@ sources:
             interval: Hourly / per-inspection
   - name: IoT & Historians
     icon: iot
-    simplified: 2
+    simplified: 3
     tiles:
       - name: AVEVA PI System
         icon: iot
@@ -488,6 +488,7 @@ consumers:
         summary: Notebooks, VS Code and JetBrains against governed data and Genie Code.
   - name: Plant & ERP
     icon: opdb
+    simplified: 2
     tiles:
       - name: SAP Order Confirmation
         icon: db

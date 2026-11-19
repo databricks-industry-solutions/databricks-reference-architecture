@@ -54,6 +54,7 @@ sources:
             interval: Nightly batch
   - name: New Business & UW
     icon: people
+    simplified: 2
     tiles:
       - name: Munich Re ALLFINANZ
         icon: partner
@@ -106,7 +107,7 @@ sources:
             interval: Continuous (API at application)
   - name: Claims & Customer
     icon: market
-    simplified: 3
+    simplified: 2
     tiles:
       - name: Sedgwick Life Claims
         icon: market
@@ -157,6 +158,7 @@ sources:
             interval: Continuous call stream
   - name: Actuarial & Finance
     icon: chart
+    simplified: 3
     tiles:
       - name: Moody's Analytics AXIS
         icon: chart
@@ -219,7 +221,6 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
-    simplified: 2
     tiles:
       - name: 'ACORD L&A XML'
         icon: zbraces
@@ -534,6 +535,7 @@ consumers:
         summary: Reinsurers, distributors and regulators reading governed live tables that reduce routine file duplication.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Underwriting Decision Hub
         icon: people

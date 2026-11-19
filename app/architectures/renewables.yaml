@@ -206,6 +206,7 @@ sources:
             interval: Hourly / nightly sync
   - name: Grid & Metering
     icon: network
+    simplified: 2
     tiles:
       - name: Revenue Meters / MDM
         icon: db
@@ -514,6 +515,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart

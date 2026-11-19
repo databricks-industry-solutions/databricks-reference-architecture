@@ -3,6 +3,7 @@ description: Protocol design, site operations, patient recruitment, safety monit
 sources:
   - name: EDC & eSource
     icon: db
+    simplified: 2
     tiles:
       - name: Medidata Rave EDC
         icon: db
@@ -512,6 +513,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Spotfire
         icon: chart

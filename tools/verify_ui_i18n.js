@@ -284,7 +284,7 @@ const SENSE = [
   { what: 'an IT or physical estate read as real property or an inheritance', src: /(?<!\breal[- ])\bestates?\b/i,
     except: /real[- ]estate|estate planning|estate tax|estates? (and|&) trusts?|probate|\bpropert(y|ies)\b/i,
     bad: { fi: /kiinteist/i, de: /anwesen|immobilie|nachlass/i, nl: /landgoed|nalatenschap|onroerend/i, sv: /fastighet|\bgods\b|dödsbo/i, da: /ejendom|\bgods\b|dødsbo/i,
-           fr: /\bdomaine|succession|propriété/i, es: /finca|hacienda|(?<!ad)herencia/i, it: /tenuta|patrimonio|eredit/i, pt: /propriedade|herança|espólio|patrimôni/i, ja: /不動産|地所|屋敷|遺産/,
+           fr: /\bdomaine|succession|propriété/i, es: /finca|hacienda|(?<!ad)herencia/i, it: /tenuta|patrimonio|eredità/i, pt: /propriedade|herança|espólio|patrimôni/i, ja: /不動産|地所|屋敷|遺産/,
            zh: /庄园|房产|遗产|地产/, ko: /부동산|사유지|유산/, he: /אחוז|נדל"ן|עיזבון/, ar: /عقار|ضيعة|(?<!مش)تركة/, hi: /जायदाद/ } },
   { what: 'an insurance policy read as a rule or a government policy', src: /\bpolic(y|ies)\b/i, onlyOn: ['insurance_pandc', 'life_insurance', 'health_insurance'],
     except: /(Unity Catalog|ABAC|access|masking|row[- ]filter|governance|retention|security|data|tag|cluster|budget|compute|serverless|pricing|monetary|public|foreign|credit|underwriting|investment|privacy|return|refund|cancellation|company|internal|IAM) polic|polic(y|ies) (engine|rules?|as code|enforcement|tags?)|policy rates?/i,
@@ -457,7 +457,9 @@ const SENSE = [
   { what: 'material properties read as real estate', src: /\bpropert(?:y|ies)\b/i, onlyOn: ['chemical_mfg'], except: /intellectual property|real estate|plant property/i,
     bad: { fi: /kiinteist/i, sv: /fastighet/i, da: /ejendom/i, nl: /vastgoed|onroerend/i, de: /immobili/i, fr: /immobili/i, es: /inmobili|inmueble/i, pt: /imóve|imobili/i, it: /immobil/i,
            ja: /不動産|物件/, zh: /房地产|物业/, ko: /부동산/, he: /נכס|נדל"ן/, ar: /عقار/, hi: /संपत्ति/ } },
-  ...['Databricks Vector Search', 'Anthropic', 'OpenAI', 'Amazon Bedrock', 'AWS Glue', 'Oracle', 'Sparkplug', 'Power BI', 'Pub/Sub', 'Event Hubs', 'Kinesis', 'SIX']
+  ...['Databricks Vector Search', 'Anthropic', 'OpenAI', 'Amazon Bedrock', 'AWS Glue', 'Oracle', 'Sparkplug', 'Power BI', 'Pub/Sub', 'Event Hubs', 'Kinesis', 'SIX',
+    'Genie', 'Genie One', 'Genie Agents', 'Genie Code', 'Genie Ontology', 'Genie ZeroOps', 'Genie App Builder', 'Genie MCP', 'Genie Migrate', 'Genie Search', 'OntoRank', 'Unity Catalog Semantics',
+    'Agent Bricks', 'Lakeflow Designer', 'Lakebase', 'MLflow', 'MCP', 'Claude', 'Copilot', 'Cursor', 'Codex']
     .map(name => ({ what: `the name ${name} translated`, src: new RegExp(name.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')),
       bad: Object.fromEntries(LANGS.map(l => [l, { test: t => !t.includes(name) }])) })),
 ];

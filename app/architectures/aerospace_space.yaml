@@ -140,6 +140,7 @@ sources:
             interval: Continuous historian stream
   - name: Program & EVM
     icon: sheet
+    simplified: 3
     tiles:
       - name: Deltek Cobra EVM
         icon: sheet
@@ -562,6 +563,7 @@ consumers:
         summary: Engineering and data-science notebooks, VS Code and JetBrains against governed program and telemetry data.
   - name: Partners & Suppliers
     icon: partner
+    simplified: 3
     tiles:
       - name: Supplier Sharing
         icon: share
@@ -623,6 +625,7 @@ consumers:
         summary: Quality, airworthiness and first-article records assembled for AS9100 and airworthiness audit from certified Gold.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Mission Control
         icon: gauge

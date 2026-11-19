@@ -127,7 +127,7 @@ sources:
             interval: Per-batch + daily
   - name: Commercial & ERP
     icon: erp
-    simplified: 2
+    simplified: 3
     tiles:
       - name: SAP IS-Mining
         icon: erp

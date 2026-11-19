@@ -64,6 +64,7 @@ sources:
             interval: Continuous historian stream
   - name: Quality & MES
     icon: gauge
+    simplified: 3
     tiles:
       - name: Valmet IQ QCS
         icon: gauge
@@ -115,7 +116,6 @@ sources:
             interval: Planning cycles + on-demand
   - name: ERP & Order-to-Cash
     icon: erp
-    simplified: 2
     tiles:
       - name: SAP S/4HANA
         icon: erp
@@ -185,6 +185,7 @@ sources:
             interval: Hourly + event-driven
   - name: Forestry & Fiber
     icon: globe
+    simplified: 2
     tiles:
       - name: Trimble Forestry
         icon: globe
@@ -552,6 +553,7 @@ consumers:
         summary: Process-engineering and data-science notebooks against governed mill and quality data.
   - name: Customers & Partners
     icon: partner
+    simplified: 2
     tiles:
       - name: Customer & EDI Portals
         icon: api

@@ -68,7 +68,7 @@ sources:
             interval: Continuous (API/events)
   - name: Portfolio Management
     icon: chart
-    simplified: 2
+    simplified: 4
     tiles:
       - name: Addepar
         icon: chart
@@ -256,7 +256,7 @@ sources:
             interval: Daily research updates
   - name: Onboarding & Compliance
     icon: gavel
-    simplified: 3
+    simplified: 2
     tiles:
       - name: Fenergo Onboarding
         icon: identity
@@ -575,6 +575,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart

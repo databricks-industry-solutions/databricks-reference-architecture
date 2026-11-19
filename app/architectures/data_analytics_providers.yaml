@@ -66,6 +66,7 @@ sources:
             interval: Daily + on-demand
   - name: Market Data Feeds
     icon: stream
+    simplified: 2
     tiles:
       - name: TotalView-ITCH
         icon: stream
@@ -544,6 +545,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -679,6 +681,7 @@ consumers:
           - Governance
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni

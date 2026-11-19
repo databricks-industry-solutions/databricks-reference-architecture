@@ -52,14 +52,12 @@ function audit(L) {
     const lc = edges(lbl, true), lead = rtl ? px(lc.right - t.right) : px(t.left - lc.left);
     if (Math.abs(lead) > L.centre) out.push(`${zone(box)}: title '${label(lbl)}' starts ${lead.toFixed(1)}px in from its leading edge`);
   };
-  const TILE = '.pcard, .fmt, .panel, .foot-chip, .mstage, .band-row.medallion .oi-lbl, .medal-arrow';
+  const TILE = '.pcard, .fmt, .panel, .gb-users, .gb-onto, .mstage, .band-row.medallion .oi-lbl, .medal-arrow';
   document.querySelectorAll('.band').forEach(bd => {
     if (!vis(bd)) return;
-    const c = edges(bd), lbl = bd.querySelector(':scope > .band-lbl:not(.band-rlbl)');
+    const c = edges(bd), lbl = bd.querySelector(':scope > .band-lbl');
     if (!bd.closest('.arm')) {
       if (lbl) title(lbl, bd);
-      const rl = bd.querySelector(':scope > .band-rlbl');
-      if (rl) title(rl, bd);
       const t = ink([...bd.querySelectorAll(TILE)].filter(e => !e.parentElement.closest('.pcard, .panel, .fmt')));
       if (t) {
         const top = px(t.top - c.top), bot = px(c.bottom - t.bottom);
@@ -131,16 +129,16 @@ function audit(L) {
 
 const PLAT_STYLE = {
   '.plat-head': ['fontSize', 'minHeight'], '.ph-mark': ['width', 'height'],
-  '.band:not(.b-work) > .band-lbl': ['flexBasis'], '.b-work > .band-lbl': ['flexBasis'], '.bl-name': ['fontSize', 'fontWeight', 'flexDirection'], '.bl-ic': ['width', 'height'],
+  '.band > .band-lbl': ['flexBasis'], '.bl-name': ['fontSize', 'fontWeight', 'flexDirection'], '.bl-ic': ['width', 'height'],
   '.pcard': ['flexDirection', 'gap', 'paddingTop', 'paddingLeft'], '.pico': ['width', 'height'], '.pico svg': ['width', 'height'],
   '.p-name': ['fontSize', 'fontWeight'], '.panel.stack .ph-name': ['fontSize', 'fontWeight'], '.panel:not(.stack) .ph-name': ['fontSize', 'fontWeight'], '.pl-name': ['fontSize', 'fontWeight'],
   '.panel.stack .tagpill': ['fontSize'], '.panel:not(.stack) .tagpill': ['fontSize'],
-  '.foot-chip': ['gap', 'paddingLeft'], '.foot-chip svg': ['width'], '.fc-name': ['fontSize'], '.oi-lbl': ['fontSize', 'flexBasis'],
+  '.gb-upill': ['fontSize'], '.gb-on': ['fontSize'], '.gb-kn': ['fontSize'], '.gb-ks': ['fontSize'], '.gb-sn': ['fontSize'], '.gb-tag': ['fontSize'], '.oi-lbl': ['fontSize', 'flexBasis'],
   '.fmt': ['fontSize', 'paddingTop'], '.fmt-logo': ['height'], '.mstage': ['flexBasis'], '.mstage svg': ['width'], '.ms-n': ['fontSize'],
 };
 const PLAT_SCALED = new Set([
-  '.band:not(.b-work) > .band-lbl flexBasis', '.bl-name fontSize', '.bl-ic width', '.bl-ic height', '.p-name fontSize', '.panel:not(.stack) .ph-name fontSize',
-  '.pl-name fontSize', '.foot-chip svg width', '.fc-name fontSize', '.oi-lbl fontSize', '.oi-lbl flexBasis', '.fmt fontSize', '.ms-n fontSize',
+  '.band > .band-lbl flexBasis', '.bl-name fontSize', '.bl-ic width', '.bl-ic height', '.p-name fontSize', '.panel:not(.stack) .ph-name fontSize',
+  '.pl-name fontSize', '.gb-upill fontSize', '.gb-on fontSize', '.gb-kn fontSize', '.gb-ks fontSize', '.gb-sn fontSize', '.gb-tag fontSize', '.oi-lbl fontSize', '.oi-lbl flexBasis', '.fmt fontSize', '.ms-n fontSize',
 ]);
 const DECK_OWN = new Set(['.panel.stack .tagpill fontSize', '.panel.stack .ph-name fontSize']);
 function platSig(STYLE) {

@@ -54,6 +54,7 @@ sources:
             interval: Hourly / nightly sync
   - name: SCADA & Operations
     icon: stream
+    simplified: 3
     tiles:
       - name: AVEVA PI System
         icon: stream
@@ -208,6 +209,7 @@ sources:
             interval: Continuous work orders + daily batch
   - name: Lab & Quality
     icon: gavel
+    simplified: 2
     tiles:
       - name: Hach WIMS
         icon: gavel
@@ -518,6 +520,7 @@ consumers:
         summary: Hydraulic and demand notebooks against governed SCADA and AMI data.
   - name: Customer & Agency
     icon: partner
+    simplified: 2
     tiles:
       - name: Outage Notification API
         icon: api
@@ -595,6 +598,7 @@ consumers:
         summary: Main break history and risk scores prioritising replacement capital.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Network & NRW
         icon: aibi

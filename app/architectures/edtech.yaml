@@ -146,6 +146,7 @@ sources:
             interval: Continuous (launch / passback)
   - name: Learning Telemetry
     icon: stream
+    simplified: 2
     tiles:
       - name: Segment CDP
         icon: custlake
@@ -647,6 +648,7 @@ consumers:
         summary: Next-best content decisions pushed into the learning platform so the path adapts in the flow.
   - name: Partners & Sharing
     icon: share
+    simplified: 2
     tiles:
       - name: Institution Products
         icon: product
@@ -659,6 +661,7 @@ consumers:
         summary: Educator- and admin-facing dashboards embedded in the product against governed tables with per-tenant row isolation.
   - name: Privacy & Compliance
     icon: gavel
+    simplified: 2
     tiles:
       - name: FERPA & COPPA Evidence
         icon: gavel

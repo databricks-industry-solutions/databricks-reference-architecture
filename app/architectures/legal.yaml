@@ -544,6 +544,7 @@ consumers:
         summary: Party and relationship hits surfaced before engagement letters and ethical walls are set.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Practice Economics
         icon: aibi

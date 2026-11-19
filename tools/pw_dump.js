@@ -33,7 +33,7 @@ const OUT = process.argv[2] || '/tmp/gate_dump.json';
     try {
       var seen={};
       (function walk(o){ if(!o||typeof o!=='object')return;
-        if(typeof o.n==='string'){ seen[o.n]=1; }
+        if(typeof o.n==='string'){ seen[o.n]=1; (o.fold||[]).forEach(function(n){ seen[n]=1; }); }
         (Array.isArray(o)?o:Object.values(o)).forEach(walk); })(ARCH.bands);
       out.prodNames = Object.keys(seen);
     } catch(e){ out.prod_error=String(e); }

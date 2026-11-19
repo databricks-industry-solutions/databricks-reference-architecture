@@ -257,6 +257,7 @@ sources:
             interval: Continuous event stream
   - name: Claims & Eligibility
     icon: market
+    simplified: 2
     tiles:
       - name: Change Healthcare
         icon: market
@@ -567,6 +568,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -579,6 +581,7 @@ consumers:
         summary: Clinical data-science notebooks and IDEs against governed member, device and claims data.
   - name: Member & Provider Apps
     icon: partner
+    simplified: 3
     tiles:
       - name: Member Mobile App
         icon: apps
@@ -608,7 +611,6 @@ consumers:
         summary: Coaching and care-plan updates written to the care-management workflow on Lakebase in the tool the care team works in.
   - name: Regulatory & Reporting
     icon: gavel
-    simplified: 2
     tiles:
       - name: HIPAA & HITRUST
         icon: gavel
@@ -647,6 +649,7 @@ consumers:
         summary: Clinical and financial outcomes by cohort and programme, so product, clinical and payer teams see what actually moves adherence, gaps and cost of care.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Virtual Care Operations
         icon: aibi

@@ -3,6 +3,7 @@ description: 'Mortgage origination, servicing and consumer lending: point-of-sal
 sources:
   - name: Origination & POS
     icon: erp
+    simplified: 2
     tiles:
       - name: ICE Encompass LOS
         icon: erp
@@ -554,6 +555,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart

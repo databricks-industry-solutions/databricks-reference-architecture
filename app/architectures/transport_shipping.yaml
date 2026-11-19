@@ -3,7 +3,7 @@ description: 'For freight carriers and 3PLs: transportation and fleet management
 sources:
   - name: TMS & Planning
     icon: erp
-    simplified: 2
+    simplified: 3
     tiles:
       - name: Oracle OTM
         icon: erp
@@ -156,7 +156,7 @@ sources:
             interval: Continuous (near real-time)
   - name: Carrier & Freight
     icon: partner
-    simplified: 2
+    simplified: 3
     tiles:
       - name: project44 Visibility
         icon: api
@@ -501,6 +501,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -568,6 +569,7 @@ consumers:
         summary: Shippers reading live ETA via Delta Sharing.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Control Tower
         icon: globe

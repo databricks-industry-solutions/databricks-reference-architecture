@@ -506,6 +506,7 @@ consumers:
         summary: Early alerts, appointment notes and degree exceptions pushed to advisors in the field.
   - name: Learning Platforms
     icon: partner
+    simplified: 2
     tiles:
       - name: LTI Tool Provisioning
         icon: api

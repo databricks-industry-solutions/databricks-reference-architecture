@@ -49,6 +49,7 @@ sources:
             interval: Nightly ERP extract
   - name: Leasing & CRM
     icon: custlake
+    simplified: 2
     tiles:
       - name: Salesforce Real Estate
         icon: custlake
@@ -97,7 +98,6 @@ sources:
             interval: Per valuation cycle
   - name: Construction & Dev
     icon: sheet
-    simplified: 2
     tiles:
       - name: Procore Project Mgmt
         icon: sheet
@@ -607,6 +607,7 @@ consumers:
           - ESG & Sustainability
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni

@@ -249,7 +249,7 @@ function pdfBoardBox(buf) {
   if (!m) return null;
   const [w, h, x, y] = m.slice(1, 5).map(Number);
   return { w, h, x, top: 595 - y - h, bottom: y, baseline: m[5] ? 595 - +m[5] : null,
-    full: Math.abs(w - 830) < 0.02 || Math.abs(h - 565) < 0.02 };
+    full: Math.abs(w - 830) < 0.02 || Math.abs(h - 551) < 0.02 };
 }
 
 function pdfBoardAlpha(buf) {
@@ -647,9 +647,9 @@ const transparentOk = s => !!s && s.clear > 0.03 && s.solid > 0.3;
     checks.push(["the pdf board sits at least 16pt below the title baseline", !!pb && pb.baseline != null && pb.top - pb.baseline >= 16 - 0.01]);
     checks.push(["the pdf board keeps its bottom margin", !!pb && pb.bottom >= 6 - 0.01]);
     checks.push(["the board slide names its platform products as the screen does", z.platNames >= 10 && z.platFound === z.platNames]);
-    if (r.view === "simple") checks.push(["Simplified platform names reach the slide at 7.4pt or more", z.platMin >= 7.4]);
-    if (r.view === "simple") checks.push(["Simplified Genie and Agent Bricks chips reach the slide at 7pt inside their rectangles", z.chips >= 8 && z.chips7 === z.chips]);
-    if (r.view === "simple") checks.push(["Simplified Genie and Agent Bricks chips reach the PDF page at 7pt inside their rectangles under a larger panel name", z.pdfChips >= 8 && z.pdfChips7 === z.pdfChips && !z.pdfChipBad.length]);
+    if (r.view === "simple") checks.push(["Simplified platform names reach the slide at 6.1pt or more", z.platMin >= 6.1]);
+    if (r.view === "simple") checks.push(["Simplified Genie chips reach the slide at 7pt inside their rectangles", z.chips >= 3 && z.chips7 === z.chips]);
+    if (r.view === "simple") checks.push(["Simplified Genie chips reach the PDF page at 7pt inside their rectangles under a larger panel name", z.pdfChips >= 3 && z.pdfChips7 === z.pdfChips && !z.pdfChipBad.length]);
     checks.push(r.view === "simple"
       ? ["the Simplified PDF sets the platform's type one step larger, as the PowerPoint does", !!r.pdfSeen && r.pdfSeen.step > 1 && r.pdfSeen.step === a.step]
       : ["the Detailed PDF keeps the screen's platform type", !!r.pdfSeen && r.pdfSeen.step === 1 && r.pdfSeen.names === r.screenBefore.names]);

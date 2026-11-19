@@ -3,6 +3,7 @@ description: 'A food and beverage manufacturer: recipe and batch production on f
 sources:
   - name: Manufacturing & MES
     icon: erp
+    simplified: 2
     tiles:
       - name: Rockwell FactoryTalk
         icon: iot
@@ -499,6 +500,7 @@ consumers:
         summary: Sanitation tasks, line checks and downtime codes pushed to tablets on the line.
   - name: Retail & Co-pack
     icon: partner
+    simplified: 2
     tiles:
       - name: Retailer VMI Portal
         icon: share
@@ -534,6 +536,7 @@ consumers:
         summary: Retailers, co-packers and auditors reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Batch Genealogy Console
         icon: stream
@@ -553,7 +556,6 @@ consumers:
         summary: Scan data and accruals reconciled to incremental volume and margin by retailer event.
   - name: AI/BI Dashboards
     icon: aibi
-    simplified: 2
     tiles:
       - name: Plant OEE & Yield
         icon: aibi

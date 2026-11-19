@@ -3,6 +3,7 @@ description: 'Colocation and hyperscale data-center operators: DCIM and critical
 sources:
   - name: DCIM & Assets
     icon: erp
+    simplified: 2
     tiles:
       - name: EcoStruxure IT
         icon: erp
@@ -128,6 +129,7 @@ sources:
             interval: Continuous
   - name: Environmental & IoT
     icon: stream
+    simplified: 2
     tiles:
       - name: BACnet & Modbus
         icon: stream
@@ -571,6 +573,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Power BI / Tableau
         icon: chart
@@ -583,6 +586,7 @@ consumers:
         summary: Engineer and analyst notebooks, VS Code and JetBrains against governed facility data and Genie Code.
   - name: NOC & Alerting
     icon: gauge
+    simplified: 2
     tiles:
       - name: PagerDuty / Opsgenie
         icon: gauge
@@ -654,6 +658,7 @@ consumers:
         summary: Metered power, billing, SLA and interconnection self-service for every tenant, served from governed data and shared live over Delta Sharing.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: PUE & Efficiency
         icon: aibi
