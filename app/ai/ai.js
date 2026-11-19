@@ -236,7 +236,7 @@ function catalogFromArch(arch){
       Object.keys(n).forEach(k=>{ if(k!=="n") walk(n[k]); });
     }
   })(node); return [...new Set(out)]; };
-  (arch.bands||[]).forEach(b=>{ const ns = names(b.rows); if(ns.length) lines.push(`  ${b.name||b.id}: ${ns.join(" | ")}`); });
+  (arch.bands||[]).forEach(b=>{ const ns = names(b); if(ns.length) lines.push(`  ${b.name||b.id}: ${ns.join(" | ")}`); });
   ["src","ing","ppl","cons"].forEach(rid=>{ const rail = arch.rails && arch.rails[rid]; if(!rail) return;
     const ns = names(rail.groups); if(ns.length) lines.push(`  ${rail.name||rid}: ${ns.join(" | ")}`); });
   if(arch.top && Array.isArray(arch.top.secs)){ const ns = names(arch.top.secs); if(ns.length) lines.push(`  Apps & Use Cases: ${ns.join(" | ")}`); }
