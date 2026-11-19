@@ -178,10 +178,7 @@
 {
 "n": "Microsoft Graph Logs",
 "p": "ingestion/lakeflow-connect/microsoft-graph-logs",
-"st": "Beta",
-"stByCloud": {
-"azure": "Coming soon"
-}
+"st": "Beta"
 },
 {
 "n": "Microsoft OneDrive",
@@ -211,7 +208,7 @@
 {
 "n": "MySQL",
 "p": "ingestion/lakeflow-connect/mysql",
-"st": "Public Preview"
+"st": "GA"
 },
 {
 "n": "Netskope Logs",
@@ -226,6 +223,11 @@
 {
 "n": "Notion",
 "p": "ingestion/lakeflow-connect/notion",
+"st": "Beta"
+},
+{
+"n": "Okta",
+"p": "ingestion/lakeflow-connect/okta",
 "st": "Beta"
 },
 {
@@ -381,10 +383,7 @@
 {
 "n": "Xero",
 "p": "ingestion/lakeflow-connect/xero",
-"st": "Beta",
-"stByCloud": {
-"azure": "Coming soon"
-}
+"st": "Beta"
 },
 {
 "n": "Zendesk Support",

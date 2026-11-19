@@ -435,6 +435,7 @@ pipelines:
           - Capital Investment Simulation
   - name: Technical
     icon: code
+    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow
@@ -535,6 +536,7 @@ consumers:
           - primavera
   - name: Grid & Market Partners
     icon: partner
+    simplified: 2
     tiles:
       - name: ISO Market Bids
         icon: api

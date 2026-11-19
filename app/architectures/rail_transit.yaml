@@ -49,6 +49,7 @@ sources:
             interval: Daily batch + inspection loads
   - name: Signaling & Control
     icon: network
+    simplified: 3
     tiles:
       - name: Wabtec I-ETMS PTC
         icon: network
@@ -319,6 +320,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: Mobile Ticketing
         icon: api
@@ -470,6 +472,7 @@ pipelines:
           - Predictive Maintenance & Asset Health
   - name: Technical
     icon: code
+    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow
@@ -536,6 +539,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -674,6 +678,7 @@ consumers:
           - Network Ops
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni

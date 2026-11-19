@@ -573,6 +573,7 @@ consumers:
         summary: Owners and brands reading live KPIs via Delta Sharing.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Property Command
         icon: gauge
@@ -647,6 +648,7 @@ consumers:
           - CEO & Brand Office
   - name: Agent Harnesses
     icon: agents
+    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni

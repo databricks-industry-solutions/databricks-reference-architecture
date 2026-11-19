@@ -326,6 +326,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 4
     tiles:
       - name: 'ISO/IEEE 11073'
         icon: zbraces
@@ -558,6 +559,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -570,7 +572,6 @@ consumers:
         summary: Engineering and data-science notebooks against governed device and quality data.
   - name: Providers & Partners
     icon: partner
-    simplified: 2
     tiles:
       - name: Provider FHIR Exchange
         icon: api

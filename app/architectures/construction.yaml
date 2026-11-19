@@ -104,6 +104,7 @@ sources:
             interval: Hourly / daily sync
   - name: BIM & Design
     icon: product
+    simplified: 3
     tiles:
       - name: Autodesk Revit
         icon: product
@@ -153,6 +154,7 @@ sources:
             interval: Scheduled twin sync
   - name: Field & Equipment
     icon: iot
+    simplified: 2
     tiles:
       - name: Samsara Fleet
         icon: iot
@@ -282,6 +284,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: Dodge Construction Network
         icon: market
@@ -329,6 +332,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 3
     tiles:
       - name: GC President & COO
         mark: Genie One
@@ -497,6 +501,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -571,6 +576,7 @@ consumers:
         summary: Owners and JV partners via Delta Sharing.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Project Command
         icon: gauge

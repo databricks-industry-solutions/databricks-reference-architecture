@@ -457,7 +457,9 @@ const SENSE = [
   { what: 'material properties read as real estate', src: /\bpropert(?:y|ies)\b/i, onlyOn: ['chemical_mfg'], except: /intellectual property|real estate|plant property/i,
     bad: { fi: /kiinteist/i, sv: /fastighet/i, da: /ejendom/i, nl: /vastgoed|onroerend/i, de: /immobili/i, fr: /immobili/i, es: /inmobili|inmueble/i, pt: /imóve|imobili/i, it: /immobil/i,
            ja: /不動産|物件/, zh: /房地产|物业/, ko: /부동산/, he: /נכס|נדל"ן/, ar: /عقار/, hi: /संपत्ति/ } },
-  ...['Databricks Vector Search', 'Anthropic', 'OpenAI', 'Amazon Bedrock', 'AWS Glue', 'Oracle', 'Sparkplug', 'Power BI', 'Pub/Sub', 'Event Hubs', 'Kinesis', 'SIX']
+  ...['Databricks Vector Search', 'Anthropic', 'OpenAI', 'Amazon Bedrock', 'AWS Glue', 'Oracle', 'Sparkplug', 'Power BI', 'Pub/Sub', 'Event Hubs', 'Kinesis', 'SIX',
+    'Genie', 'Genie One', 'Genie Agents', 'Genie Code', 'Genie Ontology', 'Genie ZeroOps', 'Genie App Builder', 'Genie MCP', 'Genie Search', 'OntoRank', 'Unity Catalog Semantics',
+    'Agent Bricks', 'Lakeflow Designer', 'Lakebase', 'MLflow', 'MCP', 'Claude', 'Copilot', 'Cursor', 'Codex']
     .map(name => ({ what: `the name ${name} translated`, src: new RegExp(name.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')),
       bad: Object.fromEntries(LANGS.map(l => [l, { test: t => !t.includes(name) }])) })),
 ];

@@ -54,6 +54,7 @@ sources:
             interval: Daily + scenario runs
   - name: Retail & Syndicated
     icon: market
+    simplified: 2
     tiles:
       - name: NielsenIQ Connect
         icon: market
@@ -99,6 +100,7 @@ sources:
             interval: Weekly feed
   - name: Trade Promotion
     icon: partner
+    simplified: 2
     tiles:
       - name: SAP TPM
         icon: partner
@@ -144,7 +146,6 @@ sources:
             interval: Daily + post-event runs
   - name: Field & DSD
     icon: stream
-    simplified: 3
     tiles:
       - name: Salesforce Consumer Goods
         icon: custlake
@@ -282,6 +283,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: Weather Source
         icon: stream
@@ -550,6 +552,7 @@ consumers:
           - sf-cg
   - name: Regulatory & Reporting
     icon: gavel
+    simplified: 2
     tiles:
       - name: Nutrition Labeling
         icon: gavel
@@ -569,6 +572,7 @@ consumers:
         summary: Retail partners via Delta Sharing.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Perfect Store Scorecard
         icon: market
@@ -588,6 +592,7 @@ consumers:
         summary: OTIF, fill rate and inventory health by DC and SKU.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Share & Distribution
         icon: aibi

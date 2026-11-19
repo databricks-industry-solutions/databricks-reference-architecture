@@ -111,7 +111,7 @@ sources:
             interval: Continuous (API)
   - name: Fulfillment & WMS
     icon: stream
-    simplified: 2
+    simplified: 3
     tiles:
       - name: ShipBob WMS
         icon: stream
@@ -158,6 +158,7 @@ sources:
             interval: Continuous tracking events
   - name: Marketing & CRM
     icon: custlake
+    simplified: 2
     tiles:
       - name: Klaviyo
         icon: custlake
@@ -337,6 +338,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 4
     tiles:
       - name: CEO & Growth CFO
         mark: Genie One
@@ -508,6 +510,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Looker
         icon: chart
@@ -520,6 +523,7 @@ consumers:
         summary: Analyst notebooks on governed clickstream.
   - name: Channels & Partners
     icon: partner
+    simplified: 2
     tiles:
       - name: Marketplace Listings
         icon: api

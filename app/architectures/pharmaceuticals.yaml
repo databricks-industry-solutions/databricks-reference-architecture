@@ -605,7 +605,6 @@ consumers:
           - mastercontrol
   - name: Partners & CMO
     icon: partner
-    simplified: 3
     tiles:
       - name: CMO Batch Exchange
         icon: share

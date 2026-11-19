@@ -550,6 +550,7 @@ consumers:
           - symplr
   - name: Regulatory & Reporting
     icon: gavel
+    simplified: 2
     tiles:
       - name: EEO & OFCCP Reports
         icon: gavel
@@ -590,7 +591,6 @@ consumers:
         summary: Licence, background and I-9 status by placement with renewal workflows.
   - name: AI/BI Dashboards
     icon: aibi
-    simplified: 2
     tiles:
       - name: Fill & Time-to-Fill
         icon: aibi

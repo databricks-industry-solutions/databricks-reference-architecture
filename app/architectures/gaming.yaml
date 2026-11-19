@@ -58,6 +58,7 @@ sources:
             interval: Continuous client telemetry
   - name: Game Platform & Live
     icon: stream
+    simplified: 2
     tiles:
       - name: Unity Gaming Services
         icon: api
@@ -441,6 +442,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 3
     tiles:
       - name: CEO & CFO
         mark: Genie One
@@ -620,6 +622,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart
@@ -650,6 +653,7 @@ consumers:
           - braze
   - name: Studio & Platform
     icon: partner
+    simplified: 2
     tiles:
       - name: Publisher Analytics Share
         icon: share
@@ -682,7 +686,6 @@ consumers:
         summary: Studios, affiliates and regulators reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
     icon: apps
-    simplified: 2
     tiles:
       - name: Live Ops Console
         icon: gauge

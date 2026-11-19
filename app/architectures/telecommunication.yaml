@@ -140,6 +140,7 @@ sources:
             interval: Continuous
   - name: Customer & Care
     icon: custlake
+    simplified: 3
     tiles:
       - name: Salesforce Service Cloud
         icon: partner
@@ -338,6 +339,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: GSMA TAP Roaming
         icon: stream
@@ -384,6 +386,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 3
     tiles:
       - name: CEO & CTO Office
         mark: Genie One
@@ -556,6 +559,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -619,6 +623,7 @@ consumers:
         summary: Partners reading live usage via Delta Sharing.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: NOC War Room
         icon: gauge

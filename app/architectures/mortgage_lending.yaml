@@ -3,6 +3,7 @@ description: 'Mortgage origination, servicing and consumer lending: point-of-sal
 sources:
   - name: Origination & POS
     icon: erp
+    simplified: 2
     tiles:
       - name: ICE Encompass LOS
         icon: erp
@@ -362,6 +363,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: Bureau & Vendor APIs
         icon: api
@@ -519,6 +521,7 @@ pipelines:
           - Portfolio Credit Risk
   - name: Technical
     icon: code
+    simplified: 3
     tiles:
       - name: Loan Data Eng
         mark: Lakeflow
@@ -554,6 +557,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart

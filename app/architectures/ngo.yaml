@@ -3,7 +3,7 @@ description: Donor stewardship, grant compliance, program delivery and field ope
 sources:
   - name: CRM & Fundraising
     icon: custlake
-    simplified: 2
+    simplified: 3
     tiles:
       - name: Salesforce Nonprofit Cloud
         icon: custlake
@@ -411,6 +411,7 @@ pipelines:
           - Beneficiary Targeting
   - name: Technical
     icon: code
+    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow

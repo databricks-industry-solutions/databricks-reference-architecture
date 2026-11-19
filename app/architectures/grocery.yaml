@@ -153,7 +153,7 @@ sources:
             interval: Daily + intraday markdown runs
   - name: E-com & Fulfillment
     icon: partner
-    simplified: 2
+    simplified: 3
     tiles:
       - name: Instacart Marketplace
         icon: partner
@@ -301,6 +301,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 4
     tiles:
       - name: CEO & COO
         mark: Genie One
@@ -509,6 +510,7 @@ consumers:
         summary: Gap scans, facing tasks and temperature checks pushed to handheld devices.
   - name: Supplier & Partners
     icon: partner
+    simplified: 2
     tiles:
       - name: Vendor VMI Portal
         icon: share

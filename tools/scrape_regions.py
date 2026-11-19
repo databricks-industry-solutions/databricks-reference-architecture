@@ -90,6 +90,11 @@ PART_OF = {
     "Download visualizations API": "an AI/BI API",
     "External models": "models served through Model Serving",
     "Firewall enablement for serverless compute": "a Serverless Compute network option",
+    "Inbound PrivateLink for performance-intensive services": "a workspace front-end network option with no box",
+    "Serverless private connectivity to S3 FIPS endpoints": "a Serverless Compute network option",
+    "Serverless private connectivity": "a Serverless Compute network option",
+    "Private network gateway (Public Preview)": "a Serverless Compute network option",
+    "Context-based ingress control": "a workspace network access option with no box",
     "Foundation Model APIs (provisioned throughput)": "a Foundation Model APIs mode; the box follows pay-per-token",
     "Foundation Model Fine-tuning": "no box on the board",
     "Knowledge Assistant": "an Agent Bricks agent type",
@@ -109,7 +114,6 @@ PART_OF = {
 REVIEWED = {
     "Genie Code": "only agent mode needs a supported Geo; without partner-powered AI features it runs everywhere on a Databricks-hosted model",
     "SQL Warehouses": "serverless warehouses follow Serverless Compute; classic and pro warehouses run in every supported region",
-    "LTAP": "only the GCP page points to region availability, and LTAP is not available on GCP yet",
 }
 DOCS = {"aws": "https://docs.databricks.com/aws/en/",
         "azure": "https://learn.microsoft.com/en-us/azure/databricks/",
@@ -148,6 +152,7 @@ MARK_EFFECT = {
     ("feature", "†", "aws"): "note",
     ("feature", "†", "azure"): "conditional",
     ("designated", "*"): "conditional",
+    ("designated", "**"): "conditional",
     ("designated", "†"): "note",
     ("designated", "‡"): "note",
     ("designated", "§"): "note",
@@ -166,6 +171,8 @@ LINK_TEXT = {
     "Foundation Model APIs (provisioned throughput)": ["Foundation Model API provisioned throughput"],
     "Private connectivity": ["Serverless private connectivity"],
     "Data Quality Monitoring": ["Databricks Data Quality Monitoring"],
+    "Inbound PrivateLink for performance-intensive services": ["Configure inbound PrivateLink for performance-intensive services",
+                                                               "Configure inbound Private Link for performance-intensive services"],
 }
 DERIVED = {
     "MCP servers": "Custom Model Serving capability (CPU serving)",
@@ -176,6 +183,7 @@ SAME_FEATURE = {
     "Custom Agents on Model Serving and Evaluation": "Custom Agents and Evaluation",
     "Serverless compute (notebooks, jobs, pipelines, and SQL warehouses)":
         "Serverless compute for notebooks, jobs, pipelines, and SQL warehouses",
+    "Inbound Private Link for performance-intensive services": "Inbound PrivateLink for performance-intensive services",
 }
 EEA = {"Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", "Czechia", "Denmark", "Estonia", "Finland", "France",
        "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Italy", "Latvia", "Liechtenstein", "Lithuania",

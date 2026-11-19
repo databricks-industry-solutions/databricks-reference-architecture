@@ -3,6 +3,7 @@ description: 'An electronics OEM/ODM designing, sourcing, assembling, shipping a
 sources:
   - name: ERP & Planning
     icon: erp
+    simplified: 2
     tiles:
       - name: SAP S/4HANA
         icon: erp
@@ -318,6 +319,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 3
     tiles:
       - name: Product Leadership
         mark: Genie One
@@ -511,6 +513,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -523,6 +526,7 @@ consumers:
         summary: Notebooks, VS Code and JetBrains against governed data and Genie Code.
   - name: Plant & ERP
     icon: opdb
+    simplified: 2
     tiles:
       - name: SAP Order Confirmation
         icon: db
@@ -650,7 +654,6 @@ consumers:
           - Firmware Engineering
   - name: Agent Harnesses
     icon: agents
-    simplified: 4
     tiles:
       - name: Omnigent OSS
         icon: omni

@@ -3,7 +3,7 @@ description: 'Fab and foundry operations: wafer manufacturing execution, yield a
 sources:
   - name: Fab & MES
     icon: erp
-    simplified: 2
+    simplified: 3
     tiles:
       - name: Applied E3 MES
         icon: erp
@@ -196,6 +196,7 @@ sources:
             interval: Continuous chamber telemetry
   - name: Supply & Materials
     icon: market
+    simplified: 2
     tiles:
       - name: SAP S/4HANA
         icon: erp
@@ -286,6 +287,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: SEMI E134 Data Collection
         icon: stream
@@ -497,6 +499,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart
@@ -558,6 +561,7 @@ consumers:
         summary: Fabless customers and OSAT partners reading live tables via Delta Sharing.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Fab Control Tower
         icon: gauge

@@ -299,6 +299,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: SAP Concur Expense
         icon: api
@@ -353,6 +354,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 3
     tiles:
       - name: Firm Leadership
         mark: Genie One
@@ -499,6 +501,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -581,6 +584,7 @@ consumers:
         summary: A governed assistant grounded on prior deliverables, methods and engagement knowledge, answering within the client and engagement walls it is allowed to cross.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Utilization & Bench
         icon: aibi
@@ -796,8 +800,6 @@ agent_usecases:
         stories:
           - title: DXC Technology boosts productivity with GenAI
             url: https://www.databricks.com/customers/dxc-technology
-          - title: NorthStar Anesthesia built a scheduling app in weeks
-            url: https://www.databricks.com/blog/how-northstar-anesthesia-built-scheduling-app-workforce-3000-clinicians-weeks
       - name: Pipeline & Win-Rate
         short: Growth
         icon: market

@@ -164,6 +164,7 @@ sources:
             interval: Daily model runs
   - name: Customer & Loyalty
     icon: custlake
+    simplified: 2
     tiles:
       - name: Salesforce Loyalty
         icon: custlake
@@ -261,6 +262,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: NielsenIQ POS
         icon: market
@@ -414,6 +416,7 @@ pipelines:
           - Agentic Commerce
   - name: Technical
     icon: code
+    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow
@@ -483,6 +486,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart
@@ -514,6 +518,7 @@ consumers:
           - sap-retail
   - name: Marketplace Partners
     icon: partner
+    simplified: 2
     tiles:
       - name: Marketplace Inventory API
         icon: api
@@ -530,7 +535,6 @@ consumers:
           - manhattan-omni
   - name: Regulatory & Reporting
     icon: gavel
-    simplified: 2
     tiles:
       - name: Product Safety Recall
         icon: gavel

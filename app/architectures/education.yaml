@@ -252,6 +252,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: IPEDS / State Reporting
         icon: gavel
@@ -506,6 +507,7 @@ consumers:
         summary: Early alerts, appointment notes and degree exceptions pushed to advisors in the field.
   - name: Learning Platforms
     icon: partner
+    simplified: 2
     tiles:
       - name: LTI Tool Provisioning
         icon: api

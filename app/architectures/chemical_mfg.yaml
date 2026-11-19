@@ -54,6 +54,7 @@ sources:
             interval: Planning cycles + on-demand
   - name: MES & Historian
     icon: iot
+    simplified: 2
     tiles:
       - name: AVEVA PI System
         icon: iot
@@ -244,6 +245,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
+    simplified: 2
     tiles:
       - name: 'Chem eStandards'
         icon: zbraces
@@ -408,6 +410,7 @@ pipelines:
           - Supply & Materials Planning
   - name: Technical
     icon: code
+    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow
@@ -474,6 +477,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Spotfire
         icon: chart

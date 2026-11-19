@@ -68,6 +68,7 @@ sources:
             interval: Continuous (real-time)
   - name: Trading & Market Data
     icon: market
+    simplified: 3
     tiles:
       - name: AlphaPoint Exchange
         icon: market
@@ -389,6 +390,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: Kafka Trade Events
         icon: eventbus
@@ -589,6 +591,7 @@ consumers:
         summary: Quant and analyst notebooks, VS Code and JetBrains against governed on-chain and market data and Genie Code.
   - name: Client & Partner APIs
     icon: partner
+    simplified: 2
     tiles:
       - name: Institutional Data API
         icon: api
@@ -630,6 +633,7 @@ consumers:
         summary: Reserve-reconciliation evidence supporting proof-of-reserves and MiCA-style disclosures, from reconciled on-chain and ledger balances for clients and auditors.
   - name: Data Products
     icon: product
+    simplified: 2
     tiles:
       - name: Data Products
         icon: product

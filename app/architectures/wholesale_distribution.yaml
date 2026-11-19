@@ -291,7 +291,7 @@ sources:
             interval: Queried on demand (federated)
   - name: Data Formats
     icon: zbraces
-    simplified: 2
+    simplified: 4
     tiles:
       - name: 'X12 EDI'
         icon: zbraces
@@ -603,6 +603,7 @@ consumers:
         summary: Suppliers, carriers and buying groups reading governed shared tables without separately maintained publisher extracts.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Inventory Command
         icon: gauge

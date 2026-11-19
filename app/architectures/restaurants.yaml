@@ -100,7 +100,7 @@ sources:
             interval: Nightly batch + period close
   - name: Labor & Scheduling
     icon: people
-    simplified: 2
+    simplified: 3
     tiles:
       - name: HotSchedules
         icon: people
@@ -230,6 +230,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: Weather & Events API
         icon: globe
@@ -273,6 +274,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 3
     tiles:
       - name: Brand Leadership
         mark: Genie One
@@ -381,6 +383,7 @@ pipelines:
           - Food Cost Control
   - name: Technical
     icon: code
+    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow
@@ -450,6 +453,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 3
     tiles:
       - name: Tableau / Qlik / ThoughtSpot
         icon: chart

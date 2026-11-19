@@ -127,7 +127,7 @@ sources:
             interval: Per-batch + daily
   - name: Commercial & ERP
     icon: erp
-    simplified: 2
+    simplified: 3
     tiles:
       - name: SAP IS-Mining
         icon: erp
@@ -254,6 +254,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: High-Precision GPS
         icon: iot
@@ -300,6 +301,7 @@ cloud_integrations:
 pipelines:
   - name: Business
     icon: zbrief
+    simplified: 4
     tiles:
       - name: Site Leadership
         mark: Genie One

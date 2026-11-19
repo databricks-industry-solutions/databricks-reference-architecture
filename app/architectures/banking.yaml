@@ -59,6 +59,7 @@ sources:
             interval: Continuous CDC
   - name: Cards & Payments
     icon: market
+    simplified: 2
     tiles:
       - name: Visa DPS / Auth
         icon: market
@@ -294,6 +295,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: FICO Falcon
         icon: gavel
@@ -443,6 +445,7 @@ pipelines:
           - Regulatory Reporting
   - name: Technical
     icon: code
+    simplified: 3
     tiles:
       - name: Data Engineers
         mark: Lakeflow
@@ -512,6 +515,7 @@ consumers:
   - name: BI & Productivity
     icon: chart
     from: bi
+    simplified: 2
     tiles:
       - name: Tableau / Power BI
         icon: chart
@@ -603,6 +607,7 @@ consumers:
         summary: Rate and liquidity scenarios with hedge recommendations.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Capital & Liquidity
         icon: aibi

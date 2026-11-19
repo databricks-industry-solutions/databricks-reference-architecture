@@ -530,6 +530,7 @@ consumers:
         summary: Analyst notebooks, VS Code and JetBrains against governed program and case data.
   - name: Constituent Channels
     icon: partner
+    simplified: 3
     tiles:
       - name: Open Data Portal
         icon: globe
@@ -561,7 +562,6 @@ consumers:
         summary: Policy-authorized payment holds and reviewed case statuses synced to disbursement and Do Not Pay controls.
   - name: Regulatory & Reporting
     icon: gavel
-    simplified: 2
     tiles:
       - name: Federal Reporting
         icon: gavel

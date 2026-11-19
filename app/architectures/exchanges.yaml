@@ -124,6 +124,7 @@ sources:
             interval: Continuous streaming
   - name: Reference & Corp Actions
     icon: db
+    simplified: 2
     tiles:
       - name: SIX Reference Data
         icon: db
@@ -341,6 +342,7 @@ cloud_integrations:
     tiles: []
   - name: 3rd Party
     icon: zplug
+    simplified: 2
     tiles:
       - name: Multicast Feed Bus
         icon: stream
@@ -564,6 +566,7 @@ consumers:
         summary: Notebooks, VS Code and JetBrains against governed tick, reference and index data with Genie Code.
   - name: Data Distribution
     icon: partner
+    simplified: 2
     tiles:
       - name: Delta Sharing Feeds
         icon: share
@@ -611,6 +614,7 @@ consumers:
         summary: Subscribers, vendors and index licensees reading live tables with no copy and no egress duplication.
   - name: Databricks Apps
     icon: apps
+    simplified: 2
     tiles:
       - name: Market Quality
         icon: gauge
@@ -630,6 +634,7 @@ consumers:
         summary: Manipulation, spoofing and layering alerts triaged with the member's full order and print context in one investigation view, with a case trail that supports regulatory examination.
   - name: AI/BI Dashboards
     icon: aibi
+    simplified: 2
     tiles:
       - name: Trading & Volume
         icon: aibi
