@@ -181,6 +181,7 @@ app/
   ai/                      the AI Architecture Assistant: app.py serves the shared board and injects
                            ai.css and ai.js (see app/ai/README.md)
   mcp/                     MCP server exposing the reference architectures as tools (see app/mcp/README.md)
+data-models/               data models behind the industry boards: tables, metric views, sample rows and checks (diagnostics_labs)
 docs/                      the GIFs in this README, recorded by tools/readme_gifs.js
 tools/                     generators and gates: palettes (palgen.py), product marks and cloud logos (markgen.py),
                            the installer (build_installer.py), region data (scrape_regions.py),
